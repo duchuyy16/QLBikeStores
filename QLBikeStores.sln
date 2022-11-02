@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLBikeStores", "QLBikeStores\QLBikeStores.csproj", "{2511CA62-C19F-4066-BA3A-5A106C282B47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2511CA62-C19F-4066-BA3A-5A106C282B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2511CA62-C19F-4066-BA3A-5A106C282B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2511CA62-C19F-4066-BA3A-5A106C282B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2511CA62-C19F-4066-BA3A-5A106C282B47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35C00C2B-F98A-4005-9012-186C9FB74D7D}
+	EndGlobalSection
+EndGlobal
