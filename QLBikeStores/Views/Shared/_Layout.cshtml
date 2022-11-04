@@ -44,15 +44,14 @@
     <header id="header" class="fixed-top ">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a href="index.html">Bike Store</a></h1>
+            <h1 class="logo me-auto"><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bike Store</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
             <nav id="navbar" class="navbar">
                 <ul>
                     @*@Html.Action("LoadMenu", "Home") *@
-
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="#hero">Home Page</a></li>
                     <li class="dropdown">
                         <a href="#"><span>Bicycle</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -156,17 +155,12 @@
                     </li>
                     <li><a class="nav-link scrollto" href="#about">About US</a></li>
                     <li><a class="nav-link scrollto" href="#store">Store</a></li>
-                    
-                        
-                            
-                        
-                    
+                    <partial name="_LoginPartial" />
                     @*<li><a class="nav-link   scrollto" href="#portfolio">Portfolio</a></li>
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>*
                     @*<li><a class="nav-link scrollto" href="#contact">Contact</a></li>*@
                     @*<li><a class="getstarted scrollto" href="#about">Get Started</a></li>*@
                 </ul>
-
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
@@ -193,9 +187,7 @@
 
     </section><!-- End Hero -->
 
-    <main id="main">
-
-        <!-- ======= Clients Section ======= -->
+    <!-- ======= Clients Section ======= -->
         <section id="clients" class="clients section-bg">
             <div class="container">
 
@@ -229,15 +221,15 @@
                         <img src="assets/img/clients/SunBicyclesLogo-slimC.png" class="img-fluid" alt="">
                     </div>
 
-                     <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
                         <img src="assets/img/clients/257-2575661_surly-bikes-surly-logo.png" class="img-fluid" alt="">
                     </div>
 
-                     <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
                         <img src="assets/img/clients/Trek.png" class="img-fluid" alt="">
                     </div>
 
-                     <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
                         <img src="assets/img/clients/1280px-Merida_(Unternehmen)_logo.svg.png" class="img-fluid" alt="">
                     </div>
 
@@ -252,26 +244,28 @@
 
             </div>
         </section><!-- End Cliens Section -->
-        <!-- ======= About Us Section ======= -->
-        <section id="about" class="about">
+
+    <div class="container">
+        <main role="main" class="pb-3">
             @RenderBody()
-        </section><!-- End About Us Section -->
-    </main><!-- End #main -->
+        </main>
+    </div><!-- End #main -->
+
     <!-- ======= Footer ======= -->
     <footer id="footer">
 
         @*<div class="footer-newsletter">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <h4>Join Our Newsletter</h4>
-                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                        <form action="" method="post">
-                            <input type="email" name="email"><input type="submit" value="Subscribe">
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-lg-6">
+        <h4>Join Our Newsletter</h4>
+        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+        <form action="" method="post">
+        <input type="email" name="email"><input type="submit" value="Subscribe">
+        </form>
+        </div>
+        </div>
+        </div>
         </div>*@
 
         <div class="footer-top">
@@ -303,10 +297,18 @@
                     <div class="col-lg-3 col-md-6 footer-links">
                         <h4>BANK ACCOUNT</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Sacombank: 7999999999 <br />
-                                Account holder: Bui Duc Huy</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Vietcombank: 7979797979 <br />
-                                Account holder: Bui Duc Huy</a></li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i> <a href="#">
+                                    Sacombank: 7999999999 <br />
+                                    Account holder: Bui Duc Huy
+                                </a>
+                            </li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i> <a href="#">
+                                    Vietcombank: 7979797979 <br />
+                                    Account holder: Bui Duc Huy
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
@@ -354,7 +356,8 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-    
+    @*@RenderSection("Scripts",false)*@
+     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>
