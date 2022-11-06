@@ -21,11 +21,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Customers
-        public async Task<IActionResult> Index(int page=1)
+        public async Task<IActionResult> Index(int? pageNo=1)
         {
-            var cus=_context.Customers.ToList();
-            var pagedList = await cus.ToPagedListAsync(page, 10);
+            var cus = _context.Customers.ToList();
+            var pagedList = await cus.ToPagedListAsync((int)pageNo, 10);
+            
             return View(pagedList);
+
+            
             //return View(await _context.Customers.ToListAsync());
         }
 

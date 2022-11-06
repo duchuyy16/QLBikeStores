@@ -21,13 +21,16 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
         
         // GET: Admin/Products
-        public async Task<IActionResult> Index(int page=1)
+        public async Task<IActionResult> Index(int? pageNo=1)
         {
             try
             {
+                
                 var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
                 //var products = _context.Products.ToList();
-                var pagedList = await demoContext.ToPagedListAsync(page, 10);
+                var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+                //ViewBag.onePageOfMovies =await demoContext.ToPagedListAsync((int)pageNo, 5);
+                //return View();
                 return View(pagedList);
             }
             catch (Exception)
