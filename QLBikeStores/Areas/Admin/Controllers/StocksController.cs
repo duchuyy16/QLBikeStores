@@ -37,11 +37,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stocks/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? productId,int? storeId)
         {
             try
             {
-                if (id == null)
+                if (productId == null || storeId==null)
                 {
                     return NotFound();
                 }
@@ -49,7 +49,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 var stock = await _context.Stocks
                     .Include(s => s.Product)
                     .Include(s => s.Store)
-                    .FirstOrDefaultAsync(m => m.StoreId == id);
+                    .FirstOrDefaultAsync(m => m.StoreId == storeId && m.ProductId==productId);
                 if (stock == null)
                 {
                     return NotFound();
@@ -107,16 +107,16 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stocks/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? productId, int? storeId)
         {
             try
             {
-                if (id == null)
+                if (productId == null || storeId == null)
                 {
                     return NotFound();
                 }
 
-                var stock = await _context.Stocks.FindAsync(id);
+                var stock = await _context.Stocks.FindAsync(storeId,productId);
                 if (stock == null)
                 {
                     return NotFound();
@@ -137,11 +137,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StoreId,ProductId,Quantity")] Stock stock)
+        public async Task<IActionResult> Edit(int? productId, int? storeId, [Bind("StoreId,ProductId,Quantity")] Stock stock)
         {
             try
             {
-                if (id != stock.StoreId)
+                if (storeId != stock.StoreId || productId !=stock.ProductId)
                 {
                     return NotFound();
                 }
@@ -155,7 +155,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        if (!StockExists(stock.StoreId))
+                        if (!StockExists(stock.StoreId,stock.ProductId))
                         {
                             return NotFound();
                         }
@@ -178,11 +178,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stocks/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? productId, int? storeId)
         {
             try
             {
-                if (id == null)
+                if (productId == null || storeId == null)
                 {
                     return NotFound();
                 }
@@ -190,7 +190,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 var stock = await _context.Stocks
                     .Include(s => s.Product)
                     .Include(s => s.Store)
-                    .FirstOrDefaultAsync(m => m.StoreId == id);
+                    .FirstOrDefaultAsync(m => m.StoreId == storeId &&m.ProductId==productId);
                 if (stock == null)
                 {
                     return NotFound();
@@ -208,11 +208,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int productId, int storeId)
         {
             try
             {
-                var stock = await _context.Stocks.FindAsync(id);
+                var stock = await _context.Stocks.FindAsync(storeId,productId);
                 _context.Stocks.Remove(stock);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -224,9 +224,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
             
         }
 
-        private bool StockExists(int id)
+        private bool StockExists(int productId, int storeId)
         {
-            return _context.Stocks.Any(e => e.StoreId == id);
+            return _context.Stocks.Any(e => e.StoreId == storeId && e.ProductId == productId);
         }
     }
 }

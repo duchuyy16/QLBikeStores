@@ -76,15 +76,21 @@
                         @Html.DisplayFor(modelItem => item.Store.StoreName)
                     </td>
                     <td>
-                        @*lỗi*@
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        <button type="button" class="btn btn-success">
+                            @Html.ActionLink("Edit", "Edit",  new { productId=item.ProductId,storeId=item.StoreId },new { @style="color:white;" })
+                        </button>
+                        <button type="button" class="btn btn-info">
+                            @Html.ActionLink("Details", "Details", new {  productId=item.ProductId,storeId=item.StoreId  },new { @style="color:white;" })
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            @Html.ActionLink("Delete", "Delete", new { productId=item.ProductId,storeId=item.StoreId },new { @style="color:white;" })
+                        </button>                     
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
     @Html.PagedListPager((IPagedList)Model,
     pageNo => Url.Action("Index", new { pageNo }),
     new PagedListRenderOptions{
