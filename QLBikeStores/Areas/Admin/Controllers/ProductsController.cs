@@ -19,13 +19,47 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             _context = context;
         }
-        
+        [HttpGet]
+        public IActionResult Search(string name, decimal? to, decimal? from)
+        {
+            var products = from product in _context.Products.Include(p => p.Brand).Include(p => p.Category) select product;
+            //var pagedList =  products.ToPagedList((int)pageNo, 10);
+            if (!string.IsNullOrEmpty(name))//neu ma khong trong
+            {
+                if (to != null && from != null)
+                {
+                    products = products.Where(x => x.ProductName.Contains(name) && x.ListPrice >= to && x.ListPrice <= from).OrderByDescending(l => l.ListPrice);
+                }
+                else
+                {
+                    products = products.Where(x => x.ProductName.Contains(name));
+                }
+            }
+            else
+            {
+                if (to != null && from != null)
+                {
+                    products = products.Where(x => x.ProductName.Contains(name) && x.ListPrice >= to && x.ListPrice <= from);
+                }
+            }
+
+            return View(products);
+        }
+        public IActionResult Filter(int? categoryId)
+        {
+            categoryId = categoryId ?? 0;
+            var categories = _context.Categories.ToList();
+            categories.Insert(0, new Category { CategoryId = 0, CategoryName = "----------Select Category----------" });
+            ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName", categoryId);
+            var products = _context.Products.Where(x => x.CategoryId == categoryId);
+            return View(products.ToList());
+        }
         // GET: Admin/Products
-        public async Task<IActionResult> Index(int? pageNo=1)
+        public async Task<IActionResult> Index(int? pageNo = 1)
         {
             try
             {
-                
+
                 var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
                 //var products = _context.Products.ToList();
                 var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
@@ -229,7 +263,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         private bool ProductExists(int id)
         {
-                return _context.Products.Any(e => e.ProductId == id); 
+            return _context.Products.Any(e => e.ProductId == id);
         }
     }
 }

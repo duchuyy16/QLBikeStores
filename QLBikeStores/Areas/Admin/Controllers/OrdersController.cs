@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Models;
+using X.PagedList;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
@@ -20,10 +21,13 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNo=1)
         {
             var demoContext = _context.Orders.Include(o => o.Customer).Include(o => o.Staff).Include(o => o.Store);
-            return View(await demoContext.ToListAsync());
+            var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+            return View(pagedList);
+            
+            
         }
 
         // GET: Admin/Orders/Details/5

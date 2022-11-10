@@ -40,12 +40,32 @@
     </style>
 </head>
 <body>
-    <p>
-        <button type="button" class="btn btn-primary" >
-        <a style="color:white;" asp-action="Create">Create New</a>
+    <div>
+        <button type="button" class="btn btn-primary">
+            <a style="color:white;" asp-action="Create">Create New</a>
         </button>
-    </p>
-    <table id="table_id" class="table table-bordered">
+    </div>
+    @* <p>
+    <button type="button" class="btn btn-primary" style="width:100px;">
+    <i class="fas fa-search"></i>&nbsp;
+    <a style="color:white;" asp-area="Admin" asp-controller="Products" asp-action="Search">Search</a>
+    </button>
+    </p>*@
+    <div>
+        <form asp-action="Search" method="get" class="form-inline">
+            Enter product name: &nbsp; <input type="text" name="name" />&nbsp; Price from: &nbsp; <input type="number" name="to" />&nbsp; To: &nbsp; <input type="number" name="from" /> &ensp; <button class="btn btn-primary" style="width:100px;"><i class="fas fa-search"></i>&nbsp;<span>Search</span></button>
+        </form>
+    </div>
+    
+    <div>
+        <form asp-controller="Products" asp-action="Filter" method="get" class="form-inline">
+            <div class="form-group">
+<select asp-items="ViewBag.CategoryId" name="CategoryId" onchange="forms[0].submit()" class="form-control"></select>
+            </div>
+            
+        </form>
+    </div>
+    <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
                 <th>
@@ -87,15 +107,15 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-success">
-                        <a style="color:white;" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> 
+                            <a style="color:white;" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
                         </button>
 
                         <button type="button" class="btn btn-info">
-                        <a style="color:white;" asp-action="Details" asp-route-id="@item.ProductId">Details</a> 
+                            <a style="color:white;" asp-action="Details" asp-route-id="@item.ProductId">Details</a>
                         </button>
 
-                        <button type="button" class="btn btn-danger" >
-                        <a style="color:white;" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                        <button type="button" class="btn btn-danger">
+                            <a style="color:white;" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
                         </button>
                     </td>
                 </tr>

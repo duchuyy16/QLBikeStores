@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<QLBikeStores.Models.Order>
 
 @{
-    
+
 }
 
 <!DOCTYPE html>
@@ -10,70 +10,123 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        .pagination-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .pagination {
+            display: flex;
+            flex: 1;
+            list-style: none;
+            padding: 0;
+            gap: .625rem;
+        }
+
+        .page-item, .page-link {
+            height: 2rem;
+            width: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .PagedList-pageCountAndLocation {
+            justify-content: start;
+            order: -1;
+            flex: 1;
+            /*expands the div to max available width*/
+        }
+    </style>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequiredDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShippedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Store)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequiredDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShippedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Staff.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store.StoreName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <button type="button" class="btn btn-primary">
+            <a style="color:white;" asp-action="Create">Create New</a>
+        </button>
+    </p>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequiredDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShippedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Staff)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Store)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequiredDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShippedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Staff.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Store.StoreName)
+                    </td>
+                    <td>
+
+                        <button type="button" class="btn btn-success">
+                            <a style="color:white;" asp-action="Edit" asp-route-id="@item.OrderId">Edit</a>
+                        </button>
+
+                        <button type="button" class="btn btn-info">
+                            <a style="color:white;" asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+                        </button>
+
+                        <button type="button" class="btn btn-danger">
+                            <a style="color:white;" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager((IPagedList)Model,
+    pageNo => Url.Action("Index", new { pageNo }),
+    new PagedListRenderOptions{
+    PageClasses = new string[] { "page-link" },
+    UlElementClasses = new string[] { "pagination" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayItemSliceAndTotal = true,
+    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
+    }
+    )
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<QLBikeStores.Models.OrderItem>
 
 @{
-    
+
 }
 
 <!DOCTYPE html>
@@ -10,58 +10,112 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        .pagination-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .pagination {
+            display: flex;
+            flex: 1;
+            list-style: none;
+            padding: 0;
+            gap: .625rem;
+        }
+
+        .page-item, .page-link {
+            height: 2rem;
+            width: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .PagedList-pageCountAndLocation {
+            justify-content: start;
+            order: -1;
+            flex: 1;
+            /*expands the div to max available width*/
+        }
+    </style>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ListPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ListPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order.OrderId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <button type="button" class="btn btn-primary">
+            <a style="color:white;" asp-action="Create">Create New</a>
+        </button>
+    </p>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Discount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ListPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order.OrderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success">
+                           @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ orderId=item.OrderId,itemId=item.ItemId},new { @style="color:white;" }) 
+                        </button>
+                        <button type="button" class="btn btn-info">
+                             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ orderId=item.OrderId,itemId=item.ItemId},new { @style="color:white;" }) 
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ orderId=item.OrderId,itemId=item.ItemId},new { @style="color:white;" })
+                        </button>
+
+                       @* @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ orderId=item.OrderId,itemId=item.ItemId}) 
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ orderId=item.OrderId,itemId=item.ItemId}) 
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ orderId=item.OrderId,itemId=item.ItemId})*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager((IPagedList)Model,
+    pageNo => Url.Action("Index", new { pageNo }),
+    new PagedListRenderOptions{
+    PageClasses = new string[] { "page-link" },
+    UlElementClasses = new string[] { "pagination" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayItemSliceAndTotal = true,
+    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
+    }
+    )
 </body>
 </html>

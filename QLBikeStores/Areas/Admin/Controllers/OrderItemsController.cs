@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Models;
+using X.PagedList;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
@@ -20,16 +21,18 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/OrderItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNo = 1)
         {
             var demoContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product);
-            return View(await demoContext.ToListAsync());
+            var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+            return View(pagedList);
+
         }
 
         // GET: Admin/OrderItems/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? orderId, int? itemId)
         {
-            if (id == null)
+            if (orderId == null && itemId == null)
             {
                 return NotFound();
             }
@@ -37,7 +40,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             var orderItem = await _context.OrderItems
                 .Include(o => o.Order)
                 .Include(o => o.Product)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .FirstOrDefaultAsync(m => m.OrderId == orderId && m.ItemId == itemId);
             if (orderItem == null)
             {
                 return NotFound();
@@ -73,14 +76,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/OrderItems/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? orderId, int? itemId)
         {
-            if (id == null)
+            if (orderId == null || itemId == null)
             {
                 return NotFound();
             }
 
-            var orderItem = await _context.OrderItems.FindAsync(id);
+            var orderItem = await _context.OrderItems.FindAsync(orderId, itemId);
             if (orderItem == null)
             {
                 return NotFound();
@@ -95,9 +98,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,ItemId,ProductId,Quantity,ListPrice,Discount")] OrderItem orderItem)
+        public async Task<IActionResult> Edit(int orderId, int itemId, [Bind("OrderId,ItemId,ProductId,Quantity,ListPrice,Discount")] OrderItem orderItem)
         {
-            if (id != orderItem.OrderId)
+            if (orderId != orderItem.OrderId || itemId != orderItem.ItemId)
             {
                 return NotFound();
             }
@@ -111,7 +114,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderItemExists(orderItem.OrderId))
+                    if (!OrderItemExists(orderItem.OrderId, orderItem.ItemId))
                     {
                         return NotFound();
                     }
@@ -128,9 +131,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/OrderItems/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? orderId, int? itemId)
         {
-            if (id == null)
+            if (orderId == null || itemId == null)
             {
                 return NotFound();
             }
@@ -138,7 +141,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             var orderItem = await _context.OrderItems
                 .Include(o => o.Order)
                 .Include(o => o.Product)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .FirstOrDefaultAsync(m => m.OrderId == orderId && m.ItemId == itemId);
             if (orderItem == null)
             {
                 return NotFound();
@@ -150,17 +153,17 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/OrderItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int orderId, int itemId)
         {
-            var orderItem = await _context.OrderItems.FindAsync(id);
+            var orderItem = await _context.OrderItems.FindAsync(orderId, itemId);
             _context.OrderItems.Remove(orderItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderItemExists(int id)
+        private bool OrderItemExists(int orderId, int itemId)
         {
-            return _context.OrderItems.Any(e => e.OrderId == id);
+            return _context.OrderItems.Any(e => e.OrderId == orderId && e.ItemId == itemId);
         }
     }
 }
