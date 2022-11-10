@@ -45,27 +45,27 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
             return View(products);
         }
-        public IActionResult Filter(int? categoryId)
-        {
-            categoryId = categoryId ?? 0;
-            var categories = _context.Categories.ToList();
-            categories.Insert(0, new Category { CategoryId = 0, CategoryName = "----------Select Category----------" });
-            ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName", categoryId);
-            var products = _context.Products.Where(x => x.CategoryId == categoryId);
-            return View(products.ToList());
-        }
+        
         // GET: Admin/Products
-        public async Task<IActionResult> Index(int? pageNo = 1)
+        public async Task<IActionResult> Index(int? categoryId, int? pageNo = 1)
         {
             try
             {
-
-                var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-                //var products = _context.Products.ToList();
-                var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
-                //ViewBag.onePageOfMovies =await demoContext.ToPagedListAsync((int)pageNo, 5);
-                //return View();
-                return View(pagedList);
+                var categories = _context.Categories.ToList();
+                categories.Insert(0, new Category { CategoryId = 0, CategoryName = "----------Select Category----------" });
+                ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName",categoryId);
+                if (categoryId==null)
+                {
+                    var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
+                    var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+                    return View(pagedList);
+                }
+                else
+                {
+                    var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
+                    var pagedList = await demoContext.Where(x => x.CategoryId == categoryId).ToPagedListAsync((int)pageNo, 10);
+                    return View(pagedList);
+                }
             }
             catch (Exception)
             {
