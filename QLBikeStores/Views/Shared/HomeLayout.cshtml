@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -46,7 +47,8 @@
             <h1 class="logo me-auto"><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bike Store</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-           @await Component.InvokeAsync("Menu")
+            @Url.Action("MenuPartial","Home")
+
         </div>
     </header><!-- End Header -->
     <!-- ======= Hero Section ======= -->
@@ -74,6 +76,7 @@
         <div class="container">
 
             <div class="row" data-aos="zoom-in">
+
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
                     <img src="assets/img/clients/electra-2-logo-png-transparent.png" class="img-fluid" alt="">
                 </div>
@@ -122,6 +125,7 @@
                     <img src="assets/img/clients/Specialized_red_S_black_logotype.jpg" class="img-fluid" alt="">
                 </div>
             </div>
+
         </div>
     </section><!-- End Cliens Section -->
 
@@ -132,6 +136,21 @@
     </div><!-- End #main -->
     <!-- ======= Footer ======= -->
     <footer id="footer">
+
+        @*<div class="footer-newsletter">
+        <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-lg-6">
+        <h4>Join Our Newsletter</h4>
+        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+        <form action="" method="post">
+        <input type="email" name="email"><input type="submit" value="Subscribe">
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>*@
+
         <div class="footer-top">
             <div class="container">
                 <div class="row">

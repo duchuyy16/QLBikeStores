@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QLBikeStores.Models;
 using System;
@@ -7,27 +8,26 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace QLBikeStores.Controllers
 {
     public class HomeController : Controller
     {
 
-        //private readonly demoContext _context;
+        private readonly demoContext _context;
 
-        //public HomeController(demoContext context)
+        public HomeController(demoContext context)
+        {
+
+            this._context = context;
+        }
+        //private readonly ILogger<HomeController> _logger;
+
+        //public HomeController(ILogger<HomeController> logger)
         //{
 
-        //    this._context = context;
+
+        //    _logger = logger;
         //}
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            
-
-            _logger = logger;
-        }
 
         public IActionResult Index()
         {
@@ -45,11 +45,32 @@ namespace QLBikeStores.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //[ChildActionOnly]
-        public IActionResult LoadMenu()
+        public ActionResult listProduct()
         {
-            
-            return View();
+            try
+            {
+                var products = _context.Products.ToList();
+                return PartialView(products);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        //x => x.CategoryId == categoryId &&
+        public ActionResult List(int brandId)
+        {
+            try
+            {
+                var products = _context.Products.Where(x => x.BrandId == brandId).ToList();
+                return View(products);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }
