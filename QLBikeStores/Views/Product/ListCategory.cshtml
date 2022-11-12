@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "ListCategory";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h1 {
+        text-align: center;
+    }
+</style>
+<div class="row">
+    <div class=" bg-danger">
+        
+<h1>ListCategory</h1>
+    </div>
+    @foreach (Product item in Model)
+    {
+        <div class="col-md-3 col-sm-6">
+            <center>
+                <h3>@item.ProductName</h3>
+                <h3 style="color:red">Price: $@item.ListPrice</h3>
+            </center>
+
+        </div>
+    }
+</div>

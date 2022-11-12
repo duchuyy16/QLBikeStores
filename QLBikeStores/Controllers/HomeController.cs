@@ -44,33 +44,5 @@ namespace QLBikeStores.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        public ActionResult listProduct()
-        {
-            try
-            {
-                var products = _context.Products.ToList();
-                return PartialView(products);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-
-        }
-
-        //x => x.CategoryId == categoryId &&
-        public ActionResult List(int brandId)
-        {
-            try
-            {
-                var products = _context.Products.Where(x => x.BrandId == brandId).ToList();
-                return View(products);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
     }
 }

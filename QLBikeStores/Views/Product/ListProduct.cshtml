@@ -1,6 +1,9 @@
-﻿@{
-    ViewData["Title"] = "List";
+﻿
+@{
+    ViewData["Title"] = "ListProduct";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <style>
     h1 {
         text-align: center;
@@ -8,11 +11,12 @@
 </style>
 <div class="row">
     <div class=" bg-danger">
-        <h1> List </h1>
+        <h1>ListProduct</h1>
     </div>
     @foreach (Product item in Model)
     {
-        <div class="col-md-3 col-sm-6">
+        @*<div class="col-md-3 col-sm-6">*@
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <center>
                 <h3>@item.ProductName</h3>
                 <h3 style="color:red">Price: $@item.ListPrice</h3>
@@ -21,5 +25,3 @@
         </div>
     }
 </div>
-
-

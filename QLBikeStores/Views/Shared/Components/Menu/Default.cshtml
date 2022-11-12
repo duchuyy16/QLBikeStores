@@ -1,19 +1,21 @@
 ﻿
 <nav id="navbar" class="navbar">
     <ul>
-        <li><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Home Page</a></li>
+        <li><a class="nav-link scrollto " asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> HOME PAGE</a></li>
         <li class="dropdown">
-            <a asp-controller="Home" asp-action="listProduct"><span>Bicycle</span> <i class="bi bi-chevron-down"></i></a>
+            <a asp-controller="Product" asp-action="ListProduct"><span class="bi bi-bicycle"> BICYCLE</span>
+                <i class="bi bi-chevron-down"></i></a>
             <ul>
                 @foreach (MenuViewModel item in Model)
                 {
                     <li class="dropdown">
-                        <a href="#"><span>@item.CategoryName</span> <i class="bi bi-chevron-right"></i></a>
+                       @* <a href="Product/ListCategory"><span>@item.CategoryName</span> <i class="bi bi-chevron-right"></i></a>*@
+                        @Html.ActionLink(item.CategoryName,"ListCategory","Product",new{categoryId=@item.CategoryId},null)
                         <ul>
                             @foreach (Brand brand in item.Brands)
                             {
-                                <li><a href="#">@brand.BrandName</a></li>
-                                @*@Html.ActionLink(brand.BrandName,"List","Home",new{@brandId=brand.BrandId},null)*@
+                                @*<li><a asp-controller="Home" asp-action="List">@brand.BrandName</a></li>*@
+                                @Html.ActionLink(brand.BrandName,"ListCategoryBrand","Product",new{brandId=@brand.BrandId,categoryId=@item.CategoryId},null)
                             }
                         </ul>
                     </li>
@@ -22,9 +24,9 @@
 
             </ul>
         </li>
-        <li><a class="nav-link scrollto" href="#about">About US</a></li>
-        <li><a class="nav-link scrollto" href="#store">Store</a></li>
-        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        <li><a class="nav-link scrollto" href="#store"><i class="bi bi-shop"></i>STORE</a></li>
+        <li><a class="nav-link scrollto" href="#about"><i class="bi bi-globe"></i>ABOUT US</a></li>
+        <li><a class="nav-link scrollto" href="#contact"><i class='bi bi-phone'></i>CONTACT</a></li>
         <partial name="_LoginPartial" />
     </ul>
     <i class="bi bi-list mobile-nav-toggle"></i>

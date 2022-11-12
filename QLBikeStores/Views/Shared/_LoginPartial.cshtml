@@ -17,11 +17,13 @@
 }
 else
 {
-    <li class="nav-item">
+   @* <li class="nav-item">
         <a class="nav-link text-important" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-important" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    </li>*@
+    <li><a class="nav-link scrollto" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+        <li><a class="nav-link scrollto" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
 }
 </ul>
