@@ -10,10 +10,11 @@
 </head>
 <body>
 
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div>
+        @*<main role="main" class="pb-3">
             @RenderBody()
-        </main>
+        </main>*@
+        @RenderBody()
     </div>
     @await RenderSectionAsync("Scripts", required: false)
 

@@ -9,28 +9,34 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
+    <!--Layout Product-->
+    @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="assets/css/StyleSheet.css" rel="stylesheet">*@
+
+
     <!-- Google font roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: Arsha - v4.9.1
@@ -50,7 +56,7 @@
             <h1 class="logo me-auto"><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bike Store</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-           @await Component.InvokeAsync("Menu")
+            @await Component.InvokeAsync("Menu")
         </div>
     </header><!-- End Header -->
     <!-- ======= Hero Section ======= -->
@@ -67,7 +73,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="assets/img/bike2.jpg" class="img-fluid animated" alt="">
+                    <img src="~/assets/img/bike2.jpg" class="img-fluid animated" alt="">
                 </div>
             </div>
         </div>
@@ -79,60 +85,61 @@
 
             <div class="row" data-aos="zoom-in">
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/electra-2-logo-png-transparent.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/electra-2-logo-png-transparent.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/Haro-Bikes-Logo.jpg" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/Haro-Bikes-Logo.jpg" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/Heller_france_logo.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/Heller_france_logo.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/bicycle-logo.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/bicycle-logo.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/ritchey-logo.jpg" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/ritchey-logo.jpg" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/strider.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/strider.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/SunBicyclesLogo-slimC.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/SunBicyclesLogo-slimC.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/257-2575661_surly-bikes-surly-logo.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/257-2575661_surly-bikes-surly-logo.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/Trek.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/Trek.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/1280px-Merida_(Unternehmen)_logo.svg.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/1280px-Merida_(Unternehmen)_logo.svg.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/Santacruz_bycicles_logo.png" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/Santacruz_bycicles_logo.png" class="img-fluid" alt="">
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="assets/img/clients/Specialized_red_S_black_logotype.jpg" class="img-fluid" alt="">
+                    <img src="~/assets/img/clients/Specialized_red_S_black_logotype.jpg" class="img-fluid" alt="">
                 </div>
             </div>
         </div>
     </section><!-- End Cliens Section -->
 
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div>
+        @*<main role="main" class="pb-3">
             @RenderBody()
-        </main>
+        </main>*@
+        @RenderBody();
     </div><!-- End #main -->
     <!-- ======= Footer ======= -->
     <footer id="footer">
@@ -213,17 +220,21 @@
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+    <!--Layout Product-->
+    @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="~/assets/js/main.js"></script>
     @*@RenderSection("Scripts",false)*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>

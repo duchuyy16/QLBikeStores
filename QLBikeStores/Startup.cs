@@ -27,6 +27,7 @@ namespace QLBikeStores
             services.AddControllersWithViews();
             services.AddDbContext<demoContext>();
             services.AddRazorPages();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +45,7 @@ namespace QLBikeStores
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+            app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -13,6 +13,7 @@ namespace QLBikeStores.Models
         public int Quantity { get; set; }
         public decimal ListPrice { get; set; }
         public decimal Discount { get; set; }
+        public double Total => (double)((Quantity * ListPrice) - (Quantity * ListPrice * Discount));
 
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Models;
 using System;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace QLBikeStores.Controllers
         {
             try
             {
-                var products = _context.Products.ToList();
+                var products = _context.Products.Include(p=>p.Category).Include(m=>m.Stocks).ToList();
                 return View(products);
             }
             catch (Exception)
@@ -35,7 +36,7 @@ namespace QLBikeStores.Controllers
         {
             try
             {
-                var products = _context.Products.Where(x=>x.CategoryId==categoryId).ToList();
+                var products = _context.Products.Where(x=>x.CategoryId==categoryId).Include(p => p.Category).Include(m => m.Stocks).ToList();
                 return View(products);
             }
             catch (Exception)
@@ -48,7 +49,7 @@ namespace QLBikeStores.Controllers
         {
             try
             {
-                var products = _context.Products.Where(x => x.CategoryId == categoryId && x.BrandId == brandId).ToList();
+                var products = _context.Products.Where(x => x.CategoryId == categoryId && x.BrandId == brandId).Include(p => p.Category).Include(m => m.Stocks).ToList();
                 return View(products);
             }
             catch (Exception)
