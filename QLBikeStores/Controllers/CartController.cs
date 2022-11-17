@@ -3,6 +3,7 @@ using QLBikeStores.Models;
 using QLBikeStores.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace QLBikeStores.Controllers
 {
@@ -50,7 +51,7 @@ namespace QLBikeStores.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(Carts);
         }
     }
 }

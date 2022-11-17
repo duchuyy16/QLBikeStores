@@ -56,7 +56,7 @@ namespace QLBikeStores
                 endpoints.MapAreaControllerRoute(
                     name: "MyAreaAdmin",
                     areaName: "Admin",
-                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "Admin/{controller=AdminHome}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

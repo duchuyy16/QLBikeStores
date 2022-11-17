@@ -1,14 +1,12 @@
 ﻿
 @{
     ViewData["Title"] = "ListCategory";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <section style="background-color: #eee;">
     <div class="container py-5">
         <div class="row">
             <div class="" style="text-align: center;">
-                <h1><strong><i>List Of Products</i></strong></h1>
+                <h1><strong><i>List Of Products By Category</i></strong></h1>
             </div>
             @foreach (Product item in Model)
             {
@@ -21,7 +19,7 @@
                                 <p class="text-white mb-0 small">new</p>
                             </div>
                         </div>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                        <img src="~/assets/img/FueL_EX5-2022.jpg"
                          class="card-img-top" alt="Laptop" />
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
