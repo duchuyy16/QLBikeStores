@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Models;
 using System;
 using System.Linq;
+using X.PagedList;
 
 namespace QLBikeStores.Controllers
 {
@@ -19,18 +20,18 @@ namespace QLBikeStores.Controllers
             return View();
         }
 
-        public ActionResult ListProduct()
+        public ActionResult ListProduct(int? pageNo=1)
         {
             try
             {
-                var products = _context.Products.Include(p=>p.Category).Include(m=>m.Stocks).ToList();
-                return View(products);
+                var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
+                var pagedList = products.ToPagedList((int)pageNo, 9);
+                return View(pagedList);
             }
             catch (Exception)
             {
-                return BadRequest(); 
+                return BadRequest();
             }
-            
         }
         public ActionResult ListCategory(int categoryId)
         {
@@ -50,6 +51,7 @@ namespace QLBikeStores.Controllers
             try
             {
                 var products = _context.Products.Where(x => x.CategoryId == categoryId && x.BrandId == brandId).Include(p => p.Category).Include(m => m.Stocks).ToList();
+                
                 return View(products);
             }
             catch (Exception)
@@ -57,7 +59,5 @@ namespace QLBikeStores.Controllers
                 return BadRequest();
             }
         }
-
-        
     }
 }

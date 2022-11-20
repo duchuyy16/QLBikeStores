@@ -14,36 +14,38 @@ namespace QLBikeStores.Controllers
         {
             _context = context;
         }
-        public List<OrderItem> Carts
+        public List<CartItem> Carts
         {
             get 
             { 
-                var data = HttpContext.Session.Get<List<OrderItem>>("GioHang");
+                var data = HttpContext.Session.Get<List<CartItem>>("GioHang");
                 if(data == null)
                 {
-                    data = new List<OrderItem>();
+                    data = new List<CartItem>();
                 }
                 return data;
             }
         }
 
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id, int quantity)
         {
             var myCart = Carts;
             var item=myCart.SingleOrDefault(p=>p.ProductId == id);
             if(item == null)
             {
                 var products=_context.Products.SingleOrDefault(p=>p.ProductId == id);
-                item = new OrderItem
+                item = new CartItem
                 {
-                    ProductId=id,
-                    ListPrice=products.ListPrice                
+                    ProductId = id,
+                    ProductName = products.ProductName,
+                    ListPrice = products.ListPrice,
+                    Quantity =quantity,   
                 };
                 myCart.Add(item);
             }    
             else
             {
-                item.Quantity++;
+                item.Quantity+=quantity;
             }
             HttpContext.Session.Set("GioHang",myCart);
 
@@ -53,5 +55,6 @@ namespace QLBikeStores.Controllers
         {
             return View(Carts);
         }
+        
     }
 }

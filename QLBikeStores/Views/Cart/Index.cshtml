@@ -1,55 +1,70 @@
-﻿@{
+﻿@model IEnumerable<CartItem>
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="vh-100" style="background-color: #eee;">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col">
-                <p><span class="h2">Shopping Cart </span><span class="h4">(1 item in your cart)</span></p>
-                <div class="card mb-4">
-                    <div class="card-body p-4">
 
-                        <div class="row align-items-center">
-                            <div class="col-md-2">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
+<section class="" style="background-color: #eee;">
+    <div class="container ">
+        <div class="row d-flex justify-content-center align-items-center h-100">           
+                <div class="col">
+                <p><span class="h2">Shopping Cart </span></p>  
+                @foreach(var item in Model)
+                {
+                    <div class="card mb-4">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="~/assets/img/bike/Marlin7_23_36967_B_Primary.jpg"
                                      class="img-fluid" alt="Generic placeholder image">
-                            </div>
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div>
-                                    <p class="small text-muted mb-4 pb-2">Product Name</p>
-                                    <p class="lead fw-normal mb-0">iPad Air</p>
                                 </div>
-                            </div>
-                            
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div>
-                                    <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                    <p class="lead fw-normal mb-0">1</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div>
-                                    <p class="small text-muted mb-4 pb-2">Price</p>
-                                    <p class="lead fw-normal mb-0">$799</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div>
-                                    <p class="small text-muted mb-4 pb-2">Discount</p>
-                                    <p class="lead fw-normal mb-0">$799</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div>
-                                    <p class="small text-muted mb-4 pb-2">Order</p>
-                                    <p class="lead fw-normal mb-0">1</p>
-                                </div>
-                            </div>
-                        </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Product Name</p>
+                                        <p class="lead fw-normal mb-0">@item.ProductName</p>
+                                    </div>
+                                </div>                                
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    @*<button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                        <i class="fas fa-minus"></i>
+                                    </button>                                   
+                                    <input id="form1" value="@item.Quantity" type="number"
+                                       class="form-control form-control-sm" />
 
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>*@
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Quantity</p>
+                                        <p class="lead fw-normal mb-0">@item.Quantity</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Price</p>
+                                        <p class="lead fw-normal mb-0">@item.ListPrice</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Total</p>
+                                        <p class="lead fw-normal mb-0">@item.Total</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Remove</p>
+                                        <p class="lead fw-normal mb-0"><a href="#" class="text-danger"><i class="fas fa-trash fa-lg"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                }
+
                 <div class="card mb-5">
                     <div class="card-body p-4">
                         <div class="float-end">
@@ -59,11 +74,11 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-light btn-lg me-2"><a asp-action="ListProduct" asp-controller="Product">CONTINUE SHOPPING</a></button>
                     <button type="submit" class="btn btn-primary btn-lg">CHECKOUT</button>
                 </div>
-
             </div>
         </div>
     </div>

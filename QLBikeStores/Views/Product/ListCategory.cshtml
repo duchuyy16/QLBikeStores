@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "ListCategory";
 }
+
 <section style="background-color: #eee;">
     <div class="container py-5">
         <div class="row">
@@ -19,7 +20,7 @@
                                 <p class="text-white mb-0 small">new</p>
                             </div>
                         </div>
-                        <img src="~/assets/img/FueL_EX5-2022.jpg"
+                        <img src="~/assets/img/bike/Marlin7_23_36967_B_Primary.jpg"
                          class="card-img-top" alt="Laptop" />
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
@@ -45,7 +46,9 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-row">
-                                <button type="submit" class="btn btn-danger flex-fill ms-1" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@*@Model.ProductId*@">Add To Cart <i class="fas fa-cart-plus"></i></button>
+                                <button type="submit" class="btn btn-danger flex-fill ms-1">
+                                    <a style="color:white;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.ProductId" asp-route-quantity="1"> Add To Cart <i class="fas fa-cart-plus"></i></a>
+                                    </button>
                             </div>
                         </div>
                     </div>

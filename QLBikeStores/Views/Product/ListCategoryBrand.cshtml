@@ -1,8 +1,43 @@
-﻿
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 @{
     ViewData["Title"] = "ListCategoryBrand";
     
 }
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        .pagination-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .pagination {
+            display: flex;
+            flex: 1;
+            list-style: none;
+            padding: 0;
+            gap: .625rem;
+        }
+
+        .page-item, .page-link {
+            height: 2rem;
+            width: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .PagedList-pageCountAndLocation {
+            justify-content: space-evenly;
+            order: -1;
+            flex: 1;
+            /*expands the div to max available width*/
+        }
+    </style>
+</head>
 <section style="background-color: #eee;">
     <div class="container py-5">
         <div class="row">
@@ -44,9 +79,11 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="d-flex flex-row">
-                                <button type="submit" class="btn btn-danger flex-fill ms-1" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@*@Model.ProductId*@">Add To Cart <i class="fas fa-cart-plus"></i></button>
+                                <button type="submit" class="btn btn-danger flex-fill ms-1">
+                                    <a style="color:white;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.ProductId" asp-route-quantity="1"> Add To Cart <i class="fas fa-cart-plus"></i></a>
+                                    </button>
                             </div>
                         </div>
                     </div>
@@ -55,4 +92,16 @@
 
         </div>
     </div>
+    @Html.PagedListPager((IPagedList)Model,
+    pageNo => Url.Action("ListCategoryBrand", new { pageNo }),
+    new PagedListRenderOptions{
+    PageClasses = new string[] { "page-link" },
+    UlElementClasses = new string[] { "pagination" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayItemSliceAndTotal = true,
+    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
+    }
+    )
 </section>

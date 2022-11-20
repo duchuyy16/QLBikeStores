@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "ListStore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>Store List</h1>
+    <br />
+    @foreach (Store item in Model)
+    {
+            <table style="width:100%">
+                <tr>
+                    <th>@item.StoreId</th>                    
+                </tr>
+                <tr style="text-align:center">
+                    <td>@item.StoreName</td>                     
+                    <td>@item.Street</td>   
+                    <td>@item.City</td> 
+                    <td>@item.State</td> 
+                    <td>@item.ZipCode</td> 
+                    <td>@item.Phone</td>   
+                    <td>@item.Email</td>  
+                    <td>Opening Hours: 10AM - 9PM (Monday - Sunday)</td>
+                </tr>
+            </table>
+    }
+</div>

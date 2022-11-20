@@ -1,7 +1,7 @@
 ﻿
 <nav id="navbar" class="navbar">
     <ul>
-        <li><a class="nav-link scrollto " asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> HOME PAGE</a></li>
+        <li><a class="nav-link scrollto " asp-controller="Home" asp-action="Index"><i class="bi bi-house-fill"></i>&nbspHOME PAGE</a></li>
         <li class="dropdown">
             <a asp-controller="Product" asp-action="ListProduct"><span class="bi bi-bicycle"> BICYCLE</span>
                 <i class="bi bi-chevron-down"></i></a>
@@ -24,10 +24,10 @@
 
             </ul>
         </li>
-        <li><a class="nav-link scrollto" href="#store"><i class="bi bi-shop"></i>STORE</a></li>
-        <li><a class="nav-link scrollto" href="#about"><i class="bi bi-globe"></i>ABOUT US</a></li>
-        <li><a class="nav-link scrollto" href="#contact"><i class='bi bi-phone'></i>CONTACT</a></li>
+        <li><a class="nav-link scrollto" asp-controller="Store" asp-action="ListStore"><i class="bi bi-shop"></i>&nbspSTORE</a></li>
+        <li><a class="nav-link scrollto" href="#contact"><i class='bi bi-phone'></i>&nbspCONTACT</a></li>
         <partial name="_LoginPartial" />
+        <li><a class="nav-link scrollto" asp-controller="Cart" asp-action="Index" ><i class="bi bi-cart-fill"></i></a></li>
     </ul>
     <i class="bi bi-list mobile-nav-toggle"></i>
 </nav><!-- .navbar -->
