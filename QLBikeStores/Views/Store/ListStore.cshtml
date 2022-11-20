@@ -2,26 +2,33 @@
     ViewData["Title"] = "ListStore";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="container">
-    <h1>Store List</h1>
-    <br />
-    @foreach (Store item in Model)
-    {
-            <table style="width:100%">
-                <tr>
-                    <th>@item.StoreId</th>                    
-                </tr>
-                <tr style="text-align:center">
-                    <td>@item.StoreName</td>                     
-                    <td>@item.Street</td>   
-                    <td>@item.City</td> 
-                    <td>@item.State</td> 
-                    <td>@item.ZipCode</td> 
-                    <td>@item.Phone</td>   
-                    <td>@item.Email</td>  
-                    <td>Opening Hours: 10AM - 9PM (Monday - Sunday)</td>
-                </tr>
-            </table>
-    }
+<div class="container-fluid p-3 my-3">
+    <h1 style="text-align:center; color:darkblue"><b>Store List</b></h1>
+    <div class="row row-cols-3 g-3">
+        @foreach (Store item in Model)
+        {
+            <div class="col">
+                <div class="card">
+                    <div class="card-body" style="background-color:#f5f5f5">
+                        <h2 class="card-title" style="color:darkblue"><b>@item.StoreName</b></h2>
+                        <h4><i class="bi-geo-alt-fill"></i>&nbsp;Address: <b>@item.Street, @item.City, @item.State, @item.ZipCode</b></h4>
+                        <h4><i class="bi-telephone-fill"></i>&nbsp;Tel: <b>@item.Phone</b></h4>
+                        <h4><i class="bi-envelope-fill"></i>&nbsp;Email: <b>@item.Email</b></h4>
+                        <h4><i class="bi-door-open-fill"></i>&nbsp;Opening Hours: <b>10AM - 9PM (Monday - Sunday)</b></h4>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+<div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white"
+     style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');">
+    <h1 class="mb-3 h2">Bike Store</h1>
+
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus praesentium
+        labore accusamus sequi, voluptate debitis tenetur in deleniti possimus modi voluptatum
+        neque maiores dolorem unde? Aut dolorum quod excepturi fugit.
+    </p>
+</div>
+
