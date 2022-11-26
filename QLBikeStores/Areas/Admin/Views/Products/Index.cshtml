@@ -58,11 +58,8 @@
 
     <div>
         <form asp-controller="Products" asp-action="Index" method="get" class="form-inline">
-            <div class="form-group">
-                
+            <div class="form-group">             
                 <select asp-items="ViewBag.CategoryId" name="categoryId" onchange="forms[2].submit()" class="form-control"></select>
-                @*<input type="text" name="demo" value="abd" onclick="console.log(forms[1])"/>
-                <input type="text" name="demo" value="abd" onclick="console.log(forms[0])"/>*@
             </div> 
         </form>
     </div>

@@ -56,5 +56,30 @@ namespace QLBikeStores.Controllers
             return View(Carts);
         }
         
+        public IActionResult RemoveCart(int id)
+        {
+            var myCart = Carts;
+            foreach (var item in myCart)
+            {
+                if (item.ProductId == id)
+                {
+                    myCart.Remove(item);
+                    break;
+                }
+            }
+            HttpContext.Session.Set("GioHang", myCart);
+            return RedirectToAction("Index");
+        }
+
+        private double OrderTotal()
+        {
+            double total = 0;
+            var myCart = Carts;
+            if(myCart != null)
+            {
+                total = myCart.Sum(s => s.Total);
+            }
+            return total;
+        }
     }
 }

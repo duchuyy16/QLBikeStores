@@ -53,8 +53,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 var categories = _context.Categories.ToList();
                 categories.Insert(0, new Category { CategoryId = 0, CategoryName = "----------Select Category----------" });
-                ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName",categoryId);
-                if (categoryId==null)
+                ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName", categoryId);
+                if (categoryId == null)
                 {
                     var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
                     var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
@@ -71,6 +71,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
+
         }
 
         // GET: Admin/Products/Details/5
