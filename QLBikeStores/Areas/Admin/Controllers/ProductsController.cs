@@ -123,7 +123,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice,Discount")] Product product)
         {
             try
             {
@@ -175,7 +175,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice,Discount")] Product product)
         {
             try
             {
@@ -212,7 +212,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-
         }
 
         // GET: Admin/Products/Delete/5

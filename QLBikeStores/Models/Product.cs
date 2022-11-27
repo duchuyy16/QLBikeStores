@@ -19,7 +19,9 @@ namespace QLBikeStores.Models
         public int CategoryId { get; set; }
         public short ModelYear { get; set; }
         public decimal ListPrice { get; set; }
-        public string Image { get; set; }
+        public string ImageBike { get; set; }
+        public decimal Discount { get; set; }
+
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }

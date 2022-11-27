@@ -38,6 +38,7 @@ namespace QLBikeStores.Controllers
                 {
                     ProductId = id,
                     ProductName = products.ProductName,
+                    Image=products.ImageBike,
                     ListPrice = products.ListPrice,
                     Quantity =quantity,   
                 };
@@ -58,16 +59,19 @@ namespace QLBikeStores.Controllers
         
         public IActionResult RemoveCart(int id)
         {
-            var myCart = Carts;
-            foreach (var item in myCart)
-            {
-                if (item.ProductId == id)
-                {
-                    myCart.Remove(item);
-                    break;
-                }
-            }
-            HttpContext.Session.Set("GioHang", myCart);
+            //var myCart = Carts;
+            //foreach (var item in myCart)
+            //{
+            //    if (item.ProductId == id)
+            //    {
+            //        myCart.Remove(item);
+            //        break;
+            //    }
+            //}
+            //HttpContext.Session.Set("GioHang", myCart);
+            //return RedirectToAction("Index");
+            //Carts.Where(p => p.ProductId != id).ToList();
+            HttpContext.Session.Set("GioHang", Carts.Where(p => p.ProductId != id).ToList());
             return RedirectToAction("Index");
         }
 
