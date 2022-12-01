@@ -8,6 +8,10 @@
         height:48px;
         overflow:hidden;
     }
+    .card-img-top{
+        height:354px;
+        overflow:hidden;
+    }
 </style>
 <section style="background-color: white;">
     <div class="container py-1">
@@ -26,10 +30,10 @@
                             <p class="lead mb-0">Authentic</p>
                             <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                              style="width: 35px; height: 35px;">
-                                <p class="text-white mb-0 small">@item.Discount</p>
+                                <p class="text-white mb-0 small">@item.Discount%</p>
                             </div>
                         </div>
-                        <img src="~/assets/img/bike/Marlin7_23_36967_B_Primary.jpg"                        
+                        <img src="~/assets/img/bike/@item.ImageBike"                        
                          class="card-img-top" alt="Bike" />
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
@@ -40,8 +44,8 @@
                                 <h5 class="mb-0">@item.ProductName</h5>
                             </div>
                             <div class="d-flex justify-content-between mb-3">
-
-                                <h5 class="text-dark mb-0">Price: $@item.ListPrice</h5>
+                                <h5 class="text-danger mb-0">$@(item.ListPrice-(item.ListPrice*item.Discount/100))</h5>
+                                <h5 class="text-dark"><s>$@item.ListPrice</s></h5>   
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">

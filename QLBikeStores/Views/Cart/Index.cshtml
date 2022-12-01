@@ -35,7 +35,7 @@
                                     <button class="btn btn-link px-2"
                                         onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                         <i class="fas fa-plus"></i>
-                                    </button>*@
+                                    </button>*@ 
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Quantity</p>
                                         <p class="lead fw-normal mb-0">@item.Quantity</p>
@@ -44,7 +44,7 @@
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Price</p>
-                                        <p class="lead fw-normal mb-0">@item.ListPrice</p>
+                                        <p class="lead fw-normal mb-0">@*$@(item.ListPrice-(item.ListPrice*item.Discount/100))*@</p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
