@@ -38,7 +38,7 @@
                     alert(id + " - " + ten);
                     $('.fb_iframe_widget').hide();
                     $('#hoten').val(ten);
-                    $('#loginform',submit)
+                    $('#loginform', submit)
                 });
         }
         else {
@@ -50,12 +50,10 @@
 <h1>Login</h1>
 <div>
     <h3>Dang nhap voi facebook</h3>
-<fb:login-button 
-  scope="public_profile,email"
-  onlogin="checkLoginState();">
-</fb:login-button>
-<form id="loginform" method="post">
-    <input type="hidden" value="" id="hoten" name="hoten"/>
-    
-</form>
+    <fb:login-button scope="public_profile,email"
+                     onlogin="checkLoginState();">
+    </fb:login-button>
+    <form id="loginform" method="post">
+        <input type="hidden" value="" id="hoten" name="hoten" />
+    </form>
 </div>

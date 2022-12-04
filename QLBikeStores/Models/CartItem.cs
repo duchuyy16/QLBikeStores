@@ -11,6 +11,6 @@
         //public double Total => (double)(ListPrice - (ListPrice * Quantity *product.Discount/100));
 
         public double Total => (double)(ListPrice * Quantity);
-        public Product product { get; set; }
+        
     }
 }

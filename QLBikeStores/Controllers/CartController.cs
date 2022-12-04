@@ -39,8 +39,9 @@ namespace QLBikeStores.Controllers
                     ProductId = id,
                     ProductName = products.ProductName,
                     Image=products.ImageBike,
-                    ListPrice = products.ListPrice,
+                    ListPrice = (products.ListPrice-(products.ListPrice*products.Discount/100)),
                     Quantity =quantity,   
+
                 };
                 myCart.Add(item);
             }    
