@@ -76,15 +76,15 @@ namespace QLBikeStores.Controllers
             return RedirectToAction("Index");
         }
 
-        private double OrderTotal()
-        {
-            double total = 0;
-            var myCart = Carts;
-            if(myCart != null)
-            {
-                total = myCart.Sum(s => s.Total);
-            }
-            return total;
-        }
+        //private double OrderTotal()
+        //{
+        //    double total = 0;
+        //    var myCart = Carts;
+        //    if (myCart != null)
+        //    {
+        //        total = myCart.Sum(s => s.Total);
+        //    }
+        //    return total;
+        //}
     }
 }

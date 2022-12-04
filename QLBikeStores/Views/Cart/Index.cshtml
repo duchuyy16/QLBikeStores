@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
 <section class="" style="background-color: white;">
@@ -9,7 +10,7 @@
         <div class="row d-flex justify-content-center align-items-center h-100">           
                 <div class="col">
                 <p><span class="h2">Shopping Cart </span></p>  
-                @foreach(var item in Model)
+                @foreach(CartItem item in Model)
                 {
                     <div class="card mb-4">
                         <div class="card-body p-4">
@@ -51,6 +52,7 @@
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Total</p>
                                         <p class="lead fw-normal mb-0">@item.Total</p>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
@@ -69,7 +71,7 @@
                     <div class="card-body p-4">
                         <div class="float-end">
                             <p class="mb-0 me-5 d-flex align-items-center">
-                                <span class="small text-muted me-2">Order total:</span> <span class="lead fw-normal">hh</span>
+                                <span class="small text-muted me-2"><b>Order total:</b></span><h3 class="text-danger">@Model.Sum(s=>s.Total)</h3><span class="lead fw-normal"></span>
                             </p>
                         </div>
                     </div>

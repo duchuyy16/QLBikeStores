@@ -18,5 +18,17 @@ namespace QLBikeStores.Controllers
 
             return View();
         }
+
+        public IActionResult GoogleLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GoogleLogin(string email, string fullname)
+        {
+            //xu ly dang nhap vao database
+            return View();
+        }
     }
 }
