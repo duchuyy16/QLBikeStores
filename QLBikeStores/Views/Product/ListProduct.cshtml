@@ -8,43 +8,48 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <style>
-            .pagination-container {
-                display: flex;
-                flex: 1;
-            }
-
-            .pagination {
-                display: flex;
-                flex: 1;
-                list-style: none;
-                padding: 0;
-                gap: .625rem;
-            }
-
-            .page-item, .page-link {
-                height: 2rem;
-                width: 2rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .PagedList-pageCountAndLocation {
-                justify-content: space-evenly;
-                order: -1;
-                flex: 1;
-                /*expands the div to max available width*/
-            }
-            .product-name{
-                height:48px;
-                overflow: hidden;
-            }
-            .card-img-top{
-            height:354px;
-            overflow:hidden;
+        .pagination-container {
+            display: flex;
+            flex: 1;
         }
+
+        .pagination {
+            display: flex;
+            flex: 1;
+            list-style: none;
+            padding: 0;
+            gap: .625rem;
+        }
+
+        .page-item, .page-link {
+            height: 2rem;
+            width: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .PagedList-pageCountAndLocation {
+            justify-content: space-evenly;
+            order: -1;
+            flex: 1;
+            /*expands the div to max available width*/
+        }
+
+        .product-name {
+            height: 48px;
+            overflow: hidden;
+        }
+
+        .card-img-top {
+            height: 354px;
+            overflow: hidden;
+        }
+        
     </style>
 </head>
+
+
 <section style="background-color: white;">
     <div class="container py-1">
         <div class="row">
@@ -53,7 +58,13 @@
                 <div class="icon-bike">
                     <img alt="icon-bike" src="~/assets/img/icon-bike.jpg" style="width:145px;height:96px;" />
                 </div>
+            </div>    
+            <form asp-action="Search" method="post" >
+                <div class="input-group rounded">
+                <input type="text" name="name" class="form-control rounded" placeholder="Enter the name of the product you are looking for..." aria-label="Search" aria-describedby="search-addon" />
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
             </div>
+            </form>           
             @foreach (Product item in Model)
             {
                 <div class="col-md-12 col-lg-4 mb-4 mb-lg-0 my-3">

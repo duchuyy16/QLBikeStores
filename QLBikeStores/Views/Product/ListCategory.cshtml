@@ -21,6 +21,12 @@
                     <img alt="icon-bike" src="~/assets/img/icon-bike.jpg" style="width:145px;height:96px;"/>
                 </div>
             </div>
+            <form asp-action="Search" method="post" >
+                <div class="input-group rounded">
+                <input type="text" name="name" class="form-control rounded" placeholder="Enter the name of the product you are looking for..." aria-label="Search" aria-describedby="search-addon" />
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+            </div>
+            </form>    
             @foreach (Product item in Model)
             {
                 <div class="col-md-12 col-lg-4 mb-4 mb-lg-0 my-3">

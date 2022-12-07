@@ -22,8 +22,16 @@ namespace QLBikeStores.Controllers
 
         public ActionResult Search(string name)
         {
-            var products = _context.Products.Where(m=>m.ProductName.Contains(name)).ToList();
-            return View(products);
+           
+            if(!string.IsNullOrEmpty(name))
+            {
+                var products = _context.Products.Where(m => m.ProductName.Contains(name)).Include(p => p.Category).Include(m => m.Stocks).ToList();
+                return View(products);
+            }    
+            else
+            {
+                return NotFound();
+            }    
         }
 
         public ActionResult ListProduct(int? pageNo=1)
