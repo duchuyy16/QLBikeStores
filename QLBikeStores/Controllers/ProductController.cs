@@ -74,6 +74,13 @@ namespace QLBikeStores.Controllers
             }
         }
 
-        
+        //public IActionResult DocDanhSachSanPham()
+        //{
+        //    var product = new ProductModel
+        //    {
+        //        ProductId = product.ProductId,
+        //    };
+        //    return View();
+        //}
     }
 }
