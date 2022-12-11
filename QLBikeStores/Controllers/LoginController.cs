@@ -21,6 +21,7 @@ namespace QLBikeStores.Controllers
 
         public IActionResult GoogleLogin()
         {
+            ViewData["ThongBao"] = "";
             return View();
         }
 
@@ -28,6 +29,8 @@ namespace QLBikeStores.Controllers
         public IActionResult GoogleLogin(string email, string fullname)
         {
             //xu ly dang nhap vao database
+            string thongbao = "Bạn đã đăng nhập với thông tin: " + email + "(" + fullname + ")";
+            ViewData["ThongBao"] = thongbao;
             return View();
         }
     }

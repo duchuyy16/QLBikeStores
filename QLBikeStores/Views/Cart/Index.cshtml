@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-@*<style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<style>
     .buttons_added {
     opacity:1;
     display:inline-block;
@@ -51,7 +52,7 @@
     -webkit-appearance:none;
     margin:0;
 }
-</style>*@
+</style>
 
 <section class="" style="background-color: white;">
     <div class="container ">
@@ -85,26 +86,29 @@
                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                 <i class="fas fa-plus"></i>
                                 </button>*@
-                                    <div>
+
+                                    @*<div>
                                 <p class="small text-muted mb-4 pb-2">Quantity</p>
                                 <p class="lead fw-normal mb-0">@item.Quantity</p>
-                                </div>
-                                    @*<div class="buttons_added">                                       
+                                </div>*@
+
+                                    <div class="buttons_added">                                       
                                         <input class="minus is-form" type="button" value="-">
-                                        <input aria-label="quantity" class="input-qty" max="10" min="1" name="" type="number" value="1">
+                                        <input aria-label="quantity" class="input-qty" max="10" min="1" name="quantity" type="number" value="@item.Quantity">
                                         <input class="plus is-form" type="button" value="+">                         
-                                    </div>*@
+                                    </div>
+
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Price</p>
-                                        <p class="lead fw-normal mb-0">@item.ListPrice</p>
+                                        <p class="lead fw-normal mb-0 price">@item.ListPrice</p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Total</p>
-                                        <p class="lead fw-normal mb-0">@item.Total</p>
+                                        <p class="lead fw-normal mb-0 total">@item.Total</p>
 
                                     </div>
                                 </div>
@@ -138,7 +142,7 @@
         </div>
     </div>
 </section>
-@*<script>
+<script>
 $('input.input-qty').each(function() {
   var $this = $(this),
     qty = $this.parent().find('.is-form'),
@@ -154,7 +158,9 @@ $('input.input-qty').each(function() {
       var x = Number($this.val()) + 1
       if (x <= max) d += 1
     }
-    $this.attr('value', d).val(d)
+      $this.attr('value', d).val(d);
+      var tong = $('.price').text() * d;     
+      $('.total').text(tong);
   })
 })
-</script>*@
+</script>

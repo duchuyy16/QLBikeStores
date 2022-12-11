@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,27 @@ namespace QLBikeStores.Controllers
 
         //    _logger = logger;
         //}
-
+        public IActionResult DanhSachSanPham()
+        {
+            //var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
+            //var dsTheLoai = JsonConvert.DeserializeObject<List<ProductModel>>(result.ToString());
+            var dsTheLoai = Utilities.SendDataRequest<List<ProductModel>>("api/Product/DocDanhSachSanPham");
+            return View(dsTheLoai); 
+        }
+        public IActionResult DanhSachSanPhamAjax()
+        {
+            return View();
+        }
+        public List<ProductModel> DocDanhSachSanPhamAjax()
+        {
+            var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
+            var dsTheLoai = JsonConvert.DeserializeObject<List<ProductModel>>(result.ToString());
+            return dsTheLoai;
+        }
+        public IActionResult DSSanPhamBanChay()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();

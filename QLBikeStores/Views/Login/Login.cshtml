@@ -31,18 +31,21 @@
 
     function statusChangeCallback(response) {
         if (response.status = 'connected') {
+            //ket noi thanh cong
             FB.api('/me?fields=id,name,email,address',
                 function(res) {
                     var id = res['id'];
                     var ten = res['ten'];
-                    alert(id + " - " + ten);
+                    var email = res['email'];
+                    //alert(id + " - " + ten+"-"+email);
                     $('.fb_iframe_widget').hide();
                     $('#hoten').val(ten);
+                    $('#email').val(email);
                     $('#loginform', submit)
                 });
         }
         else {
-
+            //ket noi khong thanh cong
         }
     }
 </script>
@@ -55,5 +58,6 @@
     </fb:login-button>
     <form id="loginform" method="post">
         <input type="hidden" value="" id="hoten" name="hoten" />
+        <input type="hidden" value="" id="email" name="email" />
     </form>
 </div>

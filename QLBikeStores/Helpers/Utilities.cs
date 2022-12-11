@@ -6,7 +6,7 @@ namespace QLBikeStores.Helpers
 {
     public class Utilities
     {
-        public static object SendDataRequest(string APIUrl,object input=null)
+        public static T SendDataRequest<T>(string APIUrl,object input=null)
         {
             HttpClient client = new();
             client.BaseAddress=new System.Uri("https://localhost:44306/");
@@ -14,10 +14,26 @@ namespace QLBikeStores.Helpers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             HttpResponseMessage response = client.PostAsJsonAsync(APIUrl, input).Result;
-            object kq = null;
+            T kq = default(T);
             if(response.IsSuccessStatusCode)
             {
-                kq= response.Content.ReadFromJsonAsync<object>().Result;
+                kq= response.Content.ReadFromJsonAsync<T>().Result;
+            }
+            return kq;
+        }
+
+        public static object SendDataRequest(string APIUrl, object input = null)
+        {
+            HttpClient client = new();
+            client.BaseAddress = new System.Uri("https://localhost:44306/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.PostAsJsonAsync(APIUrl, input).Result;
+            object kq = null;
+            if (response.IsSuccessStatusCode)
+            {
+                kq = response.Content.ReadFromJsonAsync<object>().Result;
             }
             return kq;
         }
