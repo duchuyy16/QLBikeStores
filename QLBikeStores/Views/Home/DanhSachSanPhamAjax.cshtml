@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "DanhSachSanPhamAjax";
+}
+
+<h1>DanhSachSanPhamAjax</h1>
+<script>
+    $.ajax({
+        method: "post",
+        url: "https://localhost:44306/api/Product/DocDanhSachSanPham",
+        success: function(response) {
+            console.log(response);
+        }
+    });
+</script>
