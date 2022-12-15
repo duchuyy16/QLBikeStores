@@ -48,8 +48,8 @@
                                 <h5 class="mb-0">@item.ProductName</h5>
                             </div>
                             <div class="d-flex justify-content-between mb-3">
-                                <h5 class="text-danger mb-0">$@(item.ListPrice-(item.ListPrice*item.Discount/100))</h5>
-                                <h5 class="text-dark"><s>$@item.ListPrice</s></h5>                
+                                <h5 class="text-danger mb-0">$@((item.ListPrice-(item.ListPrice*item.Discount/100)).ToString("#,##0.00"))</h5>
+                                <h5 class="text-dark"><s>$@item.ListPrice.ToString("#,##0.00")</s></h5>                
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">

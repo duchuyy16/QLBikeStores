@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace QLBikeStores.Controllers
 {
@@ -51,9 +52,18 @@ namespace QLBikeStores.Controllers
         {
             return View();
         }
-        public IActionResult Index()
+        public IActionResult Index(int? pageNo = 1)
         {
-            return View();
+            try
+            {
+                var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).OrderBy(l => l.ListPrice).ToList();
+                var pagedList = products.ToPagedList((int)pageNo, 9);
+                return View(pagedList);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         public IActionResult Privacy()
