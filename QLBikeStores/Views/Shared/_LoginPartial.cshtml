@@ -1,0 +1,44 @@
+﻿@*@using Core.Model
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item text-nowrap pr-3">
+            <a class="nav-link text-white" target="_blank" href="/"><i class="fa fa-arrow-left"></i> Live</a>
+        </li>
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item nav-link text-nowrap text-white">
+                <i class="fa fa-user"></i> Chào quản trị <a asp-controller="Account" asp-action="Index" title="Account"> @UserManager.GetUserName(User)</a>
+            </li>
+        }
+        else if (User.IsInRole("Editor"))
+        {
+            <li class="nav-item nav-link text-nowrap text-white">
+                <i class="fa fa-user"></i> Chào biên tập <a asp-controller="Account" asp-action="Index" title="Account"> @UserManager.GetUserName(User)</a>
+            </li>
+        }
+        <li class="nav-item text-nowrap">
+            <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="">
+                <button type="submit" class="btn btn-link text-white"><i class="fa fa-sign-out"></i> Đăng xuất</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item text-nowrap left">
+            <a class="nav-link" asp-controller="Account" asp-action="Login" title="Sign in">
+                <i class="fa fa-user-circle" aria-hidden="true"></i> Sign in &nbsp;
+            </a>
+        </li>
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" asp-controller="Account" asp-action="Register" title="Register">
+                <i class="fa fa-ban"></i> Register
+            </a>
+        </li>
+    }
+}
+*@
