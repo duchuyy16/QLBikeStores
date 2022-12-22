@@ -21,8 +21,12 @@ namespace QLBikeStores.Models
         public byte Active { get; set; }
         public int StoreId { get; set; }
         public int? ManagerId { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int? RoleId { get; set; }
 
         public virtual Staff Manager { get; set; }
+        public virtual Role Role { get; set; }
         public virtual Store Store { get; set; }
         public virtual ICollection<Staff> InverseManager { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

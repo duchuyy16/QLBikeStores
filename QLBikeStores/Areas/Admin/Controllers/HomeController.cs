@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QLBikeStores.Areas.Admin
+namespace QLBikeStores.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {

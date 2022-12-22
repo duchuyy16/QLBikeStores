@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,10 +30,18 @@ namespace QLBikeStores
             services.AddRazorPages();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
                 options.Cookie.HttpOnly=true;
                 options.Cookie.IsEssential = true;
             });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.ExpireTimeSpan = TimeSpan.FromMinutes(60 * 1);
+                    option.LoginPath = "/Account/Login";
+                    option.AccessDeniedPath = "/Account/Login";
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +59,7 @@ namespace QLBikeStores
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseSession();
             app.UseRouting();
             app.UseAuthentication();

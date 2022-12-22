@@ -28,8 +28,15 @@
         <li><a class="nav-link scrollto" asp-controller="Contact" asp-action="Index"><i class='bi bi-phone'></i>&nbspCONTACT</a></li>
         <li><a class="nav-link scrollto" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart-fill"></i></a></li>
         <li><a class="nav-link scrollto" asp-controller="Product" asp-action="Search" ><i class="bi bi-search"></i></a></li>
+        <li><a class="nav-link scrollto" asp-controller="Account" asp-action="Login" ><i class="bi bi-person-square"></i></a></li>
         @*<partial name="_LoginPartial">*@
     </ul>
-    
+    @if(User.Identity.IsAuthenticated)
+    {
+        <div class="navbar float-right">
+            <span> Welcome to</span> <span class="text-success font-weight-bold p-2">@User.Identity.Name.ToUpper()</span><a  class="btn btn-sm btn-danger"
+            asp-action="LogOut" asp-controller="Account">SignOut</a>
+        </div>
+    }
     <i class="bi bi-list mobile-nav-toggle"></i>
 </nav><!-- .navbar -->

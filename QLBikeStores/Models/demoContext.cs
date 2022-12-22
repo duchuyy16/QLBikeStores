@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -18,19 +17,13 @@ namespace QLBikeStores.Models
         {
         }
 
-        
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-
-        internal static Task SignOutAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
@@ -46,8 +39,6 @@ namespace QLBikeStores.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            
 
             modelBuilder.Entity<Brand>(entity =>
             {
@@ -245,6 +236,20 @@ namespace QLBikeStores.Models
                     .HasConstraintName("FK__products__catego__286302EC");
             });
 
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("roles", "sales");
+
+                entity.Property(e => e.RoleId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("role_id");
+
+                entity.Property(e => e.RoleName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("role_name");
+            });
+
             modelBuilder.Entity<Staff>(entity =>
             {
                 entity.ToTable("staffs", "sales");
@@ -276,17 +281,34 @@ namespace QLBikeStores.Models
 
                 entity.Property(e => e.ManagerId).HasColumnName("manager_id");
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
                 entity.Property(e => e.Phone)
                     .HasMaxLength(25)
                     .IsUnicode(false)
                     .HasColumnName("phone");
 
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
+
                 entity.Property(e => e.StoreId).HasColumnName("store_id");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("username");
 
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.InverseManager)
                     .HasForeignKey(d => d.ManagerId)
                     .HasConstraintName("FK__staffs__manager___31EC6D26");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.staff)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("fk_staffs_roles");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.staff)

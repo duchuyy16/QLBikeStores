@@ -69,6 +69,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email");
                 ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName");
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
                 return View();
             }
             catch (Exception)
@@ -83,7 +84,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId")] Staff staff)
+        public async Task<IActionResult> Create([Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId,Username,Password,RoleId")] Staff staff)
         {
             try
             {
@@ -95,6 +96,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
                 ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -121,6 +123,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
                 ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -135,7 +138,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId")] Staff staff)
+        public async Task<IActionResult> Edit(int id, [Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId,Username,Password,RoleId")] Staff staff)
         {
             try
             {
@@ -166,6 +169,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
                 ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
