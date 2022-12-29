@@ -2,10 +2,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QLBikeStores.Helpers;
+using QLBikeStores.Interfaces;
 using QLBikeStores.Models;
+using QLBikeStores.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +35,7 @@ namespace QLBikeStores
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(5);
-                options.Cookie.HttpOnly=true;
+                options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -41,6 +45,10 @@ namespace QLBikeStores
                     option.LoginPath = "/Account/Login";
                     option.AccessDeniedPath = "/Account/Login";
                 });
+
+
+ 
+
 
         }
 

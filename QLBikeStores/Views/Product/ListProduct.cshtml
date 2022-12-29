@@ -30,7 +30,7 @@
         }
 
         .PagedList-pageCountAndLocation {
-            justify-content: space-evenly;
+            justify-content: space-between;
             order: -1;
             flex: 1;
             /*expands the div to max available width*/
@@ -110,8 +110,8 @@
                 </div>
             }
         </div>
-    </div>
-    @Html.PagedListPager((IPagedList)Model,
+        <div class="row mt-5">
+             @Html.PagedListPager((IPagedList)Model,
     pageNo => Url.Action("ListProduct", new { pageNo }),
     new PagedListRenderOptions{
     PageClasses = new string[] { "page-link" },
@@ -123,6 +123,9 @@
     DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
     }
     )
+        </div>
+    </div>
+   
 </section>
 
 

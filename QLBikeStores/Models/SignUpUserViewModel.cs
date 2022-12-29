@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using System;
+using Microsoft.AspNetCore.Mvc;
+
 namespace QLBikeStores.Models
 {
     public class SignUpUserViewModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; }    
 
         [Required(ErrorMessage = "Please enter first name")]
         public string Firstname { get; set; }
@@ -16,6 +19,7 @@ namespace QLBikeStores.Models
         public int StoreId { get; set; } // <=3
 
         [Required (ErrorMessage ="Please enter username")]
+        [Remote(action:"UsernameIsExist",controller:"Account")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter email")]
@@ -31,11 +35,11 @@ namespace QLBikeStores.Models
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please enter confirm password")]
-        [Compare("Password",ErrorMessage =("Confirm password can't matched"))]
+        [System.ComponentModel.DataAnnotations.Compare("Password",ErrorMessage =("Confirm password can't matched"))]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Active")]
-        public bool IsActive { get; set; }
+        //[Display(Name = "Active")]
+        //public bool IsActive { get; set; }
     }
 }

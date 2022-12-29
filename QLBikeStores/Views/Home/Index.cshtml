@@ -30,7 +30,7 @@
         }
 
         .PagedList-pageCountAndLocation {
-            justify-content: space-evenly;
+            justify-content: space-between;
             order: -1;
             flex: 1;
             /*expands the div to max available width*/
@@ -45,7 +45,6 @@
             height: 354px;
             overflow: hidden;
         }
-        
     </style>
 </head>
 
@@ -58,13 +57,13 @@
                 <div class="icon-bike">
                     <img alt="icon-bike" src="~/assets/img/icon-bike.jpg" style="width:145px;height:96px;" />
                 </div>
-            </div>    
-            <form asp-action="Search" method="post" >
-                <div class="input-group rounded">
-                <input type="text" name="name" class="form-control rounded" placeholder="Enter the name of the product you are looking for..." aria-label="Search" aria-describedby="search-addon" />
-                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
             </div>
-            </form>           
+            <form asp-action="Search" method="post">
+                <div class="input-group rounded">
+                    <input type="text" name="name" class="form-control rounded" placeholder="Enter the name of the product you are looking for..." aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
             @foreach (Product item in Model)
             {
                 <div class="col-md-12 col-lg-4 mb-4 mb-lg-0 my-3">
@@ -110,19 +109,21 @@
                 </div>
             }
         </div>
+        <div class="row mt-5">
+            @Html.PagedListPager((IPagedList)Model,
+            pageNo => Url.Action("Index", new { pageNo }),
+            new PagedListRenderOptions{
+            PageClasses = new string[] { "page-link" },
+            UlElementClasses = new string[] { "pagination" },
+            LiElementClasses = new string[] { "page-item" },
+            DisplayItemSliceAndTotal = true,
+            DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+            DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
+            }
+            )
+        </div>
     </div>
-    @Html.PagedListPager((IPagedList)Model,
-    pageNo => Url.Action("ListProduct", new { pageNo }),
-    new PagedListRenderOptions{
-    PageClasses = new string[] { "page-link" },
-    UlElementClasses = new string[] { "pagination" },
-    LiElementClasses = new string[] { "page-item" },
-    DisplayItemSliceAndTotal = true,
-    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
-    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
-    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
-    }
-    )
 </section>
 
 

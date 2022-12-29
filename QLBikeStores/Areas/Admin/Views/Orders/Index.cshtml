@@ -33,7 +33,7 @@
         }
 
         .PagedList-pageCountAndLocation {
-            justify-content: start;
+            justify-content: space-between;
             order: -1;
             flex: 1;
             /*expands the div to max available width*/
@@ -116,17 +116,19 @@
             }
         </tbody>
     </table>
-    @Html.PagedListPager((IPagedList)Model,
-    pageNo => Url.Action("Index", new { pageNo }),
-    new PagedListRenderOptions{
-    PageClasses = new string[] { "page-link" },
-    UlElementClasses = new string[] { "pagination" },
-    LiElementClasses = new string[] { "page-item" },
-    DisplayItemSliceAndTotal = true,
-    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
-    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
-    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
-    }
-    )
 </body>
+ <div class="row mt-5">
+            @Html.PagedListPager((IPagedList)Model,
+            pageNo => Url.Action("Index", new { pageNo }),
+            new PagedListRenderOptions{
+            PageClasses = new string[] { "page-link" },
+            UlElementClasses = new string[] { "pagination" },
+            LiElementClasses = new string[] { "page-item" },
+            DisplayItemSliceAndTotal = true,
+            DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+            DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
+            }
+            )
+        </div>
 </html>

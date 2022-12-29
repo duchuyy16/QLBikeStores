@@ -59,6 +59,9 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
                 <p><span class="h2">Shopping Cart </span></p>
+                @{
+                    int count = 0;
+                }
                 @foreach (CartItem item in Model)
                 {
                     <div class="card mb-4">
@@ -75,28 +78,29 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
-                                    @*<div>
-                                <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                <p class="lead fw-normal mb-0">@item.Quantity</p>
-                                </div>*@
 
-                                    <div class="buttons_added">                                       
+                                    <div>
+                                <p class="small text-muted mb-4 pb-2">Quantity</p>
+                                <p class="lead fw-normal mb-0">@item.Quantity </p>
+                                </div>
+
+                                    @*<div class="buttons_added">                                       
                                         <input class="minus is-form" type="button" value="-">
                                         <input aria-label="quantity" class="input-qty" max="10" min="1" name="quantity" type="number" value="@item.Quantity">
                                         <input class="plus is-form" type="button" value="+">                         
-                                    </div>
+                                    </div>*@
 
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Price</p>
-                                        <p class="lead fw-normal mb-0 price">@item.ListPrice.ToString("#,##0.00") </p>
+                                        <p class="lead fw-normal mb-0" id="price">@item.ListPrice.ToString("#,##0.00") </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Total</p>
-                                        <p class="lead fw-normal mb-0 total">@item.Total.ToString("#,##0.00")</p>
+                                        <p class="lead fw-normal mb-0" id="total_@count" >@item.Total.ToString("#,##0.00")</p>
 
                                     </div>
                                 </div>
@@ -110,6 +114,7 @@
 
                         </div>
                     </div>
+                    count++;
                 }
 
                 <div class="card mb-5">
@@ -130,7 +135,7 @@
         </div>
     </div>
 </section>
-<script>
+@*<script>
 $('input.input-qty').each(function() {
   var $this = $(this),
     qty = $this.parent().find('.is-form'),
@@ -147,11 +152,11 @@ $('input.input-qty').each(function() {
       if (x <= max) d += 1
     }
       $this.attr('value', d).val(d);
-      var tong = $('.price').text() * d;           
-      $('.total').text(tong);
+      var tong = $('#price').text() * d;           
+      $('#total').text(tong.toFixed(2));
   })
 })
-</script>
+</script>*@
 @*.ToString("#,##0.00")*@
 @*.replace('$',"")*@
 

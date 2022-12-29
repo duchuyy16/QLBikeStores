@@ -95,6 +95,11 @@ namespace QLBikeStores.Models
                     .IsUnicode(false)
                     .HasColumnName("last_name");
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
                 entity.Property(e => e.Phone)
                     .HasMaxLength(25)
                     .IsUnicode(false)
@@ -109,6 +114,11 @@ namespace QLBikeStores.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("street");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("username");
 
                 entity.Property(e => e.ZipCode)
                     .HasMaxLength(5)
@@ -313,6 +323,7 @@ namespace QLBikeStores.Models
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.staff)
                     .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__staffs__store_id__30F848ED");
             });
 

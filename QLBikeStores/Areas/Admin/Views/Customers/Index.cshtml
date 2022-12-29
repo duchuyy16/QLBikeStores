@@ -33,7 +33,7 @@
         }
 
         .PagedList-pageCountAndLocation {
-            justify-content: start;
+            justify-content: space-between;
             order: -1;
             flex: 1;
             /*expands the div to max available width*/
@@ -73,6 +73,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ZipCode)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -105,6 +108,9 @@
                         @Html.DisplayFor(modelItem => item.ZipCode)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
                         <button type="button" class="btn btn-success">
                             <a style="color:white;" asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a>
                         </button>
@@ -120,6 +126,9 @@
             }
         </tbody>
     </table>
+
+</body>
+<div class="row mt-5">
     @Html.PagedListPager((IPagedList)Model,
     pageNo => Url.Action("Index", new { pageNo }),
     new PagedListRenderOptions{
@@ -132,5 +141,5 @@
     DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
     }
     )
-</body>
+</div>
 </html>
