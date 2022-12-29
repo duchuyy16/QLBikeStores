@@ -10,9 +10,10 @@
         overflow: hidden;
     }
 
-    .card-img-top {
-        height: 354px;
-        overflow: hidden;
+    .card-img-top{
+        height:150px;
+        /*overflow:hidden;*/
+        text-align:center;
     }
 </style>
 
@@ -42,8 +43,9 @@
                                 <p class="text-white mb-0 small">@item.Discount%</p>
                             </div>
                         </div>
-                        <img src="~/assets/img/bike/@item.ImageBike"
-                         class="card-img-top" alt="Bike" />
+                         <div class="card-img-top">
+                            <img src="~/assets/img/bike/@item.ImageBike" alt="Bike" style="max-height:100%;"/>
+                        </div>  
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="small"><a href="#!" class="text-muted">@item.Category.CategoryName</a></p>
