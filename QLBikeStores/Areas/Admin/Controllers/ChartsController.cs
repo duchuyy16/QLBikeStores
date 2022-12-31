@@ -4,6 +4,7 @@ using QLBikeStores.Areas.Admin.ModelsAdmin;
 using QLBikeStores.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
@@ -37,7 +38,19 @@ namespace QLBikeStores.Areas.Admin.Controllers
             };
             return model;
         }
-
+        [HttpGet]
+        public async Task<IActionResult> findAll()
+        {
+            try
+            {
+                var products = _context.Products.ToList();
+                return Ok(products);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
         //[HttpGet]
         //public ActionResult ListProductCategoryChart(int categoryId)
         //{
@@ -50,7 +63,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             var categories = _context.Categories.ToList();
             return categories;
-
         }
     }
 }

@@ -214,6 +214,10 @@ namespace QLBikeStores.Models
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
+                entity.Property(e => e.Describe)
+                    .IsUnicode(false)
+                    .HasColumnName("describe");
+
                 entity.Property(e => e.Discount)
                     .HasColumnType("decimal(4, 0)")
                     .HasColumnName("discount");

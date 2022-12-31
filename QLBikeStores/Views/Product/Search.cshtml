@@ -43,16 +43,18 @@
                                 <p class="text-white mb-0 small">@item.Discount%</p>
                             </div>
                         </div>
-                         <div class="card-img-top">
-                            <img src="~/assets/img/bike/@item.ImageBike" alt="Bike" style="max-height:100%;"/>
-                        </div>  
+                        <div class="card-img-top">
+                             <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId">
+                                 <img src="~/assets/img/bike/@item.ImageBike" alt="Bike" style="max-height:100%;"/>
+                             </a> 
+                        </div> 
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="small"><a href="#!" class="text-muted">@item.Category.CategoryName</a></p>
                                 @*<p class="small text-danger"><s>ddd</s></p>*@
                             </div>
                             <div class="d-flex justify-content-between mb-3 product-name">
-                                <h5 class="mb-0">@item.ProductName</h5>
+                                <h5 class="mb-0"><a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId">@item.ProductName</a></h5>
                             </div>
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="text-danger mb-0">$@(item.ListPrice-(item.ListPrice*item.Discount/100))</h5>

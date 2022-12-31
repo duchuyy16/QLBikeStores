@@ -74,13 +74,14 @@ namespace QLBikeStores.Controllers
             }
         }
 
-        //public IActionResult DocDanhSachSanPham()
-        //{
-        //    var product = new ProductModel
-        //    {
-        //        ProductId = product.ProductId,
-        //    };
-        //    return View();
-        //}
+        public IActionResult ProductDetail(int id)
+        {
+            var item = _context.Products.Include(p => p.Category).Include(m => m.Brand).Include(m => m.Stocks).SingleOrDefault(p => p.ProductId == id);
+            if(item != null)
+            {
+                return View(item);
+            }    
+            return RedirectToAction("ListProduct");
+        }
     }
 }
