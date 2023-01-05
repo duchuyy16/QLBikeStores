@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '2350445351783688',
+            cookie: true,
+            xfbml: true,
+            version: 'v15.0'
+        });
+
+        FB.AppEvents.logPageView();
+
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status = 'connected') {
+            //ket noi thanh cong
+            FB.api('/me?fields=id,name,email',
+                function(res) {
+                    var id = res['id'];
+                    var ten = res['name'];
+                    var email = res['email'];
+                    //alert(id + " - " + ten+"-"+email);
+                    $('.fb_iframe_widget').hide();
+                    $('#hoten').val(ten);
+                    $('#email').val(email);
+                    $('#loginform', submit)
+                });
+        }
+        else {
+            //ket noi khong thanh cong
+        }
+    }
+</script>
+
+<h1>Login</h1>
+<div>
+    <h3>Dang nhap voi facebook</h3>
+    <fb:login-button scope="public_profile,email"
+                     onlogin="checkLoginState();">
+    </fb:login-button>
+    <form id="loginform" method="post">
+        <input type="hidden" value="" id="hoten" name="hoten" />
+        <input type="hidden" value="" id="email" name="email" />
+    </form>
+</div>

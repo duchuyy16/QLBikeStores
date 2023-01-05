@@ -21,9 +21,9 @@
         .row-underline{content: "";display: block;border-bottom: 2px solid #3798db;margin: 0px 0px;margin-bottom: 20px;margin-top: 15px}
         .deal-text{margin-left: -10px;font-size: 25px;margin-bottom: 10px;color: #000;font-weight: 700}.padding-0{padding-left: 0;padding-right: 0}
     </style>
-    <div class="title">
-            <h1 style="text-align:center;">Product Details</h1>
-        </div>
+    <div class="title-product" style="text-align: center; color:#37517e; margin-top:50px;">
+        <h1><b><i>Product Details</i></b></h1>
+    </div>
     <div class="site-section" style="margin:100px;">
         <div class="container">
             <div class="row">
@@ -31,25 +31,29 @@
                     <img src="~/assets/img/bike/@Model.ImageBike" alt="@Model.ProductName" class="img-fluid" style="max-height:100%;" />
                 </div>
                 <div class="col-md-6">
-                    <h2 class="text-black">@Model.ProductName</h2>
-                    <p>Brand: <span class="fw-bold">@Model.Brand.BrandName</span></p>
-                    <p>Category: <span class="fw-bold">@Model.Category.CategoryName</span></p>
-                    <div class="d-flex justify-content-space-around">
-                        <p><strong class="text-danger h4">Price: $@((Model.ListPrice-(Model.ListPrice*Model.Discount/100)).ToString("#,##0.00"))</strong></p>&nbsp;
-                        <p style="margin-top:auto;"><strong class="text-dark"><s>$@Model.ListPrice.ToString("#,##0.00")</s></strong></p>
-                    </div>
-                    <p>Available: <span class="fw-bold">@Model.Stocks.Sum(p=>p.Quantity)</span></p>
-                    <hr />
-                    <div class="d-flex col-md-6">
-                        <button type="submit" class="btn btn-danger flex-fill ms-1">
-                            <a style="color:white;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.ProductId" asp-route-quantity="1"> Add To Cart <i class="fas fa-cart-plus"></i></a>
-                        </button>
-                    </div>
+                <div class="d-flex justify-content-space-around">
+                    <p><span class="fw-bold h1">@Model.ProductName</span></p>
+                </div>
+                <p>Brand: <span class="fw-bold">@Model.Brand.BrandName</span></p>
+                <p>Category: <span class="fw-bold">@Model.Category.CategoryName</span></p>
+                <div class="d-flex justify-content-space-around">
+                    <p><strong class="text-danger h4">Price: $@((Model.ListPrice-(Model.ListPrice*Model.Discount/100)).ToString("#,##0.00"))</strong></p>&nbsp;
+                    <p style="margin-top:auto;"><strong class="text-dark"><s>$@Model.ListPrice.ToString("#,##0.00")</s></strong></p>
+                </div>
+                <p>Available: <span class="fw-bold">@Model.Stocks.Sum(p=>p.Quantity)</span></p>
+                <hr />
+                <div class="d-flex col-md-6">
+                    <button type="submit" class="btn btn-danger flex-fill ms-1">
+                        <a style="color:white;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.ProductId" asp-route-quantity="1"> Add To Cart <i class="fas fa-cart-plus"></i></a>
+                    </button>
+                    <button type="submit" class="btn btn-success flex-fill ms-1">
+                        <a style="color:white;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.ProductId" asp-route-quantity="1"> Buy Now </a>
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="row row-underline">
-            <div class="col-md-6"> <span class=" deal-text">Describe</span> </div>
+            </div>   
+            <div class="row row-underline">
+            <div class="col-md-6" style="margin-top:70px;"> <span class=" deal-text">Describe</span> </div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -58,4 +62,10 @@
                 </p>
             </div>
         </div>
+        </div>
     </div>
+            
+
+
+
+

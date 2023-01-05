@@ -190,11 +190,11 @@ namespace QLBikeStores.Controllers
         {
             if (ModelState.IsValid)
             {
-                var data = _context.Customers.Where(s => s.Username == model.Username).SingleOrDefault();
+                var data = _context.Customers.Where(s => s.Username == model.Username).FirstOrDefault();
                 if (data != null)
                 {
                     bool isValid = (data.Username == model.Username && DecryptPassword(data.Password) == model.Password);
-                    if (isValid)
+                    if (isValid==true)
                     {
                         var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, model.Username) },
                             CookieAuthenticationDefaults.AuthenticationScheme);
@@ -217,6 +217,7 @@ namespace QLBikeStores.Controllers
             }
             else
             {
+                TempData["errorMessage"] = "Invalid!";
                 return View(model);
             }
         }
@@ -230,6 +231,31 @@ namespace QLBikeStores.Controllers
                 Response.Cookies.Delete(cookies);
             }
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult GoogleLogin()
+        {
+            ViewData["ThongBao"] = "";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GoogleLogin(string email, string fullname)
+        {
+            //xu ly dang nhap vao database
+            string thongbao = "Bạn đã đăng nhập với thông tin: " + email + "(" + fullname + ")";
+            ViewData["ThongBao"] = thongbao;
+            return View();
+        }
+
+        public IActionResult FacebookLogin()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult FacebookLogin(string hoten)
+        {
+
+            return View();
         }
     }
 }

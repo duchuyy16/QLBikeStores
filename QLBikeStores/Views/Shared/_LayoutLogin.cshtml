@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    
+    <style>
+        .container-fluid{
+            padding-right:0px;
+        padding-left:0px;
+        }
+        
+    </style>
 </head>
-<body>
-    <div class="container">
-        <main role="main" class="pb-3">
+<body style="margin-bottom:0px;">
+    <div class="container-fluid">
+        <main role="main"> @*class="pb-3"*@
             @RenderBody()
         </main>
+        
     </div>
 
   @*  <footer class="border-top footer text-muted">

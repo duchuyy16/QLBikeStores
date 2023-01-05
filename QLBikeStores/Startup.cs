@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,14 +39,12 @@ namespace QLBikeStores
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(option =>
                 {
-                    option.ExpireTimeSpan = TimeSpan.FromMinutes(60 * 1);
+                    option.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     option.LoginPath = "/Account/Login";
                     option.AccessDeniedPath = "/Account/Login";
                 });
 
-
- 
-
+            
 
         }
 

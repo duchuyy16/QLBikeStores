@@ -3,16 +3,11 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <div class="container">
     <div class="row mt-lg-5">
         <div class="col-4 offset-4 border border-primary rounded pl-5 pr-5 pb-5">
-            <form method="post" asp-action="Login">
-                <div class="text-center">
-                    <a class="text-light btn btn-primary font-weight-bold" asp-action="SignUp" asp-controller="Account">Sign Up</a>
-                </div>
+            <form method="post" asp-action="Login" asp-controller="Accounts" asp-area="Admin">
+
                 <h6 class="text-success text-center">@TempData["successMessage"]</h6>
                 <div class="form-group">
                     <label asp-for="Username"></label>
@@ -40,18 +35,21 @@
                 <a class="text-primary" asp-action="ForgotPassword">Forgot Password?</a>
             </div>
             <hr class="my-4">
-            @*<a asp-action="GoogleLogin" asp-controller="Account" class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" role="button"><i class="fab fa-google me-2"></i> Sign in with google</a>*@
 
             <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;"
-                    type="submit"><a  asp-action="GoogleLogin" asp-controller="Account" style="color:white"><i class="fab fa-google me-2"></i> Sign in with google</a>
+                    type="submit">
+                <i class="fab fa-google me-2"></i> Sign in with google
             </button>
             <button class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
                     type="submit">
-                <a  asp-action="FacebookLogin" asp-controller="Account" style="color:white"><i class="fab fa-facebook-f me-2"></i> Sign in with facebook</a>
+                <i class="fab fa-facebook-f me-2"></i> Sign in with facebook
             </button>
         </div>
     </div>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#open").click(function() {

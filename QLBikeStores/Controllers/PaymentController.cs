@@ -14,16 +14,18 @@ namespace QLBikeStores.Controllers
 
         public IActionResult Index()
         {
-            //if (Session["idUser"]==null)
+            //if (Session["idUser"] == null)
             //{
             //    return RedirectToAction("Login", "Account");
-            //}    
+            //}
             //else
             //{
             //    //lay thong tin gio hang
-            //    var lstCart = (List<CartItem>)Session["GioHang"];
+            //    var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
             //    //gan du lieu cho order
             //    Order ord = new Order();
+            //    ord.OrderId=;
+            //    ord.CustomerId=
             //    ord.OrderStatus = 4;
             //    ord.OrderDate = DateTime.Now;
             //    ord.RequiredDate = DateTime.Today.AddDays(3);
@@ -37,7 +39,7 @@ namespace QLBikeStores.Controllers
             //    int orderId = ord.OrderId;
 
             //    List<OrderItem> lstOrderItem = new();
-            //    foreach(var item in lstCart)
+            //    foreach (var item in lstCart)
             //    {
             //        OrderItem orderItem = new OrderItem();
             //        orderItem.OrderId = orderId;
@@ -45,11 +47,11 @@ namespace QLBikeStores.Controllers
             //        orderItem.Quantity = item.Quantity;
             //        orderItem.ListPrice = item.ListPrice;
             //        lstOrderItem.Add(orderItem);
-            //    }    
+            //    }
 
             //    _context.OrderItems.AddRange(lstOrderItem);
             //    _context.SaveChanges();
-            //}    
+            //}
             return View();
         }
     }

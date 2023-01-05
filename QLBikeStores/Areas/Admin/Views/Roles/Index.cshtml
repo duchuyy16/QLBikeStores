@@ -1,0 +1,50 @@
+﻿@model IEnumerable<QLBikeStores.Models.Role>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<p>
+<button type="button" class="btn btn-primary">
+            <a style="color:white;" asp-action="Create">Create New</a>
+        </button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            
+
+            <td>
+                        <button type="button" class="btn btn-success">
+                            <a style="color:white;" asp-action="Edit" asp-route-id="@item.RoleId">Edit</a>
+                        </button>
+
+                        <button type="button" class="btn btn-info">
+                            <a style="color:white;" asp-action="Details" asp-route-id="@item.RoleId">Details</a>
+                        </button>
+
+                        <button type="button" class="btn btn-danger">
+                            <a style="color:white;" asp-action="Delete" asp-route-id="@item.RoleId">Delete</a>
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            <a style="color:white;" asp-action="Grant" asp-controller="Roles">Grant</a>
+                        </button>
+                    </td>
+        </tr>
+}
+    </tbody>
+</table>

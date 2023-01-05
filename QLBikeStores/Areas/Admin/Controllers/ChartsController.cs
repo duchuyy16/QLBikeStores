@@ -38,19 +38,19 @@ namespace QLBikeStores.Areas.Admin.Controllers
             };
             return model;
         }
-        [HttpGet]
-        public async Task<IActionResult> findAll()
-        {
-            try
-            {
-                var products = _context.Products.ToList();
-                return Ok(products);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> findAll()
+        //{
+        //    try
+        //    {
+        //        var products = _context.Products.ToList();
+        //        return Ok(products);
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
         //[HttpGet]
         //public ActionResult ListProductCategoryChart(int categoryId)
         //{
