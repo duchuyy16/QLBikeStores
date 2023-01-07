@@ -252,7 +252,7 @@ namespace QLBikeStores.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult FacebookLogin(string hoten)
+        public IActionResult FacebookLogin(string hoten,string email)
         {
 
             return View();

@@ -32,7 +32,7 @@
     function statusChangeCallback(response) {
         if (response.status = 'connected') {
             //ket noi thanh cong
-            FB.api('/me?fields=id,name,email',
+            FB.api('/me?fields=id,name,email,address',
                 function(res) {
                     var id = res['id'];
                     var ten = res['name'];
@@ -41,10 +41,11 @@
                     $('.fb_iframe_widget').hide();
                     $('#hoten').val(ten);
                     $('#email').val(email);
-                    $('#loginform', submit)
+                    $('#loginform').submit();
                 });
         }
-        else {
+        else
+        {
             //ket noi khong thanh cong
         }
     }
