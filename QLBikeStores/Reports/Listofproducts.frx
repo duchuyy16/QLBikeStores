@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/05/2023 18:51:36" ReportInfo.Modified="01/05/2023 19:16:36" ReportInfo.CreatorVersion="2023.1.0.0">
+  <Styles Name="Gray">
+    <Style Name="Title" Font="Arial, 12pt, style=Bold"/>
+    <Style Name="Header" Fill.Color="Gainsboro" Font="Arial, 10pt, style=Bold"/>
+    <Style Name="Group" Font="Arial, 10pt, style=Bold"/>
+    <Style Name="Data" Font="Arial, 10pt"/>
+    <Style Name="Footer" Fill.Color="Gainsboro" Font="Arial, 10pt"/>
+    <Style Name="EvenRows" Fill.Color="WhiteSmoke" Font="Arial, 10pt"/>
+  </Styles>
+  <Dictionary>
+    <MsSqlDataConnection Name="QLBikeStoreConnection" ConnectionString="rijcmlqW+trQVRf8ffYSUAa/yWGWhGIEaXPQBDKiw9QdrCcyqyzeDz1JrBZ3rHUfWr8UTJDLYi4g6EHrDzCdSGC7VVsUHAU9YaivsEr8349DEuAYdznqKxSKNnsSxbS6fVDaN1BaNazHS1ptqcnNi64h6Wdl+ZEwwX6cHGmgYz1+sxxU9LKAOMTUk98npUsKtiMVUe4SCtflfSNlh1RkVxXdVBT7g==">
+      <TableDataSource Name="production_products" DataType="System.Int32" Enabled="true" TableName="production.&quot;products&quot;">
+        <Column Name="product_id" DataType="System.Int32"/>
+        <Column Name="product_name" DataType="System.String"/>
+        <Column Name="brand_id" DataType="System.Int32"/>
+        <Column Name="category_id" DataType="System.Int32"/>
+        <Column Name="model_year" DataType="System.Int16"/>
+        <Column Name="list_price" DataType="System.Decimal"/>
+        <Column Name="image_bike" DataType="System.String"/>
+        <Column Name="discount" DataType="System.Decimal"/>
+        <Column Name="describe" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Width="718.2" Height="37.8" Dock="Fill" Text="List of products" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold" Style="Title"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35">
+      <TextObject Name="Text3" Width="378" Height="18.9" Fill.Color="Gainsboro" Text="Product name" Font="Arial, 10pt, style=Bold" Style="Header"/>
+      <TextObject Name="Text5" Left="378" Width="85.05" Height="18.9" Fill.Color="Gainsboro" Text="CategoryId" Font="Arial, 10pt, style=Bold" Style="Header"/>
+      <TextObject Name="Text7" Left="463.05" Width="85.05" Height="18.9" Fill.Color="Gainsboro" Text="BrandId" Font="Arial, 10pt, style=Bold" Style="Header"/>
+      <TextObject Name="Text9" Left="548.1" Width="85.05" Height="18.9" Fill.Color="Gainsboro" Text="Price" Font="Arial, 10pt, style=Bold" Style="Header"/>
+      <TextObject Name="Text11" Left="633.15" Width="85.05" Height="18.9" Fill.Color="Gainsboro" Text="Discount" Font="Arial, 10pt, style=Bold" Style="Header"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="74.15" Width="718.2" Height="18.9" EvenStyle="EvenRows" DataSource="production_products">
+      <TextObject Name="Text2" Width="378" Height="18.9" Text="[production_products.product_name]" Font="Arial, 10pt" Style="Data"/>
+      <TextObject Name="Text4" Left="378" Width="85.05" Height="18.9" Text="[production_products.category_id]" Font="Arial, 10pt" Style="Data"/>
+      <TextObject Name="Text6" Left="463.05" Width="85.05" Height="18.9" Text="[production_products.brand_id]" Font="Arial, 10pt" Style="Data"/>
+      <TextObject Name="Text8" Left="548.1" Width="85.05" Height="18.9" Text="$[production_products.list_price]" Font="Arial, 10pt" Style="Data"/>
+      <TextObject Name="Text10" Left="633.15" Width="85.05" Height="18.9" Text="[production_products.discount]%" Font="Arial, 10pt" Style="Data"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="97.05" Width="718.2" Height="18.9">
+      <TextObject Name="Text12" Width="718.2" Height="18.9" Dock="Fill" Fill.Color="Gainsboro" Text="[PageN]" HorzAlign="Right" Font="Arial, 10pt" Style="Footer"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

@@ -27,6 +27,8 @@ namespace QLBikeStores
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            FastReport.Utils.RegisteredObjects.AddConnection(typeof(FastReport.Data.MsSqlDataConnection));
+
             services.AddControllersWithViews();
             services.AddDbContext<demoContext>();
             services.AddRazorPages();
@@ -63,7 +65,7 @@ namespace QLBikeStores
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseFastReport();
             app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
@@ -75,7 +77,8 @@ namespace QLBikeStores
                 endpoints.MapAreaControllerRoute(
                     name: "MyAreaAdmin",
                     areaName: "Admin",
-                    pattern: "Admin/{controller=AdminHome}/{action=Index}/{id?}");
+                //pattern: "Admin");
+                pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -2,15 +2,15 @@
     ViewData["Title"] = "ListCategory";
 }
 <style>
-    .product-name{
-        height:48px;
-        overflow:hidden;
+    .product-name {
+        height: 48px;
+        overflow: hidden;
     }
 
-    .card-img-top{
-        height:150px;
+    .card-img-top {
+        height: 150px;
         /*overflow:hidden;*/
-        text-align:center;
+        text-align: center;
     }
 
 </style>
@@ -18,18 +18,18 @@
 
     <div class="container py-1">
         <div class="row">
-            <div class="title-product" style="text-align: center; color:#37517e" >
+            <div class="title-product" style="text-align: center; color:#37517e">
                 <h1><b><i>List Of Products By Category</i></b></h1>
                 <div class="icon-bike">
-                    <img alt="icon-bike" src="~/assets/img/icon-bike.jpg" style="width:145px;height:96px;"/>
+                    <img alt="icon-bike" src="~/assets/img/icon-bike.jpg" style="width:145px;height:96px;" />
                 </div>
             </div>
-            <form asp-action="Search" method="post" >
+            <form asp-action="Search" method="post">
                 <div class="input-group rounded">
-                <input type="text" name="name" class="form-control rounded" placeholder="Enter the name of the product you are looking for..." aria-label="Search" aria-describedby="search-addon" />
-                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
-            </div>
-            </form>    
+                    <input type="text" name="name" class="form-control rounded" placeholder="Enter the name of the product you are looking for..." aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
             @foreach (Product item in Model)
             {
                 <div class="col-md-12 col-lg-4 mb-4 mb-lg-0 my-3">
@@ -38,17 +38,17 @@
                             <p class="lead mb-0">Authentic</p>
                             <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                              style="width: 35px; height: 35px;">
-                                <p class="text-white mb-0 small">@item.Discount%</p> 
+                                <p class="text-white mb-0 small">@item.Discount%</p>
                             </div>
                         </div>
 
                         <div class="card-img-top">
-                             <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId">
-                                 <img src="~/assets/img/bike/@item.ImageBike" alt="Bike" style="max-height:100%;"/>
-                             </a> 
-                        </div>           
-                       
-                        <div class="card-body">                           
+                            <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId">
+                                <img src="~/assets/img/bike/@item.ImageBike" alt="Bike" style="max-height:100%;" />
+                            </a>
+                        </div>
+
+                        <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="small"><a href="#!" class="text-muted">@item.Category.CategoryName</a></p>
                             </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="text-danger mb-0">$@((item.ListPrice-(item.ListPrice*item.Discount/100)).ToString("#,##0.00"))</h5>
-                                <h5 class="text-dark"><s>$@item.ListPrice.ToString("#,##0.00")</s></h5>                
+                                <h5 class="text-dark"><s>$@item.ListPrice.ToString("#,##0.00")</s></h5>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
@@ -71,6 +71,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-row">
+                                
                                 <button type="submit" class="btn btn-danger flex-fill ms-1">
                                     <a style="color:white;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.ProductId" asp-route-quantity="1"> Add To Cart <i class="fas fa-cart-plus"></i></a>
                                 </button>
