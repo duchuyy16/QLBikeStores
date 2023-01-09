@@ -2,6 +2,8 @@
 using FastReport.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using QLBikeStores.Helpers;
+using QLBikeStores.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,7 +32,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             var duongdan = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
             var webReport = new WebReport();
             webReport.Report.Load(duongdan);
-            //webReport.Report.Dictionary.Connections[0].ConnectionString = "Server=PM307-01\\MSSQLSERVER2019;Database=demo;User Id=sa; Password=123;"; pull
+            webReport.Report.Dictionary.Connections[0].ConnectionString = "Server=MSI\\HUYSQLSERVER;Database=demo;User Id=sa; Password=123;"; //pull
             return View(webReport);
         }
 
@@ -39,15 +41,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
             var duongdan = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
             var webReport = new WebReport();
             webReport.Report.Load(duongdan);
-
+            webReport.Report.Dictionary.Connections[0].ConnectionString = "Server=MSI\\HUYSQLSERVER;Database=demo;User Id=sa; Password=123;";
             webReport.Report.Prepare(); //tien hanh ket noi db nap du lieu len bao cao
 
             //ghi du lieu xuong tap tin pdf
             using(MemoryStream ms=new MemoryStream())
             {
                 PDFSimpleExport pdfExport=new PDFSimpleExport();
-                pdfExport.Export(webReport.Report, ms);
-                //webReport.Report.Dictionary.Connections[0].ConnectionString = "Server=PM307-01\\MSSQLSERVER2019;Database=demo;User Id=sa; Password=123;"; pull
+                pdfExport.Export(webReport.Report, ms); 
                 ms.Flush();//do du lieu tu bo nho tra ve respone client
                 return File(ms.ToArray(), "application/pdf", Path.GetFileNameWithoutExtension(duongdan) + ".pdf");
             }
@@ -56,11 +57,51 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         public IActionResult ListOfProductsPush()
         {
-            var duongdan = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
+            var duongdanreport = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
             var webReport = new WebReport();
-            webReport.Report.Load(duongdan);
-            //webReport.Report.Dictionary.Connections[0].ConnectionString = "Server=PM307-01\\MSSQLSERVER2019;Database=demo;User Id=sa; Password=123;"; pull
+            webReport.Report.Load(duongdanreport);
+
+            var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>("api/Product/DocDanhSachSanPham");
+
+            //dsXepHangPhim = dsXepHangPhim.Where(x => x.KyHieu.Equals("C13")).ToList();
+            //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
+            //dsPhim = dsPhim.Where(x => x.XepHangPhimId.Equals(xephangid)).ToList();
+
+            var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
+
+            webReport.Report.RegisterData(bangSanPham, "Product");
+
+            //webReport.Report.SetParameterValue("pXepHangPhimId", xephangid);
+
             return View(webReport);
+        }
+
+        public IActionResult ListOfProductsPushPDF()
+        {
+            var tentaptinbaocao = "Listofproducts.frx";
+            var duongdanreport = Path.Combine(_env.ContentRootPath, "Reports", tentaptinbaocao);
+            var webReport = new WebReport();
+            webReport.Report.Load(duongdanreport);
+
+            var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>("api/Product/DocDanhSachSanPham");
+
+            //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
+
+            var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
+
+            webReport.Report.RegisterData(bangSanPham, "Product");
+
+            webReport.Report.Prepare();
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                PDFSimpleExport pdfExport = new PDFSimpleExport();
+                pdfExport.Export(webReport.Report, ms);
+                ms.Flush();
+                //var tenbaocao = tentaptinbaocao.ToLower().Replace(".frx", "");
+                var tenbaocao = Path.GetFileNameWithoutExtension(tentaptinbaocao);
+                return File(ms.ToArray(), "application/pdf", tenbaocao + ".pdf");
+            }
         }
 
 

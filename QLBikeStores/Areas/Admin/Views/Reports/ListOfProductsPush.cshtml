@@ -1,0 +1,9 @@
+﻿@model FastReport.Web.WebReport
+@{
+
+}
+
+<div>
+    <a class="btn btn-info" asp-area="Admin" asp-controller="Reports" asp-action="ListOfProductsPushPDF">Lưu báo cáo dưới dạng PDF</a>
+    @await Model.Render()
+</div>
