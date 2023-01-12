@@ -5,6 +5,7 @@
         public class Product
         {
             public const string DanhSachSanPham = "api/Product/DocDanhSachSanPham";
+
         }
     }
 }

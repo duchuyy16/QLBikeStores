@@ -14,6 +14,7 @@ namespace QLBikeStores.Controllers
 
         public IActionResult Index()
         {
+
             //if (Session["idUser"] == null)
             //{
             //    return RedirectToAction("Login", "Account");
@@ -24,8 +25,8 @@ namespace QLBikeStores.Controllers
             //    var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
             //    //gan du lieu cho order
             //    Order ord = new Order();
-            //    ord.OrderId=;
-            //    ord.CustomerId=
+            //    ord.OrderId =;
+            //    ord.CustomerId =
             //    ord.OrderStatus = 4;
             //    ord.OrderDate = DateTime.Now;
             //    ord.RequiredDate = DateTime.Today.AddDays(3);

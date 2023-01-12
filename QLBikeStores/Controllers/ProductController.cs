@@ -37,7 +37,7 @@ namespace QLBikeStores.Controllers
         {
             try
             {
-                var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).OrderBy(l => l.ListPrice).ToList();
+                var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
                 var pagedList = products.ToPagedList((int)pageNo, 9);
                 return View(pagedList);
             }
