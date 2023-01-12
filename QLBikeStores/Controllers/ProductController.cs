@@ -33,7 +33,6 @@ namespace QLBikeStores.Controllers
                 return NotFound();
             }    
         }
-
         public ActionResult ListProduct(int? pageNo=1)
         {
             try

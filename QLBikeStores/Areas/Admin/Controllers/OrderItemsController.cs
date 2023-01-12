@@ -30,6 +30,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/OrderItems/Details/5
+        //them tham so khoa ngoai
         public async Task<IActionResult> Details(int? orderId, int? itemId)
         {
             if (orderId == null && itemId == null)

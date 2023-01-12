@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using QLBikeStores.Interfaces;
 using QLBikeStores.Models;
 using System;
 using System.Linq;
@@ -21,85 +20,6 @@ namespace QLBikeStores.Controllers
             _context = context;
         }
 
-        //private readonly demoContext _context;
-        //private readonly UserManager<AppUser> _userManager;
-        //private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly SignInManager<AppUser> _signInManager;
-        //private readonly ISendGridEmail _sendGridEmail;
-
-        //public AccountController(demoContext context,UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-        //   ISendGridEmail sendGridEmail, RoleManager<IdentityRole> roleManager)
-        //{
-        //    _userManager = userManager;
-        //    _signInManager = signInManager;
-        //    _sendGridEmail = sendGridEmail;
-        //    _roleManager = roleManager;
-        //}
-
-        //[HttpGet]
-        //public IActionResult ForgotPassword()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = await _userManager.FindByEmailAsync(model.Email);
-        //        if (user == null)
-        //        {
-        //            return RedirectToAction("ForgotPasswordConfirmation");
-        //        }
-        //        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        //        var callbackurl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-
-        //        await _sendGridEmail.SendEmailAsync(model.Email, "Reset Email Confirmation", "Please reset email by going to this " +
-        //            "<a href=\"" + callbackurl + "\">link</a>");
-        //        return RedirectToAction("ForgotPasswordConfirmation");
-        //    }
-        //    return View(model);
-        //}
-
-        //[HttpGet]
-        //public IActionResult ResetPassword(string code = null)
-        //{
-        //    return code == null ? View("Error") : View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = await _userManager.FindByEmailAsync(resetPasswordViewModel.Email);
-        //        if (user == null)
-        //        {
-        //            ModelState.AddModelError("Email", "User not found");
-        //            return View();
-        //        }
-        //        var result = await _userManager.ResetPasswordAsync(user, resetPasswordViewModel.Code, resetPasswordViewModel.Password);
-        //        if (result.Succeeded)
-        //        {
-        //            return RedirectToAction("ResetPasswordConfirmation");
-        //        }
-        //    }
-        //    return View(resetPasswordViewModel);
-        //}
-
-        //[HttpGet]
-        //public IActionResult ForgotPasswordConfirmation()
-        //{
-        //    return View();
-        //}
-
-        //[HttpGet]
-        //public IActionResult ResetPasswordConfirmation()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Index()
         {
@@ -257,5 +177,7 @@ namespace QLBikeStores.Controllers
 
             return View();
         }
+
+        
     }
 }

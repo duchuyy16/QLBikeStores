@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Check Out";
+}
+
+<div class="container product_section_container p-3 my-3">
+    <div class="row">
+        <div class="col product_section clearfix">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Check Out</h1>
+                    <p>Please check your order information for accuracy!</p>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-4 order-md-2 mb-4">
+                    @*<h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted">Your cart</span>
+                        <span class="badge badge-secondary badge-pill">3</span>
+                    </h4>*@
+                    
+                </div>
+                <div class="col-md-8 order-md-1">
+                    <h3 class="mb-3">Customer information</h3>
+                    <form class="needs-validation" novalidate="">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>First name</label>
+                                <input type="text" name="FirstName" class="form-control" autocomplete="off" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Last name</label>
+                                <input type="text" name="LastName" class="form-control" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Phone</label>
+                            <input type="text" name="Phone" class="form-control" autocomplete="off" />
+                        </div>
+                        <div class="mb-3">
+                            <label >Email</label>
+                            <input type="Email" class="form-control" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                            <label>Street</label>
+                            <input type="text" name="Street" class="form-control" autocomplete="off" />
+                        </div>
+                        <div class="mb-3">
+                            <label>City</label>
+                            <input type="text" name="City" class="form-control" autocomplete="off" />
+                        </div>
+                        <div class="mb-3">
+                            <label>State</label>
+                            <input type="text" name="State" class="form-control" autocomplete="off" />
+                        </div>
+                        <hr class="mb-4">
+                        <button class="btn btn-success btn-lg btn-block" type="submit">Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

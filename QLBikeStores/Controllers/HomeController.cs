@@ -23,40 +23,42 @@ namespace QLBikeStores.Controllers
 
             this._context = context;
         }
-        //private readonly ILogger<HomeController> _logger;
 
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-
-
-        //    _logger = logger;
-        //}
-        public IActionResult DanhSachSanPham()
-        {
-            //var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
-            //var dsTheLoai = JsonConvert.DeserializeObject<List<ProductModel>>(result.ToString());
-            var dsTheLoai = Utilities.SendDataRequest<List<ProductModel>>("api/Product/DocDanhSachSanPham");
-            return View(dsTheLoai); 
-        }
+        //var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
         public IActionResult DanhSachSanPhamAjax()
         {
             return View();
         }
-        public List<ProductModel> DocDanhSachSanPhamAjax()
+        public List<Product> DocDanhSachSanPhamAjax()
         {
             var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
-            var dsTheLoai = JsonConvert.DeserializeObject<List<ProductModel>>(result.ToString());
+            var dsTheLoai = JsonConvert.DeserializeObject<List<Product>>(result.ToString());
             return dsTheLoai;
         }
-        public IActionResult DSSanPhamBanChay()
+
+        public IActionResult DanhSachSanPham()
         {
-            return View();
+            //var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
+            //var dsTheLoai = JsonConvert.DeserializeObject<List<ProductModel>>(result.ToString());
+            var dsSanPham = Utilities.SendDataRequest<List<Product>>("api/Product/DocDanhSachSanPham");
+            return View(dsSanPham);
         }
+
         public IActionResult Index(int? pageNo = 1)
         {
+            //try
+            //{
+            //    var products = Utilities.SendDataRequest<List<Product>>("api/Product/DocDanhSachSanPham");
+            //    var pagedList = products.ToPagedList((int)pageNo, 10);
+            //    return View(pagedList);
+            //}
+            //catch (Exception)
+            //{
+            //    return BadRequest();
+            //}
             try
             {
-                var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).OrderBy(l => l.ListPrice).ToList();
+                var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
                 var pagedList = products.ToPagedList((int)pageNo, 9);
                 return View(pagedList);
             }
@@ -65,6 +67,8 @@ namespace QLBikeStores.Controllers
                 return BadRequest();
             }
         }
+
+
 
         public IActionResult Privacy()
         {

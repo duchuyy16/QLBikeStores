@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using QLBikeStores.Helpers;
-using QLBikeStores.Interfaces;
 using QLBikeStores.Models;
-using QLBikeStores.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +29,7 @@ namespace QLBikeStores
 
             services.AddControllersWithViews();
             services.AddDbContext<demoContext>();
-            services.AddRazorPages();
+            //services.AddRazorPages();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(5);
@@ -46,10 +44,10 @@ namespace QLBikeStores
                     option.AccessDeniedPath = "/Account/Login";
                 });
 
-            
+            services.AddHttpContextAccessor();
 
         }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -73,12 +71,10 @@ namespace QLBikeStores
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapAreaControllerRoute(
                     name: "MyAreaAdmin",
                     areaName: "Admin",
-                //pattern: "Admin");
-                pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

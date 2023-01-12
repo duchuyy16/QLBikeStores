@@ -27,7 +27,7 @@ namespace QLBikeStores.Controllers
             }
         }
 
-        public IActionResult AddToCart(int id, int quantity)
+        public IActionResult AddToCart(int id, int quantity, string type="Normal")
         {
             var myCart = Carts;
             var item=myCart.SingleOrDefault(p=>p.ProductId == id);
@@ -50,7 +50,7 @@ namespace QLBikeStores.Controllers
                 item.Quantity+=quantity;
             }
             HttpContext.Session.Set("GioHang",myCart);
-
+            
             return RedirectToAction("Index");
         }
         public IActionResult Index()
@@ -76,6 +76,11 @@ namespace QLBikeStores.Controllers
             return RedirectToAction("Index");
         }
 
-       
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        
     }
 }
