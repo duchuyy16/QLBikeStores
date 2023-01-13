@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Attributes;
 using QLBikeStores.Models;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [WebAuthorizeAttribute("admin")]
     public class StaffsController : Controller
     {
         private readonly demoContext _context;

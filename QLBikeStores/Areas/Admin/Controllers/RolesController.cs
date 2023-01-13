@@ -144,17 +144,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool RoleExists(int id)
         {
             return _context.Roles.Any(e => e.RoleId == id);
         }
-
         public async Task<IActionResult> Grant()
         {
             try
             {
-                var demoContext = _context.Staffs.Include(s => s.Manager).Include(s => s.Store);
+                var demoContext = _context.Staffs.Include(s => s.Manager).Include(s => s.Store).Include(r=>r.Role);             
                 return View(await demoContext.ToListAsync());
             }
             catch (Exception)
@@ -163,11 +161,84 @@ namespace QLBikeStores.Areas.Admin.Controllers
             }
         }
 
-        public IActionResult GrantPermission()
+        public async Task<IActionResult> GrantPermission(int? id)
         {
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            return View();
+                var staff = await _context.Staffs.FindAsync(id);
+                if (staff == null)
+                {
+                    return NotFound();
+                }
+                //ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
+                //ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                return View(staff);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GrantPermission(int id, [Bind("StaffId,RoleId")] Staff staff)
+        {
+            try
+            {
+                if (id != staff.StaffId)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        var staffss=_context.Staffs.Find(id) ;     
+                        staffss.RoleId= staff.RoleId;
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!StaffExists(staff.StaffId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                //ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
+                //ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                return View(staff);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private bool StaffExists(int id)
+        {
+            return _context.Staffs.Any(e => e.StaffId == id);
+        }
+        //public IActionResult GrantPermission()
+        //{
+
+        //    return View();
+        //}
 
         public IActionResult GrantDelete()
         {

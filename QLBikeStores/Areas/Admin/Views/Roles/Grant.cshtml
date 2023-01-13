@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Grant</title>
 </head>
 <body>
     <table class="table table-bordered">
@@ -24,26 +24,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.Phone)
-                </th>
+                
                 <th>
-                    @Html.DisplayNameFor(model => model.Active)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manager)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Store)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.Role)
+                    @Html.DisplayNameFor(model => model.Role.RoleName)
                 </th>
                 <th></th>
             </tr>
@@ -61,33 +44,16 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Phone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Active)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Manager.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Store.StoreName)
-                    </td>
+                    
                      <td>
-                        @Html.DisplayFor(modelItem => item.Username)
-                    </td>
-                     <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>*@
-                     <td>
-                        @Html.DisplayFor(modelItem => item.RoleId)
+                        @Html.DisplayFor(modelItem => item.Role.RoleName)
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger">
                             <a style="color:white;" asp-action="Delete" asp-route-id="@item.RoleId">Delete</a>
                         </button>
                         <button type="button" class="btn btn-primary">
-                            <a style="color:white;" asp-action="Grant" asp-controller="Roles">Grant Permission</a>
+                            <a style="color:white;" asp-action="GrantPermission" asp-controller="Roles" asp-route-id="@item.StaffId">Grant Permission</a>
                         </button>
                     </td>
                 </tr>
