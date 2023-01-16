@@ -54,86 +54,91 @@
     }
 </style>
 
+
 <section class="" style="background-color: white;">
-    <div class="container ">
+    <div class="container">
         <div class="row d-flex justify-content-center align-items-center h-100">
+
             <div class="col">
                 <p><span class="h2">Shopping Cart </span></p>
-                @{
+                @if (ViewData["Cart"] != null)
+                {                    
                     int count = 0;
-                }
-                @foreach (CartItem item in Model)
-                {
-                    count++;
-                    <div class="card mb-4">
-                        <div class="card-body p-4">
-                            <div class="row align-items-center">
-                                <div class="col-md-2">
-                                    <img src="~/assets/img/bike/@item.Image"
+                    @foreach (CartItem item in Model)
+                    {
+                        count++;
+                        <div class="card mb-4">
+                            <div class="card-body p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                        <img src="~/assets/img/bike/@item.Image"
                                      class="img-fluid" alt="Generic placeholder image">
-                                </div>
-                                <div class="col-md-2 d-flex justify-content-center">
-                                    <div>
-                                        <p class="small text-muted mb-4 pb-2">Product Name</p>
-                                        <p class="lead fw-normal mb-0">@item.ProductName</p>
                                     </div>
-                                </div>
-                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="small text-muted mb-4 pb-2">Product Name</p>
+                                            <p class="lead fw-normal mb-0">@item.ProductName</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
 
-                                    @* <div>
+                                        @* <div>
                                 <p class="small text-muted mb-4 pb-2">Quantity</p>
                                 <p class="lead fw-normal mb-0">@item.Quantity </p>
                                 </div>*@
 
 
-                                <div class="buttons_added">
-                                        <input class="minus is-form" type="button" value="-">
-                                        <input aria-label="quantity" data-id="@count" class="input-qty" max="10" min="1" name="quantity" type="number" value="@item.Quantity">
-                                        <input class="plus is-form" type="button" value="+">
-                                </div>
+                                        <div class="buttons_added">
+                                            <input class="minus is-form" type="button" value="-">
+                                            <input aria-label="quantity" data-id="@count" class="input-qty" max="10" min="1" name="quantity" type="number" value="@item.Quantity">
+                                            <input class="plus is-form" type="button" value="+">
+                                        </div>
 
-                                </div>
-                                <div class="col-md-2 d-flex justify-content-center">
-                                    <div>
-                                        <p class="small text-muted mb-4 pb-2">Price</p>
-                                        <p class="lead fw-normal mb-0" id="price_@count">@item.ListPrice.ToString("#,##0.00") </p>
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="small text-muted mb-4 pb-2">Price</p>
+                                            <p class="lead fw-normal mb-0" id="price_@count">@item.ListPrice.ToString("#,##0.00") </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="small text-muted mb-4 pb-2">Total</p>
+                                            <p class="lead fw-normal mb-0 total" id="total_@count">@item.Total.ToString("#,##0.00")</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="small text-muted mb-4 pb-2">Remove</p>
+                                            <p class="lead fw-normal mb-0"><a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.ProductId" class="text-danger"><i class="fas fa-trash fa-lg"></i></a></p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 d-flex justify-content-center">
-                                    <div>
-                                        <p class="small text-muted mb-4 pb-2">Total</p>
-                                        <p class="lead fw-normal mb-0 total" id="total_@count">@item.Total.ToString("#,##0.00")</p>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex justify-content-center">
-                                    <div>
-                                        <p class="small text-muted mb-4 pb-2">Remove</p>
-                                        <p class="lead fw-normal mb-0"><a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.ProductId" class="text-danger"><i class="fas fa-trash fa-lg"></i></a></p>
-                                    </div>
-                                </div>
                             </div>
-
+                        </div>
+                    }
+                    <div class="card mb-5">
+                        <div class="card-body p-4">
+                            <div class="float-end">
+                                <p class="mb-0 me-5 d-flex align-items-center">
+                                    <span class="small text-muted me-2"><b>Order total:</b></span><h3 class="text-danger total_all">@Model.Sum(s=>s.Total).ToString("#,##0.00")</h3><span class="lead fw-normal"></span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                }
-
-                <div class="card mb-5">
-                    <div class="card-body p-4">
-                        <div class="float-end">
-                            <p class="mb-0 me-5 d-flex align-items-center">
-                                <span class="small text-muted me-2"><b>Order total:</b></span><h3 class="text-danger total_all">@Model.Sum(s=>s.Total).ToString("#,##0.00")</h3><span class="lead fw-normal"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-light btn-lg me-2"><a asp-action="ListProduct" asp-controller="Product">CONTINUE SHOPPING</a></button>
                     <button type="submit" class="btn btn-primary btn-lg"><a asp-action="CheckOut" asp-controller="Cart">CHECKOUT</a></button>
                 </div>
+                }
+                else
+                {     
+                    <h4> No items in your cart!!!</h4>
+                    <button type="submit" class="btn btn-light btn-lg me-2"><a asp-action="ListProduct" asp-controller="Product">CONTINUE SHOPPING</a></button>
+                }
             </div>
         </div>
     </div>
@@ -168,7 +173,6 @@
         })
     })
 </script>
-@*.ToString("#,##0.00")*@
-@*.replace('$',"")*@
+
 
 

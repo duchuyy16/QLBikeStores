@@ -120,7 +120,8 @@ namespace QLBikeStores.Controllers
                             CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                        HttpContext.Session.SetString("Username", model.Username);
+                        HttpContext.Session.SetString("ClientUsername", model.Username);
+                        HttpContext.Session.SetInt32("ClientCustomerId", data.CustomerId);
                         return RedirectToAction("Index", "Home");
                     }
                     else

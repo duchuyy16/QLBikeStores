@@ -1,8 +1,145 @@
-﻿@{
-    ViewBag.Title = "Check Out";
-}
+﻿@*@{
+    ViewBag.Title = "CheckOut";
+}*@
 
-<div class="container product_section_container p-3 my-3">
+@model IEnumerable<CartItem>
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<style>
+        .buttons_added {
+        opacity:1;
+        display:inline-block;
+        display:-ms-inline-flexbox;
+        display:inline-flex;
+        white-space:nowrap;
+        vertical-align:top;
+    }
+    .is-form {
+        overflow:hidden;
+        position:relative;
+        background-color:#f9f9f9;
+        height:2.2rem;
+        width:1.9rem;
+        padding:0;
+        text-shadow:1px 1px 1px #fff;
+        border:1px solid #ddd;
+    }
+
+    .is-form:focus,.input-text:focus {
+        outline:none;
+    }
+    .is-form.minus {
+        border-radius:4px 0 0 4px;
+    }
+    .is-form.plus {
+        border-radius:0 4px 4px 0;
+    }
+    .input-qty {
+        background-color:#fff;
+        height:2.2rem;
+        text-align:center;
+        font-size:1rem;
+        display:inline-block;
+        vertical-align:top;
+        margin:0;
+        border-top:1px solid #ddd;
+        border-bottom:1px solid #ddd;
+        border-left:0;
+        border-right:0;
+        padding:0;
+    }
+    .input-qty::-webkit-outer-spin-button,.input-qty::-webkit-inner-spin-button {
+        -webkit-appearance:none;
+        margin:0;
+    }
+</style>
+
+<section class="" style="background-color: white;">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <p><span class="h2">Shopping Cart </span></p>
+                @{
+                    int count = 0;
+                }
+                @foreach (CartItem item in Model)
+                {
+                    count++;
+                    <div class="card mb-4">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="~/assets/img/bike/@item.Image"
+                                     class="img-fluid" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Product Name</p>
+                                        <p class="lead fw-normal mb-0">@item.ProductName</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+
+                                    @* <div>
+                                <p class="small text-muted mb-4 pb-2">Quantity</p>
+                                <p class="lead fw-normal mb-0">@item.Quantity </p>
+                                </div>*@
+
+
+                                <div class="buttons_added">
+                                        <input class="minus is-form" type="button" value="-">
+                                        <input aria-label="quantity" data-id="@count" class="input-qty" max="10" min="1" name="quantity" type="number" value="@item.Quantity">
+                                        <input class="plus is-form" type="button" value="+">
+                                </div>
+
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Price</p>
+                                        <p class="lead fw-normal mb-0" id="price_@count">@item.ListPrice.ToString("#,##0.00") </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Total</p>
+                                        <p class="lead fw-normal mb-0 total" id="total_@count">@item.Total.ToString("#,##0.00")</p>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Remove</p>
+                                        <p class="lead fw-normal mb-0"><a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.ProductId" class="text-danger"><i class="fas fa-trash fa-lg"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+                <div class="card mb-5">
+                    <div class="card-body p-4">
+                        <div class="float-end">
+                            <p class="mb-0 me-5 d-flex align-items-center">
+                                <span class="small text-muted me-2"><b>Order total:</b></span><h3 class="text-danger total_all">@Model.Sum(s=>s.Total).ToString("#,##0.00")</h3><span class="lead fw-normal"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container product_section_container p-3 my-3">
     <div class="row">
         <div class="col product_section clearfix">
             <div class="row">
@@ -13,16 +150,31 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-md-4 order-md-2 mb-4">
-                    @*<h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Your cart</span>
-                        <span class="badge badge-secondary badge-pill">3</span>
-                    </h4>*@
-                    
-                </div>
-                <div class="col-md-8 order-md-1">
+                @*@foreach (CartItem item in Model)
+                {
+                    <div class="col-md-4 order-md-2 mb-4" >
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Your cart</span>
+                            <span class="badge badge-secondary badge-pill">3</span>
+                        </h4>
+                        <div style="border:1px solid #808080">
+                            <table class="table">
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Total.ToString("#,##0.00")</td>
+                            </tr>
+                            <tr>
+                                <td>Tổng tiền</td>
+                                <td>@Model.Sum(s=>s.Total).ToString("#,##0.00")</td>
+                            </tr>
+                            </table>
+                        </div>
+                    </div>
+                }*@
+                <div class="col-md-12 order-md-1">
                     <h3 class="mb-3">Customer information</h3>
-                    <form class="needs-validation" novalidate="">
+                    <form class="needs-validation" novalidate="" method="post" id="customer-form">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label>First name</label>
@@ -38,8 +190,8 @@
                             <input type="text" name="Phone" class="form-control" autocomplete="off" />
                         </div>
                         <div class="mb-3">
-                            <label >Email</label>
-                            <input type="Email" class="form-control" autocomplete="off">
+                            <label>Email</label>
+                            <input type="Email" name="Email" class="form-control" autocomplete="off">
                         </div>
                         <div class="mb-3">
                             <label>Street</label>
@@ -54,10 +206,71 @@
                             <input type="text" name="State" class="form-control" autocomplete="off" />
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-success btn-lg btn-block" type="submit">Order</button>
+                        <button class="btn btn-success btn-lg btn-block" type="submit"><a style="color:white" asp-action="OrderSuccess" asp-controller="Cart">Order</a></button>
+                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</section>
+
+<script>
+    $('input.input-qty').each(function() {
+        var id = $(this).data("id");
+        var $this = $(this),
+            qty = $this.parent().find('.is-form'),
+            min = Number($this.attr('min')),
+            max = Number($this.attr('max'))
+        if (min == 0) {
+            var d = 0
+        } else d = min
+        $(qty).on('click', function() {
+            if ($(this).hasClass('minus')) {
+                if (d > min) d += -1
+            } else if ($(this).hasClass('plus')) {
+                var x = Number($this.val()) + 1
+                if (x <= max) d += 1
+            }
+            $this.attr('value', d).val(d);
+            var tong = $('#price_' + id).text() * d;
+            $('#total_' + id).text(tong.toFixed(2));
+
+            var total = 0;
+            $('.total').each(function() {
+                total += parseFloat($(this).text());
+            });
+            $('.total_all').text(total)
+        })
+    })
+</script>
+
+@*<script type="text/javascript">
+$("#customer-form").validate({
+    rules: {
+        FirstName: {
+            required: true;
+        },
+        LastName: {
+            required: true;
+        },
+        Phone: {
+            required: true;
+        },
+        Email: {
+            required: true;
+        },
+        Street: {
+            required: true;
+        },
+        City: {
+            required: true;
+        },
+        State: {
+            required: true;
+        }
+    }
+});
+</script>*@
+

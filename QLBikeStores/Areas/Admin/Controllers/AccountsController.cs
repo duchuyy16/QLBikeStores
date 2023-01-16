@@ -71,7 +71,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                             CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                        HttpContext.Session.SetString("Username", model.Username);
+                        HttpContext.Session.SetString("AdminUsername", model.Username);
                         return RedirectToAction("Index", "Home");
                     }
                     else
