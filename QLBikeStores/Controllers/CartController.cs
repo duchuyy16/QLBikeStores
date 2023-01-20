@@ -86,39 +86,45 @@ namespace QLBikeStores.Controllers
 
         public IActionResult OrderSuccess()
         {
-            List<CartItem> lstCart = HttpContext.Session.Get<List<CartItem>>("GioHang");
-            //gan du lieu cho order
-
-            Order ord = new Order();
-            ord.CustomerId =  HttpContext.Session.GetInt32("ClientCustomerId");
-            ord.OrderStatus = 3;
-            ord.OrderDate = DateTime.Now;
-            ord.RequiredDate = DateTime.Today.AddDays(3);
-            ord.ShippedDate = DateTime.Today.AddDays(2);
-            ord.StoreId = 1;
-            ord.StaffId = 1;
-            _context.Orders.Add(ord);
-            _context.SaveChanges();
-
-            
-            foreach (CartItem cart in lstCart)
+            if (HttpContext.Session.GetString("Username") == null)
             {
-                OrderItem orderItem = new OrderItem()
-                {
-                    OrderId = ord.OrderId,
-                    ItemId = cart.ProductId,
-                    ProductId = cart.ProductId,
-                    Quantity = cart.Quantity,
-                    ListPrice = cart.ListPrice
-                };
-                _context.OrderItems.Add(orderItem);
-                _context.SaveChanges();
+                return RedirectToAction("Login", "Account");
             }
+            else
+            {
+                List<CartItem> lstCart = HttpContext.Session.Get<List<CartItem>>("GioHang");
+                //gan du lieu cho order
 
-            HttpContext.Session.Remove("GioHang");
-            return View();
+                Order ord = new Order();
+                ord.CustomerId = HttpContext.Session.GetInt32("ClientCustomerId");
+                ord.OrderStatus = 3;
+                ord.OrderDate = DateTime.Now;
+                ord.RequiredDate = DateTime.Today.AddDays(3);
+                ord.ShippedDate = DateTime.Today.AddDays(2);
+                ord.StoreId = 1;
+                ord.StaffId = 1;
+                _context.Orders.Add(ord);
+                _context.SaveChanges();
+
+
+                foreach (CartItem cart in lstCart)
+                {
+                    OrderItem orderItem = new OrderItem()
+                    {
+                        OrderId = ord.OrderId,
+                        ItemId = cart.ProductId,
+                        ProductId = cart.ProductId,
+                        Quantity = cart.Quantity,
+                        ListPrice = cart.ListPrice
+                    };
+                    _context.OrderItems.Add(orderItem);
+                    _context.SaveChanges();
+                }
+                HttpContext.Session.Remove("GioHang");
+                return View();
+            }
+            
         }
-
 
     }
 }
