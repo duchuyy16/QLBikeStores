@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using QLBikeStores.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Net.Http;
@@ -21,7 +23,9 @@ namespace QLBikeStores.Helpers
             T kq = default(T);
             if(response.IsSuccessStatusCode)
             {
-                kq= response.Content.ReadFromJsonAsync<T>().Result;
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                var returnData = JsonConvert.DeserializeObject<T>(jsonString);
+                return returnData;
             }
             return kq;
         }

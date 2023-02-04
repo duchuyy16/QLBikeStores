@@ -9,6 +9,7 @@ using QLBikeStores.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace QLBikeStores
@@ -51,6 +52,32 @@ namespace QLBikeStores
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStatusCodePages(context =>
+            {
+                var response = context.HttpContext.Response;
+                var method = context.HttpContext.Request.Method;
+
+                if (!method.ToUpper().Equals("GET")) return Task.CompletedTask;
+
+                switch (response.StatusCode)
+                {
+                    case (int)HttpStatusCode.NotFound:
+                        response.Redirect("/Common/PageNotFound");
+                        break;
+                    case (int)HttpStatusCode.Unauthorized:
+                        response.Redirect("/Account/Login");
+                        break;
+                    case (int)HttpStatusCode.Forbidden:
+                        response.Redirect("/Common/NoPermission");
+                        break;
+                    case(int)HttpStatusCode.BadRequest:
+                        response.Redirect("/Common/PageBadRequest");
+                        break;
+                }
+
+                return Task.CompletedTask;
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

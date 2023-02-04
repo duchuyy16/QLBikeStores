@@ -5,11 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Services\**" />
+    <Content Remove="Interfaces\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.5.3" />
     <PackageReference Include="FastReport.OpenSource" Version="2023.1.6" />
     <PackageReference Include="FastReport.OpenSource.Data.MsSql" Version="2021.4.0" />
     <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2023.1.6" />
     <PackageReference Include="FastReport.OpenSource.Web" Version="2023.1.6" />
+    <PackageReference Include="Mapster" Version="7.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.17" />
@@ -29,8 +41,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

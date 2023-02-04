@@ -189,15 +189,15 @@
                             <div class="col-xl-6">
                                 <input type="text" placeholder="email">
                             </div>
-                            <div class="col-xl-6">
+                           @* <div class="col-xl-6">
                                 <input type="text" placeholder="subject">
                             </div>
                             <div class="col-xl-6">
                                 <input type="text" placeholder="telephone">
-                            </div>
+                            </div>*@
                             <div class="col-xl-12">
                                 <textarea placeholder="message" cols="30" rows="10"></textarea>
-                                <input type="submit" value="send message">
+                                <input type="submit" asp-action="Submit" asp-controller="Contact" value="send message">
                             </div>
                         </div>
                     </form>

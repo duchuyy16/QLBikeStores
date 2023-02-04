@@ -7,7 +7,7 @@
             public const string DanhSachSanPham = "api/Product/DocDanhSachSanPham";
             public const string ChiTietSanPham = "api/Product/ChiTietSanPham/{id}";
             public const string DocDanhSachSanPhamTheoTheLoai = "api/Product/DocDanhSachSanPhamTheoTheLoai/{categoryId}";
-            public const string DocDanhSachSanPhamTheoTheLoaiThuongHieu = "api/Product/DocDanhSachSanPhamTheoTheLoaiThuongHieu/{categoryId}&{brandId}";
+            public const string DocDanhSachSanPhamTheoTheLoaiThuongHieu = "api/Product/DocDanhSachSanPhamTheoTheLoaiThuongHieu/{0}&{1}";
             public const string TimKiem = "api/Product/TiemKiem/{name}";
             public const string ThemSanPham = "api/Product/ThemSanPham";
             public const string CapNhatSanPham = "api/Product/CapNhatSanPham";

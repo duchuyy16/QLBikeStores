@@ -35,7 +35,7 @@ namespace QLBikeStores.Controllers
             var item = myCart.SingleOrDefault(p => p.ProductId == id);
             if (item == null)
             {
-                var products = _context.Products.SingleOrDefault(p => p.ProductId == id);
+                var products = /*Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.ChiTietSanPham);*/ _context.Products.SingleOrDefault(p => p.ProductId == id);
                 item = new CartItem
                 {
                     ProductId = id,

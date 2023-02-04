@@ -8,5 +8,11 @@ namespace QLBikeStores.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Submit(string name, string email, string message)
+        {
+            // Xử lý dữ liệu form và lưu vào database hoặc gửi email
+            return View("Thanks");
+        }
     }
 }
