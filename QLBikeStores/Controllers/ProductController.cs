@@ -11,12 +11,6 @@ namespace QLBikeStores.Controllers
 {
     public class ProductController : Controller
     {
-        //private readonly demoContext _context;
-
-        //public ProductController(demoContext context)
-        //{
-        //    _context = context;
-        //}
         public IActionResult Index()
         {
             return View();
@@ -25,18 +19,10 @@ namespace QLBikeStores.Controllers
         public ActionResult Search(string name)
         {
 
-            //if(!string.IsNullOrEmpty(name))
-            //{
-            //    var products = _context.Products.Where(m => m.ProductName.Contains(name)).Include(p => p.Category).Include(m => m.Stocks).ToList();
-            //    return View(products);
-            //}    
-            //else
-            //{
-            //    return NotFound();
-            //}    
             if (!string.IsNullOrEmpty(name))
             {
-                var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.TimKiem);
+                var url = string.Format(ConstantValues.Product.TimKiem, name);
+                var products = Utilities.SendDataRequest<List<Product>>(url);
                 return View(products);
             }
             else
@@ -44,18 +30,8 @@ namespace QLBikeStores.Controllers
                 return NotFound();
             }
         }
-        public ActionResult ListProduct(int? pageNo=1)
+        public ActionResult ListProduct(int? pageNo = 1)
         {
-            //try
-            //{
-            //    var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
-            //    var pagedList = products.ToPagedList((int)pageNo, 9);
-            //    return View(pagedList);
-            //}
-            //catch (Exception)
-            //{
-            //    return BadRequest();
-            //}
             try
             {
                 var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
@@ -69,18 +45,10 @@ namespace QLBikeStores.Controllers
         }
         public ActionResult ListCategory(int categoryId)
         {
-            //try
-            //{
-            //    var products = _context.Products.Where(x=>x.CategoryId==categoryId).Include(p => p.Category).Include(m => m.Stocks).OrderBy(l => l.ListPrice).ToList();
-            //    return View(products);
-            //}
-            //catch (Exception)
-            //{
-            //    return BadRequest();
-            //}
             try
             {
-                var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DocDanhSachSanPhamTheoTheLoai);
+                var url = string.Format(ConstantValues.Product.DocDanhSachSanPhamTheoTheLoai, categoryId);
+                var products = Utilities.SendDataRequest<List<Product>>(url);
                 return View(products);
             }
             catch (Exception)
@@ -90,19 +58,9 @@ namespace QLBikeStores.Controllers
         }
         public ActionResult ListCategoryBrand(int brandId, int categoryId)
         {
-            //try
-            //{
-            //    var products = _context.Products.Where(x => x.CategoryId == categoryId && x.BrandId == brandId).Include(p => p.Category).Include(m => m.Stocks).OrderBy(l => l.ListPrice).ToList();
-
-            //    return View(products);
-            //}
-            //catch (Exception)
-            //{
-            //    return BadRequest();
-            //}
             try
             {
-                var url = string.Format(ConstantValues.Product.DocDanhSachSanPhamTheoTheLoaiThuongHieu, categoryId, brandId);
+                var url = string.Format(ConstantValues.Product.DanhSachSanPhamTheoTheLoaiThuongHieu, categoryId, brandId);
                 var products = Utilities.SendDataRequest<List<Product>>(url);
 
                 return View(products);
@@ -113,15 +71,11 @@ namespace QLBikeStores.Controllers
             }
         }
 
-        public IActionResult ProductDetail(int id)
+        
+        public ActionResult ProductDetail(int id)
         {
-            //var item = _context.Products.Include(p => p.Category).Include(m => m.Brand).Include(m => m.Stocks).SingleOrDefault(p => p.ProductId == id);
-            //if(item != null)
-            //{
-            //    return View(item);
-            //}    
-            //return RedirectToAction("ListProduct");
-            var item = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.ChiTietSanPham);
+            var url = string.Format(ConstantValues.Product.ChiTietSanPham, id);
+            var item = Utilities.SendDataRequest<Product>(url);
             if (item != null)
             {
                 return View(item);

@@ -11,7 +11,7 @@ using QLBikeStores.Models;
 namespace QLBikeStores.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [WebAuthorizeAttribute("admin")]
+    [WebAuthorize("admin")]
     public class StaffsController : Controller
     {
         private readonly demoContext _context;

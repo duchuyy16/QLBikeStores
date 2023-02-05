@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
+using X.PagedList;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
@@ -22,14 +24,28 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // GET: Admin/Brands
         public async Task<IActionResult> Index()
         {
+            //var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
+            //var pagedList = products.ToPagedList((int)pageNo, 9);
+            //return View(pagedList);
+
             try
             {
-                return View(await _context.Brands.ToListAsync());
+                var brands = Utilities.SendDataRequest<List<Brand>>(ConstantValues.Brand.DanhSachNhanHieu);
+                return View(await brands.ToListAsync());
             }
             catch (Exception)
             {
                 return BadRequest();
             }
+            
+            //try
+            //{
+            //    return View(await _context.Brands.ToListAsync());
+            //}
+            //catch (Exception)
+            //{
+            //    return BadRequest();
+            //}
             
         }
 

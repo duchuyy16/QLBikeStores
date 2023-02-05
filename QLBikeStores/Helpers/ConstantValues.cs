@@ -4,11 +4,11 @@
     {
         public class Product
         {
-            public const string DanhSachSanPham = "api/Product/DocDanhSachSanPham";
-            public const string ChiTietSanPham = "api/Product/ChiTietSanPham/{id}";
-            public const string DocDanhSachSanPhamTheoTheLoai = "api/Product/DocDanhSachSanPhamTheoTheLoai/{categoryId}";
-            public const string DocDanhSachSanPhamTheoTheLoaiThuongHieu = "api/Product/DocDanhSachSanPhamTheoTheLoaiThuongHieu/{0}&{1}";
-            public const string TimKiem = "api/Product/TiemKiem/{name}";
+            public const string DanhSachSanPham = "api/Product/DanhSachSanPham";
+            public const string ChiTietSanPham = "api/Product/ChiTietSanPham/{0}";
+            public const string DocDanhSachSanPhamTheoTheLoai = "api/Product/DocDanhSachSanPhamTheoTheLoai/{0}";
+            public const string DanhSachSanPhamTheoTheLoaiThuongHieu = "api/Product/DocDanhSachSanPhamTheoTheLoaiThuongHieu/{0}&{1}";
+            public const string TimKiem = "api/Product/TimKiem/{0}";
             public const string ThemSanPham = "api/Product/ThemSanPham";
             public const string CapNhatSanPham = "api/Product/CapNhatSanPham";
             public const string XoaSanPham = "api/Product/XoaSanPham";
@@ -57,7 +57,7 @@
         }
         public class Brand
         {
-            public const string DanhSachKhachHang = "api/Brand/DanhSachNhanHieu";
+            public const string DanhSachNhanHieu = "api/Brand/DanhSachNhanHieu";
             public const string ChiTietNhanHieu = "api/Brand/ChiTietNhanHieu/{id}";
             public const string ThemNhanHieu = "api/Brand/ThemNhanHieu";
             public const string CapNhatNhanHieu = "api/Brand/CapNhatNhanHieu";
@@ -78,6 +78,14 @@
             public const string ThemChiTietDonDatHang = "api/OrderItem/ThemChiTietDonDatHang";
             public const string CapNhatChiTietDonHang = "api/OrderItem/CapNhatChiTietDonHang";
             public const string XoaChiTietDonHang = "api/OrderItem/XoaChiTietDonHang";
+        }
+        public class Role
+        {
+            public const string DanhSachQuyen = "api/Role/DanhSachQuyen";
+            public const string ChiTietQuyen = "api/Role/ChiTietQuyen/{id}";
+            public const string ThemQuyen = "api/Role/ThemQuyen";
+            public const string CapNhatQuyen = "api/Role/CapNhatQuyen";
+            public const string XoaQuyen = "api/Role/XoaQuyen";
         }
     }
 }

@@ -15,16 +15,6 @@ namespace QLBikeStores.Controllers
 {
     public class HomeController : Controller
     {
-
-        //private readonly demoContext _context;
-
-        //public HomeController(demoContext context)
-        //{
-
-        //    this._context = context;
-        //}
-
-
         //public IActionResult DanhSachSanPhamAjax()
         //{
         //    return View();
@@ -54,24 +44,15 @@ namespace QLBikeStores.Controllers
         {
             try
             {
-                var products = Utilities.SendDataRequest<List<Product>>("api/Product/DanhSachSanPham");
+                var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
                 var pagedList = products.ToPagedList((int)pageNo, 10);
                 return View(pagedList);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
-            //try
-            //{
-            //    var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(m => m.Stocks).ToList();
-            //    var pagedList = products.ToPagedList((int)pageNo, 9);
-            //    return View(pagedList);
-            //}
-            //catch (Exception)
-            //{
-            //    return BadRequest();
-            //}
+            
         }
 
         public IActionResult Privacy()

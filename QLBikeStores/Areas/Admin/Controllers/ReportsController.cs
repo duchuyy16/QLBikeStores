@@ -57,23 +57,30 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         public IActionResult ListOfProductsPush()
         {
-            var duongdanreport = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
-            var webReport = new WebReport();
-            webReport.Report.Load(duongdanreport);
+            try
+            {
+                var duongdanreport = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
+                var webReport = new WebReport();
+                webReport.Report.Load(duongdanreport);
 
-            var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>("api/Product/DocDanhSachSanPham");
+                var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>(ConstantValues.Product.DanhSachSanPham);
+
+                var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
+                webReport.Report.RegisterData(bangSanPham, "Product");
+                return View(webReport);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
             //dsXepHangPhim = dsXepHangPhim.Where(x => x.KyHieu.Equals("C13")).ToList();
             //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
             //dsPhim = dsPhim.Where(x => x.XepHangPhimId.Equals(xephangid)).ToList();
-
-            var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
-
-            webReport.Report.RegisterData(bangSanPham, "Product");
-
             //webReport.Report.SetParameterValue("pXepHangPhimId", xephangid);
 
-            return View(webReport);
+            
         }
 
         public IActionResult ListOfProductsPushPDF()
@@ -83,14 +90,12 @@ namespace QLBikeStores.Areas.Admin.Controllers
             var webReport = new WebReport();
             webReport.Report.Load(duongdanreport);
 
-            var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>("api/Product/DocDanhSachSanPham");
+            var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>(ConstantValues.Product.DanhSachSanPham);
 
             //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
 
             var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
-
             webReport.Report.RegisterData(bangSanPham, "Product");
-
             webReport.Report.Prepare();
 
             using (MemoryStream ms = new MemoryStream())

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using System;
 using System.Linq;
@@ -58,6 +59,7 @@ namespace QLBikeStores.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult SignUp(SignUpUserViewModel model)
         {
@@ -75,6 +77,9 @@ namespace QLBikeStores.Controllers
                 };
                 _context.Customers.Add(data);
                 _context.SaveChanges();
+                
+                //Utilities.SendDataRequest
+
                 TempData["successMessage"] = "You are eligible to login, please fill own credential's then login!";
                 return RedirectToAction("Login");
 

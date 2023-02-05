@@ -30,21 +30,21 @@ namespace QLBikeStores.Helpers
             return kq;
         }
 
-        public static object SendDataRequest(string APIUrl, object input = null)
-        {
-            HttpClient client = new();
-            client.BaseAddress = new System.Uri("https://localhost:44306/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //public static object SendDataRequest(string APIUrl, object input = null)
+        //{
+        //    HttpClient client = new();
+        //    client.BaseAddress = new System.Uri("https://localhost:44306/");
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.PostAsJsonAsync(APIUrl, input).Result;
-            object kq = null;
-            if (response.IsSuccessStatusCode)
-            {
-                kq = response.Content.ReadFromJsonAsync<object>().Result;
-            }
-            return kq;
-        }
+        //    HttpResponseMessage response = client.PostAsJsonAsync(APIUrl, input).Result;
+        //    object kq = null;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        kq = response.Content.ReadFromJsonAsync<object>().Result;
+        //    }
+        //    return kq;
+        //}
 
         public static DataTable GetTable<TEntity>(IEnumerable<TEntity> table, string name) where TEntity : class
         {
@@ -63,7 +63,7 @@ namespace QLBikeStores.Helpers
                     result.Columns.Add(new DataColumn(info.Name, info.PropertyType));
                 }
             }
-            foreach (var el in table)
+            foreach (var el in table) //lỗi
             {
                 DataRow row = result.NewRow();
                 foreach (PropertyInfo info in infos)
