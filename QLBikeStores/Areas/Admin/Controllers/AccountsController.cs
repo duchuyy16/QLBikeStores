@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using System;
 using System.Linq;
@@ -13,12 +14,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class AccountsController : Controller
     {
-        private readonly demoContext _context;
-
-        public AccountsController(demoContext context)
-        {
-            _context = context;
-        }
         public IActionResult Index()
         {
             return View();
@@ -61,7 +56,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var data = _context.Staffs.Where(s => s.Username == model.Username).SingleOrDefault();
+                //var data = _context.Staffs.Where(s => s.Username == model.Username).SingleOrDefault();
+                var data = Utilities.SendDataRequest<Staff>(ConstantValues.Staff.DangNhap, model);
                 if (data != null)
                 {
                     bool isValid = (data.Username == model.Username && DecryptPassword(data.Password) == model.Password);
@@ -71,7 +67,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                             CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                        HttpContext.Session.SetString("AdminUsername", model.Username);
+                        HttpContext.Session.SetString("Username", model.Username);
+                        HttpContext.Session.SetString("UserRoles", data.Role.RoleName);
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -101,7 +98,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 Response.Cookies.Delete(cookies);
             }
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.Clear();
+            return Redirect("/Admin/Accounts/Login");
         }
     }
 }

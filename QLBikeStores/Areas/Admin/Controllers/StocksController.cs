@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using X.PagedList;
 
@@ -13,20 +14,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class StocksController : Controller
     {
-        private readonly demoContext _context;
-
-        public StocksController(demoContext context)
-        {
-            _context = context;
-        }
 
         // GET: Admin/Stocks
-        public async Task<IActionResult> Index(int? pageNo=1)
+        public IActionResult Index(int? pageNo=1)
         {
             try
             {
-                var demoContext = _context.Stocks.Include(s => s.Product).Include(s => s.Store);
-                var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 5);
+                var stocks = Utilities.SendDataRequest<List<Stock>>(ConstantValues.Stock.DocDanhSach);
+                var pagedList = stocks.ToPagedList((int)pageNo, 5);
                 return View(pagedList);
             }
             catch(Exception)
@@ -37,7 +32,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stocks/Details/5
-        public async Task<IActionResult> Details(int? productId,int? storeId)
+        public IActionResult Details(int? productId,int? storeId)
         {
             try
             {
@@ -45,11 +40,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
+                var url=string.Format(ConstantValues.Stock.ChiTiet,productId,storeId);
 
-                var stock = await _context.Stocks
-                    .Include(s => s.Product)
-                    .Include(s => s.Store)
-                    .FirstOrDefaultAsync(m => m.StoreId == storeId && m.ProductId==productId);
+                var stock = Utilities.SendDataRequest<Stock>(url);
                 if (stock == null)
                 {
                     return NotFound();
@@ -69,8 +62,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             try
             {
-                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName");
+                ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName");
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName");
                 return View();
             }
             catch (Exception)
@@ -81,22 +74,19 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Stocks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StoreId,ProductId,Quantity")] Stock stock)
+        public IActionResult Create([Bind("StoreId,ProductId,Quantity")] Stock stock)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(stock);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<Stock>(ConstantValues.Stock.ThemKhoHang, stock);
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", stock.ProductId);
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", stock.StoreId);
+                ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName", stock.ProductId);
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName", stock.StoreId);
                 return View(stock);
             }
             catch (Exception)
@@ -107,7 +97,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stocks/Edit/5
-        public async Task<IActionResult> Edit(int? productId, int? storeId)
+        public IActionResult Edit(int? productId, int? storeId)
         {
             try
             {
@@ -116,13 +106,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var stock = await _context.Stocks.FindAsync(storeId,productId);
+                var url = string.Format(ConstantValues.Stock.TimKiem, productId, storeId);
+
+                var stock = Utilities.SendDataRequest<Stock>(url);
                 if (stock == null)
                 {
                     return NotFound();
                 }
-                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", stock.ProductId);
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", stock.StoreId);
+                ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName", stock.ProductId);
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName", stock.StoreId);
                 return View(stock);
             }
             catch (Exception)
@@ -133,11 +125,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Stocks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? productId, int? storeId, [Bind("StoreId,ProductId,Quantity")] Stock stock)
+        public IActionResult Edit(int? productId, int? storeId, [Bind("StoreId,ProductId,Quantity")] Stock stock)
         {
             try
             {
@@ -150,8 +140,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     try
                     {
-                        _context.Update(stock);
-                        await _context.SaveChangesAsync();
+                        Utilities.SendDataRequest<bool>(ConstantValues.Stock.CapNhatKho, stock);
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -166,8 +155,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", stock.ProductId);
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", stock.StoreId);
+                ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), stock.ProductId);
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), stock.StoreId);
                 return View(stock);
             }
             catch (Exception)
@@ -178,7 +167,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stocks/Delete/5
-        public async Task<IActionResult> Delete(int? productId, int? storeId)
+        public IActionResult Delete(int? productId, int? storeId)
         {
             try
             {
@@ -187,10 +176,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var stock = await _context.Stocks
-                    .Include(s => s.Product)
-                    .Include(s => s.Store)
-                    .FirstOrDefaultAsync(m => m.StoreId == storeId &&m.ProductId==productId);
+                var url = string.Format(ConstantValues.Stock.ChiTiet, storeId, productId);
+                var stock = Utilities.SendDataRequest<Stock>(url);
                 if (stock == null)
                 {
                     return NotFound();
@@ -208,13 +195,13 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int productId, int storeId)
+        public IActionResult DeleteConfirmed(int productId, int storeId)
         {
             try
             {
-                var stock = await _context.Stocks.FindAsync(storeId,productId);
-                _context.Stocks.Remove(stock);
-                await _context.SaveChangesAsync();
+                var url = string.Format(ConstantValues.Stock.TimKiem, storeId, productId);
+                var store = Utilities.SendDataRequest<Stock>(url);
+                Utilities.SendDataRequest<bool>(ConstantValues.Stock.XoaKhoHang,store);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -223,10 +210,12 @@ namespace QLBikeStores.Areas.Admin.Controllers
             }
             
         }
-
         private bool StockExists(int productId, int storeId)
         {
-            return _context.Stocks.Any(e => e.StoreId == storeId && e.ProductId == productId);
+            var url = string.Format(ConstantValues.Stock.StockExists, storeId, productId);
+            var stock = Utilities.SendDataRequest<bool>(url);
+            if (stock !=true) return false;
+            else return true;
         }
     }
 }

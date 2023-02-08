@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using X.PagedList;
 
@@ -23,6 +24,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         public IActionResult Search(string name, decimal? to, decimal? from)
         {
             var products = from product in _context.Products.Include(p => p.Brand).Include(p => p.Category) select product;
+            //var products = Utilities.SendDataRequest<Product>(ConstantValues.Product.DanhSachSanPham);
             //var pagedList =  products.ToPagedList((int)pageNo, 10);
             if (!string.IsNullOrEmpty(name))//neu ma khong trong
             {
@@ -51,19 +53,23 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             try
             {
-                var categories = _context.Categories.ToList();
+                var categories = Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai);
                 categories.Insert(0, new Category { CategoryId = 0, CategoryName = "----------Select Category----------" });
                 ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName", categoryId);
                 if (categoryId == null)
                 {
-                    var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-                    var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+                    //var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
+                    //var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+                    var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
+                    var pagedList = await products.ToPagedListAsync((int)pageNo, 10);
                     return View(pagedList);
                 }
                 else
                 {
-                    var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-                    var pagedList = await demoContext.Where(x => x.CategoryId == categoryId).ToPagedListAsync((int)pageNo, 10);
+                    //var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
+                    //var pagedList = await demoContext.Where(x => x.CategoryId == categoryId).ToPagedListAsync((int)pageNo, 10);
+                    var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
+                    var pagedList = await products.ToPagedListAsync((int)pageNo, 10);
                     return View(pagedList);
                 }
             }
@@ -75,7 +81,34 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    try
+        //    {
+        //        if (id == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        var product = await _context.Products
+        //            .Include(p => p.Brand)
+        //            .Include(p => p.Category)
+        //            .FirstOrDefaultAsync(m => m.ProductId == id);
+        //        if (product == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return View(product);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //}
+
+        public IActionResult Details(int? id)
         {
             try
             {
@@ -84,10 +117,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var product = await _context.Products
-                    .Include(p => p.Brand)
-                    .Include(p => p.Category)
-                    .FirstOrDefaultAsync(m => m.ProductId == id);
+                var url = string.Format(ConstantValues.Product.ChiTietSanPham, id);
+                var product = Utilities.SendDataRequest<Product>(url);
                 if (product == null)
                 {
                     return NotFound();
@@ -102,6 +133,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         }
 
+        
         // GET: Admin/Products/Create
         public IActionResult Create()
         {

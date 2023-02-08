@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 
 namespace QLBikeStores.Areas.Admin.Controllers
@@ -12,29 +13,25 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class RolesController : Controller
     {
-        private readonly demoContext _context;
 
-        public RolesController(demoContext context)
-        {
-            _context = context;
-        }
 
         // GET: Admin/Roles
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Roles.ToListAsync());
+            var role= Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen);
+            return View(role.ToList());
         }
 
         // GET: Admin/Roles/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var url = string.Format(ConstantValues.Role.ChiTietQuyen, id);
 
-            var role = await _context.Roles
-                .FirstOrDefaultAsync(m => m.RoleId == id);
+            var role = Utilities.SendDataRequest<Role>(url);
             if (role == null)
             {
                 return NotFound();
@@ -50,30 +47,28 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Roles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoleId,RoleName")] Role role)
+        public IActionResult Create([Bind("RoleId,RoleName")] Role role)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(role);
-                await _context.SaveChangesAsync();
+                Utilities.SendDataRequest<Role>(ConstantValues.Role.ThemQuyen,role);
                 return RedirectToAction(nameof(Index));
             }
             return View(role);
         }
 
         // GET: Admin/Roles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles.FindAsync(id);
+            var url = string.Format(ConstantValues.Role.TimKiem, id);
+            var role = Utilities.SendDataRequest<Role>(url);
             if (role == null)
             {
                 return NotFound();
@@ -82,11 +77,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Roles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RoleId,RoleName")] Role role)
+        public IActionResult Edit(int id, [Bind("RoleId,RoleName")] Role role)
         {
             if (id != role.RoleId)
             {
@@ -97,8 +90,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(role);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<bool>(ConstantValues.Role.CapNhatQuyen, role);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,15 +109,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Roles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var url = string.Format(ConstantValues.Role.ChiTietQuyen, id);
 
-            var role = await _context.Roles
-                .FirstOrDefaultAsync(m => m.RoleId == id);
+            var role = Utilities.SendDataRequest<Role>(url);
             if (role == null)
             {
                 return NotFound();
@@ -137,23 +129,26 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Roles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var role = await _context.Roles.FindAsync(id);
-            _context.Roles.Remove(role);
-            await _context.SaveChangesAsync();
+            var url = string.Format(ConstantValues.Role.TimKiem, id);
+            var role = Utilities.SendDataRequest<Role>(url);
+            Utilities.SendDataRequest<bool>(ConstantValues.Role.XoaQuyen,role);
             return RedirectToAction(nameof(Index));
         }
         private bool RoleExists(int id)
         {
-            return _context.Roles.Any(e => e.RoleId == id);
+            var url = string.Format(ConstantValues.Role.RoleExists, id);
+            var role = Utilities.SendDataRequest<bool>(url);
+            if (role != true) return false;
+            else return true;
         }
-        public async Task<IActionResult> Grant()
+        public IActionResult Grant()
         {
             try
             {
-                var demoContext = _context.Staffs.Include(s => s.Manager).Include(s => s.Store).Include(r=>r.Role);             
-                return View(await demoContext.ToListAsync());
+                var staff = Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien);
+                return View(staff.ToList());
             }
             catch (Exception)
             {
@@ -161,7 +156,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> GrantPermission(int? id)
+        public IActionResult GrantPermission(int? id)
         {
             try
             {
@@ -169,15 +164,17 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
+                var url = string.Format(ConstantValues.Staff.TimKiem, id);
 
-                var staff = await _context.Staffs.FindAsync(id);
+                var staff = Utilities.SendDataRequest<Staff>(url);
+                //var staff = await _context.Staffs.FindAsync(id);
                 if (staff == null)
                 {
                     return NotFound();
                 }
                 //ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
                 //ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                ViewData["RoleId"] = new SelectList(Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen), "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -188,7 +185,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GrantPermission(int id, [Bind("StaffId,RoleId")] Staff staff)
+        public IActionResult GrantPermission(int id, [Bind("StaffId,RoleId")] Staff staff)
         {
             try
             {
@@ -201,9 +198,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     try
                     {
-                        var staffss=_context.Staffs.Find(id) ;     
-                        staffss.RoleId= staff.RoleId;
-                        await _context.SaveChangesAsync();
+                        var url = string.Format(ConstantValues.Staff.TimKiem, id);
+                        var staffss = Utilities.SendDataRequest<Staff>(url);
+                        staffss.RoleId = staff.RoleId;
+                        Utilities.SendDataRequest<bool>(ConstantValues.Staff.CapNhatNhanVien, staffss);
+
+                        //var staffss=_context.Staffs.Find(id) ;     
+                        //staffss.RoleId= staff.RoleId;
+                        //await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -220,7 +222,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 //ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
                 //ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                ViewData["RoleId"] = new SelectList(Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen), "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -232,17 +234,13 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         private bool StaffExists(int id)
         {
-            return _context.Staffs.Any(e => e.StaffId == id);
+            var url = string.Format(ConstantValues.Staff.StaffExists, id);
+            var staff = Utilities.SendDataRequest<bool>(url);
+            if (staff !=true) return false;
+            else return true;
         }
-        //public IActionResult GrantPermission()
-        //{
-
-        //    return View();
-        //}
-
         public IActionResult GrantDelete()
         {
-
             return View();
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 
 namespace QLBikeStores.Areas.Admin.Controllers
@@ -12,29 +13,60 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoriesController : Controller
     {
-        private readonly demoContext _context;
-
-        public CategoriesController(demoContext context)
-        {
-            _context = context;
-        }
-
         // GET: Admin/Categories
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    try
+        //    {
+        //        return View(await _context.Categories.ToListAsync());
+        //    }
+        //    catch(Exception)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //}
+
+        public IActionResult Index()
         {
             try
             {
-                return View(await _context.Categories.ToListAsync());
+                var categories = Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai);
+                return View(categories.ToList());
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest();
             }
-            
+
         }
 
         // GET: Admin/Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    try
+        //    {
+        //        if (id == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        var category = await _context.Categories
+        //            .FirstOrDefaultAsync(m => m.CategoryId == id);
+        //        if (category == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return View(category);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //    }  
+        //}
+
+        public IActionResult Details(int? id)
         {
             try
             {
@@ -42,9 +74,10 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
+                var url=string.Format(ConstantValues.Category.ChiTietTheLoai,id);
 
-                var category = await _context.Categories
-                    .FirstOrDefaultAsync(m => m.CategoryId == id);
+                var category = Utilities.SendDataRequest<Category>(url);
+
                 if (category == null)
                 {
                     return NotFound();
@@ -56,7 +89,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            
         }
 
         // GET: Admin/Categories/Create
@@ -68,16 +100,36 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            _context.Add(category);
+        //            await _context.SaveChangesAsync();
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        return View(category);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
+        public IActionResult Create([Bind("CategoryId,CategoryName")] Category category)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(category);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<Category>(ConstantValues.Category.ThemTheLoai,category);
                     return RedirectToAction(nameof(Index));
                 }
                 return View(category);
@@ -86,11 +138,32 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            
+
         }
 
         // GET: Admin/Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    try
+        //    {
+        //        if (id == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        var category = await _context.Categories.FindAsync(id);
+        //        if (category == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return View(category);
+        //    }catch(Exception)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
+
+        public IActionResult Edit(int? id)
         {
             try
             {
@@ -99,24 +172,23 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var category = await _context.Categories.FindAsync(id);
+                var url = string.Format(ConstantValues.Category.TimKiem, id);
+                var category = Utilities.SendDataRequest<Category>(url);
                 if (category == null)
                 {
                     return NotFound();
                 }
                 return View(category);
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 return BadRequest();
             }
         }
 
-        // POST: Admin/Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
+        public IActionResult Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
         {
             try
             {
@@ -129,8 +201,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     try
                     {
-                        _context.Update(category);
-                        await _context.SaveChangesAsync();
+                        Utilities.SendDataRequest<bool>(ConstantValues.Category.CapNhatTheLoai,category);
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -147,15 +218,13 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 return View(category);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest();
             }
-            
-        }
 
-        // GET: Admin/Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        }
+        public IActionResult Delete(int? id)
         {
             try
             {
@@ -164,8 +233,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var category = await _context.Categories
-                    .FirstOrDefaultAsync(m => m.CategoryId == id);
+                var url = string.Format(ConstantValues.Category.ChiTietTheLoai, id);
+                var category = Utilities.SendDataRequest<Category>(url);
                 if (category == null)
                 {
                     return NotFound();
@@ -173,35 +242,37 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
                 return View(category);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest();
             }
-            
+
         }
 
-        // POST: Admin/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             try
             {
-                var category = await _context.Categories.FindAsync(id);
-                _context.Categories.Remove(category);
-                await _context.SaveChangesAsync();
+                var url = string.Format(ConstantValues.Category.TimKiem, id);
+                var category = Utilities.SendDataRequest<Category>(url);
+                Utilities.SendDataRequest<bool>(ConstantValues.Category.XoaTheLoai,id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return BadRequest();
 
-            }   
+            }
         }
 
         private bool CategoryExists(int id)
         {
-            return _context.Categories.Any(e => e.CategoryId == id);
+            var url = string.Format(ConstantValues.Category.CategoryExists, id);
+            var category = Utilities.SendDataRequest<bool>(url);
+            if (category != true) return false;
+            else return true;
         }
     }
 }

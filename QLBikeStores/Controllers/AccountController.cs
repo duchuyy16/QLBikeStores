@@ -116,6 +116,7 @@ namespace QLBikeStores.Controllers
             if (ModelState.IsValid)
             {
                 var data = _context.Customers.Where(s => s.Username == model.Username).FirstOrDefault();
+                //var data = Utilities.SendDataRequest<Customer>(ConstantValues.Customer.da)
                 if (data != null)
                 {
                     bool isValid = (data.Username == model.Username && DecryptPassword(data.Password) == model.Password);
@@ -125,7 +126,7 @@ namespace QLBikeStores.Controllers
                             CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                        HttpContext.Session.SetString("ClientUsername", model.Username);
+                        HttpContext.Session.SetString("Username", model.Username);
                         HttpContext.Session.SetInt32("ClientCustomerId", data.CustomerId);
                         return RedirectToAction("Index", "Home");
                     }
@@ -156,6 +157,7 @@ namespace QLBikeStores.Controllers
             {
                 Response.Cookies.Delete(cookies);
             }
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
         public IActionResult GoogleLogin()

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using X.PagedList;
 
@@ -13,35 +14,22 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class CustomersController : Controller
     {
-        private readonly demoContext _context;
-
-        public CustomersController(demoContext context)
+        public IActionResult Index(int? pageNo = 1)
         {
-            _context = context;
-        }
-
-        // GET: Admin/Customers
-        public async Task<IActionResult> Index(int? pageNo=1)
-        {
-            var cus = _context.Customers.ToList();
-            var pagedList = await cus.ToPagedListAsync((int)pageNo, 10);
-            
+            var cus = Utilities.SendDataRequest<List<Customer>>(ConstantValues.Customer.DanhSachKhachHang);
+            var pagedList =  cus.ToPagedList((int)pageNo, 10);
             return View(pagedList);
-
-            
-            //return View(await _context.Customers.ToListAsync());
         }
 
-        // GET: Admin/Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var url = string.Format(ConstantValues.Customer.ChiTietKhachHang, id);
+            var customer = Utilities.SendDataRequest<Customer>(url);
             if (customer == null)
             {
                 return NotFound();
@@ -56,31 +44,28 @@ namespace QLBikeStores.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,FirstName,LastName,Phone,Email,Street,City,State,ZipCode,Username,Password")] Customer customer)
+        public IActionResult Create([Bind("CustomerId,FirstName,LastName,Phone,Email,Street,City,State,ZipCode,Username,Password")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
+                Utilities.SendDataRequest<Customer>(ConstantValues.Customer.ThemKhachHang, customer);
                 return RedirectToAction(nameof(Index));
             }
             return View(customer);
         }
 
         // GET: Admin/Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var url = string.Format(ConstantValues.Customer.TimKiem, id);
+            var customer = Utilities.SendDataRequest<Customer>(url);
             if (customer == null)
             {
                 return NotFound();
@@ -89,11 +74,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,Phone,Email,Street,City,State,ZipCode,Username,Password")] Customer customer)
+        public IActionResult Edit(int id, [Bind("CustomerId,FirstName,LastName,Phone,Email,Street,City,State,ZipCode,Username,Password")] Customer customer)
         {
             if (id != customer.CustomerId)
             {
@@ -104,8 +87,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<bool>(ConstantValues.Customer.CapNhatKhachHang, customer);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -123,16 +105,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
             return View(customer);
         }
 
-        // GET: Admin/Customers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var url = string.Format(ConstantValues.Customer.ChiTietKhachHang, id);
+            var customer = Utilities.SendDataRequest<Customer>(url);
             if (customer == null)
             {
                 return NotFound();
@@ -144,17 +125,20 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+            var url = string.Format(ConstantValues.Customer.TimKiem, id);
+            var customer = Utilities.SendDataRequest<Customer>(url);
+            Utilities.SendDataRequest<bool>(ConstantValues.Customer.XoaKhachHang, id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool CustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            var url = string.Format(ConstantValues.Customer.CustomerExists, id);
+            var customer = Utilities.SendDataRequest<bool>(url);
+            if (customer !=true) return false;
+            else return true;
         }
     }
 }

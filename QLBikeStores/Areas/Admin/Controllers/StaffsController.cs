@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Attributes;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 
 namespace QLBikeStores.Areas.Admin.Controllers
@@ -14,30 +15,22 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [WebAuthorize("admin")]
     public class StaffsController : Controller
     {
-        private readonly demoContext _context;
-
-        public StaffsController(demoContext context)
-        {
-            _context = context;
-        }
-
         // GET: Admin/Staffs
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             try
             {
-                var demoContext = _context.Staffs.Include(s => s.Manager).Include(s => s.Store);
-                return View(await demoContext.ToListAsync());
+                var staffs = Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien);
+                return View(staffs.ToList());
             }
             catch(Exception)
             {
                 return BadRequest();
-            }
-            
+            }        
         }
 
         // GET: Admin/Staffs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             try
             {
@@ -45,11 +38,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
+                var url = string.Format(ConstantValues.Staff.ChiTietNhanVien, id);
 
-                var staff = await _context.Staffs
-                    .Include(s => s.Manager)
-                    .Include(s => s.Store)
-                    .FirstOrDefaultAsync(m => m.StaffId == id);
+                var staff = Utilities.SendDataRequest<Staff>(url);
                 if (staff == null)
                 {
                     return NotFound();
@@ -69,9 +60,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             try
             {
-                ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email");
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName");
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+                ViewData["ManagerId"] = new SelectList(Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien), "StaffId", "Email");
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName");
+                ViewData["RoleId"] = new SelectList(Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen), "RoleId", "RoleName");
                 return View();
             }
             catch (Exception)
@@ -82,23 +73,20 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Staffs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId,Username,Password,RoleId")] Staff staff)
+        public IActionResult Create([Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId,Username,Password,RoleId")] Staff staff)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(staff);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<Staff>(ConstantValues.Staff.ThemNhanVienMoi);
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                ViewData["ManagerId"] = new SelectList(Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien), "StaffId", "Email", staff.ManagerId);
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen), "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -109,7 +97,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Staffs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             try
             {
@@ -118,14 +106,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var staff = await _context.Staffs.FindAsync(id);
+                var url = string.Format(ConstantValues.Staff.TimKiem, id);
+                var staff = Utilities.SendDataRequest<Staff>(url);
                 if (staff == null)
                 {
                     return NotFound();
                 }
-                ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                ViewData["ManagerId"] = new SelectList(Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien), "StaffId", "Email", staff.ManagerId);
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen), "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -136,11 +125,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Staffs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId,Username,Password,RoleId")] Staff staff)
+        public IActionResult Edit(int id, [Bind("StaffId,FirstName,LastName,Email,Phone,Active,StoreId,ManagerId,Username,Password,RoleId")] Staff staff)
         {
             try
             {
@@ -153,8 +140,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     try
                     {
-                        _context.Update(staff);
-                        await _context.SaveChangesAsync();
+                        Utilities.SendDataRequest<bool>(ConstantValues.Staff.CapNhatNhanVien, staff);
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -169,9 +155,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["ManagerId"] = new SelectList(_context.Staffs, "StaffId", "Email", staff.ManagerId);
-                ViewData["StoreId"] = new SelectList(_context.Stores, "StoreId", "StoreName", staff.StoreId);
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", staff.RoleId);
+                ViewData["ManagerId"] = new SelectList(Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien), "StaffId", "Email", staff.ManagerId);
+                ViewData["StoreId"] = new SelectList(Utilities.SendDataRequest<List<Store>>(ConstantValues.Store.DocDanhSachCuaHang), "StoreId", "StoreName", staff.StoreId);
+                ViewData["RoleId"] = new SelectList(Utilities.SendDataRequest<List<Role>>(ConstantValues.Role.DanhSachQuyen), "RoleId", "RoleName", staff.RoleId);
                 return View(staff);
             }
             catch (Exception)
@@ -182,7 +168,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Staffs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             try
             {
@@ -191,10 +177,10 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var staff = await _context.Staffs
-                    .Include(s => s.Manager)
-                    .Include(s => s.Store)
-                    .FirstOrDefaultAsync(m => m.StaffId == id);
+                var url = string.Format(ConstantValues.Staff.ChiTietNhanVien, id);
+
+                var staff = Utilities.SendDataRequest<Staff>(url);
+
                 if (staff == null)
                 {
                     return NotFound();
@@ -212,25 +198,27 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Staffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             try
             {
-                var staff = await _context.Staffs.FindAsync(id);
-                _context.Staffs.Remove(staff);
-                await _context.SaveChangesAsync();
+                var url = string.Format(ConstantValues.Staff.TimKiem, id);
+                var staff = Utilities.SendDataRequest<Staff>(url);
+                Utilities.SendDataRequest<bool>(ConstantValues.Staff.XoaNhanVien, staff);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
                 return BadRequest();
             }
-            
         }
 
         private bool StaffExists(int id)
         {
-            return _context.Staffs.Any(e => e.StaffId == id);
+            var url = string.Format(ConstantValues.Staff.StaffExists,id);
+            var staff = Utilities.SendDataRequest<bool>(url);
+            if (staff !=true) return false;
+            else return true;
         }
     }
 }

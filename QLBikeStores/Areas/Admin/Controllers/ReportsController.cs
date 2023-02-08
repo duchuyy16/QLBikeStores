@@ -69,7 +69,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 webReport.Report.RegisterData(bangSanPham, "Product");
                 return View(webReport);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 throw;
