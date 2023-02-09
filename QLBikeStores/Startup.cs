@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QLBikeStores.Areas.Admin.Services;
+using QLBikeStores.Areas.Admin.Services.Impl;
 using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using System;
@@ -30,6 +32,7 @@ namespace QLBikeStores
 
             services.AddControllersWithViews();
             services.AddDbContext<demoContext>();
+            services.AddScoped<IIdentityService, IdentityService>();
             //services.AddRazorPages();
             services.AddSession(options =>
             {

@@ -1,4 +1,7 @@
-﻿<nav id="navbar" class="navbar">
+﻿@using QLBikeStores.Areas.Admin.Services
+@inject IIdentityService _IDentityService
+
+<nav id="navbar" class="navbar">
     <ul>
         <li><a class="nav-link scrollto " asp-controller="Home" asp-action="Index"><i class="bi bi-house-fill"></i>&nbspHOME PAGE</a></li>
         <li class="dropdown">
@@ -29,8 +32,11 @@
         @*<li><a class="nav-link scrollto" asp-controller="Account" asp-action="Login"><i class="bi bi-person"></i></a></li>*@
         @* <li><a class="nav-link scrollto" asp-controller="Product" asp-action="Search"><i class="bi bi-search"></i></a></li>*@
 
-        @if (User.Identity.IsAuthenticated)
+        @if (_IDentityService.IsAuthorize())
         {
+            <li>
+                @_IDentityService.GetCurrentUserLogin().UserName
+            </li>
             <li>
                 <a class="btn btn-danger" style="padding:5px; margin-left:20px;" asp-action="LogOut" asp-controller="Account">SignOut</a>
             </li>
