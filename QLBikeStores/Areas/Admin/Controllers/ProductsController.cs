@@ -79,35 +79,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
             }
 
         }
-
-        // GET: Admin/Products/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    try
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        var product = await _context.Products
-        //            .Include(p => p.Brand)
-        //            .Include(p => p.Category)
-        //            .FirstOrDefaultAsync(m => m.ProductId == id);
-        //        if (product == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return View(product);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //}
-
         public IActionResult Details(int? id)
         {
             try
@@ -132,15 +103,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
             }
 
         }
-
-        
+    
         // GET: Admin/Products/Create
         public IActionResult Create()
         {
             try
             {
-                ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
-                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+                ViewData["BrandId"] = new SelectList(Utilities.SendDataRequest<List<Brand>>(ConstantValues.Brand.DanhSachNhanHieu), "BrandId", "BrandName");
+                ViewData["CategoryId"] = new SelectList(Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai), "CategoryId", "CategoryName");
                 return View();
             }
             catch (Exception)
@@ -151,22 +121,20 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice,Discount")] Product product)
+        public IActionResult Create([Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice,Discount")] Product product)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(product);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<Product>(ConstantValues.Product.ThemSanPham, product);
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
-                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
+                ViewData["BrandId"] = new SelectList(Utilities.SendDataRequest<List<Brand>>(ConstantValues.Brand.DanhSachNhanHieu), "BrandId", "BrandName", product.BrandId);
+                ViewData["CategoryId"] = new SelectList(Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai), product.CategoryId);
                 return View(product);
             }
             catch (Exception)
@@ -177,7 +145,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             try
             {
@@ -186,13 +154,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var product = await _context.Products.FindAsync(id);
+                var url = string.Format(ConstantValues.Product.Find, id);
+                var product = Utilities.SendDataRequest<Product>(url);
                 if (product == null)
                 {
                     return NotFound();
                 }
-                ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
-                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
+
+                ViewData["BrandId"] = new SelectList(Utilities.SendDataRequest<List<Brand>>(ConstantValues.Brand.DanhSachNhanHieu), "BrandId", "BrandName", product.BrandId);
+                ViewData["CategoryId"] = new SelectList(Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai), "CategoryId", "CategoryName", product.CategoryId);
                 return View(product);
             }
             catch (Exception)
@@ -203,11 +173,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // POST: Admin/Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice,Discount")] Product product)
+        public IActionResult Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,ModelYear,ListPrice,Discount")] Product product)
         {
             try
             {
@@ -220,8 +188,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     try
                     {
-                        _context.Update(product);
-                        await _context.SaveChangesAsync();
+                        Utilities.SendDataRequest<bool>(ConstantValues.Product.CapNhatSanPham, product);
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -236,8 +203,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
-                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
+                ViewData["BrandId"] = new SelectList(Utilities.SendDataRequest<List<Brand>>(ConstantValues.Brand.DanhSachNhanHieu), "BrandId", "BrandName", product.BrandId);
+                ViewData["CategoryId"] = new SelectList(Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai), "CategoryId", "CategoryName", product.CategoryId);
                 return View(product);
             }
             catch (Exception)
@@ -247,7 +214,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             try
             {
@@ -256,10 +223,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var product = await _context.Products
-                    .Include(p => p.Brand)
-                    .Include(p => p.Category)
-                    .FirstOrDefaultAsync(m => m.ProductId == id);
+                var url = string.Format(ConstantValues.Product.ChiTietSanPham, id);
+                var product = Utilities.SendDataRequest<Product>(url);
                 if (product == null)
                 {
                     return NotFound();
@@ -277,13 +242,13 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             try
             {
-                var product = await _context.Products.FindAsync(id);
-                _context.Products.Remove(product);
-                await _context.SaveChangesAsync();
+                var url = string.Format(ConstantValues.Product.Find, id);
+                var product = Utilities.SendDataRequest<Product>(url);
+                Utilities.SendDataRequest<bool>(ConstantValues.Product.XoaSanPham, product);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -295,7 +260,10 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            var url = string.Format(ConstantValues.Product.ProductExists, id);
+            var product = Utilities.SendDataRequest<bool>(url);
+            if (product != true) return false;
+            else return true;
         }
     }
 }

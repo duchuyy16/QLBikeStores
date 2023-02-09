@@ -16,8 +16,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
     {
         public IActionResult Index(int? pageNo = 1)
         {
-            var cus = Utilities.SendDataRequest<List<Customer>>(ConstantValues.Customer.DanhSachKhachHang);
-            var pagedList =  cus.ToPagedList((int)pageNo, 10);
+            var customer = Utilities.SendDataRequest<List<Customer>>(ConstantValues.Customer.DanhSachKhachHang);
+            var pagedList = customer.ToPagedList((int)pageNo, 10);
             return View(pagedList);
         }
 

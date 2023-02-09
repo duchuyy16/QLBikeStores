@@ -15,11 +15,11 @@ namespace QLBikeStores.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly demoContext _context;
-        public AccountController(demoContext context)
-        {
-            _context = context;
-        }
+        //private readonly demoContext _context;
+        //public AccountController(demoContext context)
+        //{
+        //    _context = context;
+        //}
 
 
         public IActionResult Index()
@@ -75,10 +75,10 @@ namespace QLBikeStores.Controllers
                     Phone = model.Phone,
                     //Active =Convert.ToByte(model.IsActive)
                 };
-                _context.Customers.Add(data);
-                _context.SaveChanges();
-                
-                //Utilities.SendDataRequest
+                //_context.Customers.Add(data);
+                //_context.SaveChanges();
+
+                Utilities.SendDataRequest<Customer>(ConstantValues.Customer.ThemKhachHang, data);
 
                 TempData["successMessage"] = "You are eligible to login, please fill own credential's then login!";
                 return RedirectToAction("Login");
@@ -94,8 +94,10 @@ namespace QLBikeStores.Controllers
         [AcceptVerbs("Post","Get")] 
         public IActionResult UserNameIsExist(string userName)
         {
-            var data = _context.Customers.Where(e => e.Username == userName).SingleOrDefault();
-            if(data!=null)
+            //var data = _context.Customers.Where(e => e.Username == userName).SingleOrDefault();
+            var url = string.Format(ConstantValues.Customer.KiemTraUsername, userName);
+            var data = Utilities.SendDataRequest<Customer>(url);
+            if (data!=null)
             {
                 return Json($"Username {userName} already in use!");
             }   
@@ -115,8 +117,8 @@ namespace QLBikeStores.Controllers
         {
             if (ModelState.IsValid)
             {
-                var data = _context.Customers.Where(s => s.Username == model.Username).FirstOrDefault();
-                //var data = Utilities.SendDataRequest<Customer>(ConstantValues.Customer.da)
+                //var data = _context.Customers.Where(s => s.Username == model.Username).FirstOrDefault();
+                var data = Utilities.SendDataRequest<Customer>(ConstantValues.Customer.DangNhap, model);
                 if (data != null)
                 {
                     bool isValid = (data.Username == model.Username && DecryptPassword(data.Password) == model.Password);

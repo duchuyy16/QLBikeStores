@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Areas.Admin.ModelsAdmin;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,8 +62,8 @@ namespace QLBikeStores.Areas.Admin.Controllers
         [HttpGet]
         public List<Category> CategoryChart()
         {
-            var categories = _context.Categories.ToList();
-            return categories;
+            var categories = Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai);
+            return categories.ToList();
         }
     }
 }

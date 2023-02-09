@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 using X.PagedList;
 
@@ -21,27 +22,34 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/OrderItems
-        public async Task<IActionResult> Index(int? pageNo = 1)
+        //public async Task<IActionResult> Index(int? pageNo = 1)
+        //{
+        //    var demoContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product);
+        //    var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+        //    return View(pagedList);
+
+        //}
+
+        // GET: Admin/OrderItems/Details/5
+        //them tham so khoa ngoai
+
+        public IActionResult Index(int? pageNo = 1)
         {
-            var demoContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product);
-            var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+            var orderItems = Utilities.SendDataRequest<List<OrderItem>>(ConstantValues.OrderItem.DanhSachDonDatHang);
+            var pagedList = orderItems.ToPagedList((int)pageNo, 10);
             return View(pagedList);
 
         }
 
-        // GET: Admin/OrderItems/Details/5
-        //them tham so khoa ngoai
-        public async Task<IActionResult> Details(int? orderId, int? itemId)
+        public IActionResult Details(int? orderId, int? itemId)
         {
             if (orderId == null && itemId == null)
             {
                 return NotFound();
             }
 
-            var orderItem = await _context.OrderItems
-                .Include(o => o.Order)
-                .Include(o => o.Product)
-                .FirstOrDefaultAsync(m => m.OrderId == orderId && m.ItemId == itemId);
+            var url = string.Format(ConstantValues.OrderItem.ChiTietDonDatHang, orderId,itemId);
+            var orderItem = Utilities.SendDataRequest<OrderItem>(url);
             if (orderItem == null)
             {
                 return NotFound();
@@ -53,53 +61,50 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // GET: Admin/OrderItems/Create
         public IActionResult Create()
         {
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            ViewData["OrderId"] = new SelectList(Utilities.SendDataRequest<List<Order>>(ConstantValues.Order.DocDanhSachMuaHang), "OrderId", "OrderId");
+            ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName");
             return View();
         }
 
         // POST: Admin/OrderItems/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,ItemId,ProductId,Quantity,ListPrice,Discount")] OrderItem orderItem)
+        public IActionResult Create([Bind("OrderId,ItemId,ProductId,Quantity,ListPrice,Discount")] OrderItem orderItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(orderItem);
-                await _context.SaveChangesAsync();
+                Utilities.SendDataRequest<OrderItem>(ConstantValues.OrderItem.ThemChiTietDonDatHang, orderItem);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", orderItem.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", orderItem.ProductId);
+            ViewData["OrderId"] = new SelectList(Utilities.SendDataRequest<List<Order>>(ConstantValues.Order.DocDanhSachMuaHang), "OrderId", "OrderId", orderItem.OrderId);
+            ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName", orderItem.ProductId);
             return View(orderItem);
         }
 
         // GET: Admin/OrderItems/Edit/5
-        public async Task<IActionResult> Edit(int? orderId, int? itemId)
+        public IActionResult Edit(int? orderId, int? itemId)
         {
             if (orderId == null || itemId == null)
             {
                 return NotFound();
             }
 
-            var orderItem = await _context.OrderItems.FindAsync(orderId, itemId);
+            var url = string.Format(ConstantValues.OrderItem.TimKiem, orderId, itemId);
+            var orderItem = Utilities.SendDataRequest<OrderItem>(url);
             if (orderItem == null)
             {
                 return NotFound();
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", orderItem.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", orderItem.ProductId);
+            ViewData["OrderId"] = new SelectList(Utilities.SendDataRequest<List<Order>>(ConstantValues.Order.DocDanhSachMuaHang), "OrderId", "OrderId", orderItem.OrderId);
+            ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName", orderItem.ProductId);
             return View(orderItem);
         }
 
         // POST: Admin/OrderItems/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int orderId, int itemId, [Bind("OrderId,ItemId,ProductId,Quantity,ListPrice,Discount")] OrderItem orderItem)
+        public IActionResult Edit(int orderId, int itemId, [Bind("OrderId,ItemId,ProductId,Quantity,ListPrice,Discount")] OrderItem orderItem)
         {
             if (orderId != orderItem.OrderId || itemId != orderItem.ItemId)
             {
@@ -110,8 +115,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(orderItem);
-                    await _context.SaveChangesAsync();
+                    Utilities.SendDataRequest<bool>(ConstantValues.OrderItem.CapNhatChiTietDonHang, orderItem);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,23 +130,21 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", orderItem.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", orderItem.ProductId);
+            ViewData["OrderId"] = new SelectList(Utilities.SendDataRequest<List<Order>>(ConstantValues.Order.DocDanhSachMuaHang), "OrderId", "OrderId", orderItem.OrderId);
+            ViewData["ProductId"] = new SelectList(Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham), "ProductId", "ProductName", orderItem.ProductId);
             return View(orderItem);
         }
 
         // GET: Admin/OrderItems/Delete/5
-        public async Task<IActionResult> Delete(int? orderId, int? itemId)
+        public IActionResult Delete(int? orderId, int? itemId)
         {
             if (orderId == null || itemId == null)
             {
                 return NotFound();
             }
 
-            var orderItem = await _context.OrderItems
-                .Include(o => o.Order)
-                .Include(o => o.Product)
-                .FirstOrDefaultAsync(m => m.OrderId == orderId && m.ItemId == itemId);
+            var url = string.Format(ConstantValues.OrderItem.ChiTietDonDatHang, orderId, itemId);
+            var orderItem = Utilities.SendDataRequest<OrderItem>(url);
             if (orderItem == null)
             {
                 return NotFound();
@@ -154,17 +156,20 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/OrderItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int orderId, int itemId)
+        public IActionResult DeleteConfirmed(int orderId, int itemId)
         {
-            var orderItem = await _context.OrderItems.FindAsync(orderId, itemId);
-            _context.OrderItems.Remove(orderItem);
-            await _context.SaveChangesAsync();
+            var url = string.Format(ConstantValues.OrderItem.TimKiem, orderId, itemId);
+            var orderItem = Utilities.SendDataRequest<OrderItem>(url);
+            Utilities.SendDataRequest<bool>(ConstantValues.OrderItem.XoaChiTietDonHang, orderItem);
             return RedirectToAction(nameof(Index));
         }
 
         private bool OrderItemExists(int orderId, int itemId)
         {
-            return _context.OrderItems.Any(e => e.OrderId == orderId && e.ItemId == itemId);
+            var url = string.Format(ConstantValues.OrderItem.OrderItemExists,orderId,itemId);
+            var orderItem = Utilities.SendDataRequest<bool>(url);
+            if (orderItem != true) return false;
+            else return true;
         }
     }
 }

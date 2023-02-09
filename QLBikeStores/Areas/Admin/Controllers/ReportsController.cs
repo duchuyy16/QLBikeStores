@@ -63,9 +63,9 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 var webReport = new WebReport();
                 webReport.Report.Load(duongdanreport);
 
-                var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>(ConstantValues.Product.DanhSachSanPham);
+                var dsSanPham = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
 
-                var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
+                var bangSanPham = Utilities.GetTable<Product>(dsSanPham, "Product");
                 webReport.Report.RegisterData(bangSanPham, "Product");
                 return View(webReport);
             }
@@ -90,11 +90,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
             var webReport = new WebReport();
             webReport.Report.Load(duongdanreport);
 
-            var dsSanPham = Utilities.SendDataRequest<List<ProductModel>>(ConstantValues.Product.DanhSachSanPham);
+            var dsSanPham = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
 
             //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
 
-            var bangSanPham = Utilities.GetTable<ProductModel>(dsSanPham, "Product");
+            var bangSanPham = Utilities.GetTable<Product>(dsSanPham, "Product");
             webReport.Report.RegisterData(bangSanPham, "Product");
             webReport.Report.Prepare();
 

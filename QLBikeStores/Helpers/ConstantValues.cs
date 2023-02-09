@@ -12,6 +12,8 @@
             public const string ThemSanPham = "api/Product/ThemSanPham";
             public const string CapNhatSanPham = "api/Product/CapNhatSanPham";
             public const string XoaSanPham = "api/Product/XoaSanPham";
+            public const string Find = "api/Product/Find/{0}";
+            public const string ProductExists = "api/Product/ProductExists/{0}";
         }
 
         public class Store
@@ -64,7 +66,10 @@
             public const string CapNhatKhachHang = "api/Customer/CapNhatKhachHang";
             public const string XoaKhachHang = "api/Customer/XoaKhachHang";
             public const string CustomerExists = "api/Customer/CustomerExists/{0}";
+            public const string KiemTraUsername = "api/Customer/KiemTraUsername/{0}";
             public const string TimKiem = "api/Customer/TimKiem/{0}";
+            public const string DangNhap = "api/Customer/DangNhap";
+            public const string DangKy = "api/Customer/DangKy";
         }
         public class Brand
         {
@@ -93,6 +98,8 @@
             public const string ThemChiTietDonDatHang = "api/OrderItem/ThemChiTietDonDatHang";
             public const string CapNhatChiTietDonHang = "api/OrderItem/CapNhatChiTietDonHang";
             public const string XoaChiTietDonHang = "api/OrderItem/XoaChiTietDonHang";
+            public const string OrderItemExists = "api/OrderItem/OrderItemExists/{0}&{1}";
+            public const string TimKiem = "api/OrderItem/TimKiem/{0}&{1}";
         }
         public class Role
         {

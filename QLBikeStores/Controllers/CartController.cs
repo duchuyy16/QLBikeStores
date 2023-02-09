@@ -35,7 +35,8 @@ namespace QLBikeStores.Controllers
             var item = myCart.SingleOrDefault(p => p.ProductId == id);
             if (item == null)
             {
-                var products = Utilities.SendDataRequest<Product>(ConstantValues.Product.ChiTietSanPham,id); /*_context.Products.SingleOrDefault(p => p.ProductId == id);*/
+                var url = string.Format(ConstantValues.Product.ChiTietSanPham, id);
+                var products = Utilities.SendDataRequest<Product>(url); /*_context.Products.SingleOrDefault(p => p.ProductId == id);*/
                 item = new CartItem
                 {
                     ProductId = id,
@@ -114,7 +115,6 @@ namespace QLBikeStores.Controllers
 
                 foreach (CartItem cart in lstCart)
                 {
-                    Product product = new Product();
                     OrderItem orderItem = new OrderItem()
                     {
                         OrderId = ord.OrderId,
@@ -122,7 +122,7 @@ namespace QLBikeStores.Controllers
                         ProductId = cart.ProductId,
                         Quantity = cart.Quantity,
                         ListPrice = cart.ListPrice,
-                        Discount=product.Discount,
+                        //Discount=product.Discount,
                     };
                     Utilities.SendDataRequest<OrderItem>(ConstantValues.OrderItem.ThemChiTietDonDatHang, orderItem);
                     //_context.OrderItems.Add(orderItem);
