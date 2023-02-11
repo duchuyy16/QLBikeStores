@@ -14,6 +14,8 @@
             public const string XoaSanPham = "api/Product/XoaSanPham";
             public const string Find = "api/Product/Find/{0}";
             public const string ProductExists = "api/Product/ProductExists/{0}";
+            public const string Search = "api/Product/Search/{0}&{1}&{2}";
+           
         }
 
         public class Store
@@ -57,6 +59,7 @@
             public const string XoaTheLoai = "api/Category/XoaTheLoai";
             public const string TimKiem = "api/Category/TimKiem/{0}";
             public const string CategoryExists = "api/Category/CategoryExists/{0}";
+            public const string ThongKeSanPhamTheoTheLoai = "api/ThongKe/ThongKeSanPhamTheoTheLoai";
         }
         public class Customer
         {

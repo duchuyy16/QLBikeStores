@@ -42,7 +42,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a asp-action="" asp-controller="" class="nav-link">Home</a>
+                    <a asp-action="Index" asp-controller="Home" class="nav-link">Home</a>
                 </li>
                 @*<li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -53,7 +53,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
                     </a>
@@ -72,7 +72,7 @@
                             </div>
                         </form>
                     </div>
-                </li>
+                </li>*@
 
 
                 <!-- Notifications Dropdown Menu -->
@@ -89,7 +89,7 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="navbar float-right">
-                    <span style="color:black"> @*Welcome to</span> <span class="text-success font-weight-bold p-2">*@ @User.Identity.Name.ToUpper()</span>
+                    <span style="color:black"> @*Welcome to</span> <span class="text-success font-weight-bold p-2">*@ @User.Identity.Name.ToUpper()</span> &nbsp;
                     <a class="btn btn-danger" asp-action="LogOut" asp-controller="Accounts">SignOut</a>
                 </div>
             }
@@ -104,9 +104,9 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a asp-action="" asp-controller="" class="brand-link">
+            <a asp-action="Index" asp-controller="Home" class="brand-link">
                 <img src="/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Admin Page</span>
+                <span class="brand-text font-weight-light">QLBikeStores</span>
             </a>
 
             <!-- Sidebar -->
@@ -148,7 +148,7 @@
 
 
                         <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link" >
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Charts
@@ -159,15 +159,15 @@
                                 <li class="nav-item">
                                     <a href="/Admin/Charts/Index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>ChartJS</p>
+                                        <p>Product Management</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a href="/Admin/Charts/Index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>CharJS</p>
                                     </a>
-                                </li>
+                                </li>*@
                             </ul>
                         </li>
 
@@ -186,12 +186,12 @@
                                         <p>ListOfProducts</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a href="/Admin/Reports/ListOfProducts" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>ListOfProducts</p>
                                     </a>
-                                </li>
+                                </li>*@
                             </ul>
                         </li>
 

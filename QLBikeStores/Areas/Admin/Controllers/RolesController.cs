@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLBikeStores.Attributes;
 using QLBikeStores.Helpers;
 using QLBikeStores.Models;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [WebAuthorize("admin")]
     public class RolesController : Controller
     {
-
-
         // GET: Admin/Roles
         public IActionResult Index()
         {

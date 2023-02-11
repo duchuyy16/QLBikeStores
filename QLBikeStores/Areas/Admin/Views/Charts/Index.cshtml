@@ -53,7 +53,7 @@
         google.charts.setOnLoadCallback(LoadData);
         function LoadData() {
             $.ajax({
-                url: '/Admin/Charts/findAll',
+                url: '/Admin/Charts/ThongKeSanPham',
                 dataType: "json",
                 type: "GET",
                 error: function(xhr, status, error) {
@@ -61,36 +61,34 @@
                     toastr.error(err.message);
                 },
                 success: function(data) {
-                    ProductChart(data);
+                    VeBieuDo(data);
                     return false;
                 }
             });
             return false;
         }
 
-        function ProductChart(data) {
+        function VeBieuDo(data) {
             var dataArray = [
-                ['ModelYear', 'ProductName']
+                ['TenTheLoai', 'SoLuongSanPham']
             ];
             $.each(data, function(i, item) {
-                dataArray.push([item["ModelYear"], item["ProductName"]]);
+                dataArray.push([item["tenTheLoai"], item["soLuongSanPham"]]);
             });
 
-            var data = google.visualization.arrayToDataTable(dataArray);
+            var myData =new google.visualization.arrayToDataTable(dataArray);
             var options = {
-                title: "Product...",
-                curveType:"function",
-                pointsVisible:true,
-               
+                title: 'Số lượng Sản Phẩm theo Thể Loại',
                 'width': 800,
-                'height': 600
+                'height': 600,
+                'legend': 'none'
             };
-            var chart = new google.visualization.PieChart(document.getElementById('line_chart'));
-            chart.draw(data, options);
+            var chart = new google.visualization.BarChart(document.getElementById('myChart'));
+            chart.draw(myData, options);
             return false;
         }
     </script>
 </div>
 <div class="container-fluid lead">
-    <div id="line_chart"style="width:800px; height:600px;" ></div>
+    <div id="myChart"style="width:800px; height:600px;" ></div>
 </div>

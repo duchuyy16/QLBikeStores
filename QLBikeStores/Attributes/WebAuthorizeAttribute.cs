@@ -13,13 +13,15 @@ namespace QLBikeStores.Attributes
     [AttributeUsage(AttributeTargets.Method|AttributeTargets.Class)]
     public class WebAuthorizeAttribute:Attribute, IAuthorizationFilter
     {
+        //là một mảng chứa các vai trò của người dùng cần được xác thực để truy cập vào các trang yêu cầu quyền truy cập.
         private string[] roleArray;
         public WebAuthorizeAttribute(string roles):base()
         {
+            //chuỗi "roles" gán giá trị của nó cho biến "roleArray" bằng cách sử dụng phương thức "Split" để chuyển chuỗi "roles" thành một mảng.
             roleArray = roles.Split(';');
         }
 
-        public void OnAuthorization(AuthorizationFilterContext context) //phan xu ly
+        public void OnAuthorization(AuthorizationFilterContext context) 
         {
             var username = context.HttpContext.Session.GetString("Username");
             
@@ -37,7 +39,7 @@ namespace QLBikeStores.Attributes
                 }
                 else
                 {
-                    if (!roleArray.Contains(userRole))
+                    if (!roleArray.Contains(userRole))//Nếu vai trò của người dùng không nằm trong mảng "roleArray"
                     {
                         context.Result = new RedirectResult("/Common/NoPermission");
                     }

@@ -1,6 +1,12 @@
 ﻿@using QLBikeStores.Areas.Admin.Services
 @inject IIdentityService _IDentityService
-
+@{
+    int count = 0;
+    if(ViewData["Count"]!=null)
+    {
+        count = (int)ViewData["Count"];   
+    }
+}
 <nav id="navbar" class="navbar">
     <ul>
         <li><a class="nav-link scrollto " asp-controller="Home" asp-action="Index"><i class="bi bi-house-fill"></i>&nbspHOME PAGE</a></li>
@@ -28,7 +34,7 @@
         </li>
         <li><a class="nav-link scrollto" asp-controller="Store" asp-action="ListStore"><i class="bi bi-shop"></i>&nbspSTORE</a></li>
         <li><a class="nav-link scrollto" asp-controller="Contact" asp-action="Index"><i class='bi bi-phone'></i>&nbspCONTACT</a></li>
-        <li><a class="nav-link scrollto" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart-fill"></i></a></li>
+        <li><a class="nav-link scrollto" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart-fill"></i>@count</a></li>
         @*<li><a class="nav-link scrollto" asp-controller="Account" asp-action="Login"><i class="bi bi-person"></i></a></li>*@
         @* <li><a class="nav-link scrollto" asp-controller="Product" asp-action="Search"><i class="bi bi-search"></i></a></li>*@
 

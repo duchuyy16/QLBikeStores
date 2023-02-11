@@ -62,7 +62,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 var duongdanreport = Path.Combine(_env.ContentRootPath, "Reports", "Listofproducts.frx");
                 var webReport = new WebReport();
                 webReport.Report.Load(duongdanreport);
-
+                
                 var dsSanPham = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
 
                 var bangSanPham = Utilities.GetTable<Product>(dsSanPham, "Product");
@@ -73,15 +73,12 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
 
                 throw;
-            }
-
-            //dsXepHangPhim = dsXepHangPhim.Where(x => x.KyHieu.Equals("C13")).ToList();
-            //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
-            //dsPhim = dsPhim.Where(x => x.XepHangPhimId.Equals(xephangid)).ToList();
-            //webReport.Report.SetParameterValue("pXepHangPhimId", xephangid);
-
-            
+            }   
         }
+        //dsXepHangPhim = dsXepHangPhim.Where(x => x.KyHieu.Equals("C13")).ToList();
+        //var xephangid = dsXepHangPhim.FirstOrDefault(x => x.KyHieu.Equals("P")).Id;
+        //dsPhim = dsPhim.Where(x => x.XepHangPhimId.Equals(xephangid)).ToList();
+        //webReport.Report.SetParameterValue("pXepHangPhimId", xephangid);
 
         public IActionResult ListOfProductsPushPDF()
         {

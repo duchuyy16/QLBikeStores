@@ -12,13 +12,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class ChartsController : Controller
     {
-       
-        private readonly demoContext _context;
-
-        public ChartsController(demoContext context)
-        {
-            _context = context;
-        }
         public IActionResult Index()
         {
             return View();
@@ -39,31 +32,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
             };
             return model;
         }
-        //[HttpGet]
-        //public async Task<IActionResult> findAll()
-        //{
-        //    try
-        //    {
-        //        var products = _context.Products.ToList();
-        //        return Ok(products);
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-        //[HttpGet]
-        //public ActionResult ListProductCategoryChart(int categoryId)
-        //{
-        //    var products = _context.Products.Where(x => x.CategoryId == categoryId).Include(p => p.Category).ToList();
-        //    return View(products);
-        //}
 
         [HttpGet]
-        public List<Category> CategoryChart()
+        public List<ThongKeModel.Output.ThongKeSanPhamTheoTheLoai> ThongKeSanPham()
         {
-            var categories = Utilities.SendDataRequest<List<Category>>(ConstantValues.Category.DanhSachTheLoai);
-            return categories.ToList();
+            var categories = Utilities.SendDataRequest<List<ThongKeModel.Output.ThongKeSanPhamTheoTheLoai>>(ConstantValues.Category.ThongKeSanPhamTheoTheLoai);
+            return categories;
         }
+
+       
     }
 }

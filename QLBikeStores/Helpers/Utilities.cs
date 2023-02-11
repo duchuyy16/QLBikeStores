@@ -46,7 +46,7 @@ namespace QLBikeStores.Helpers
         //    return kq;
         //}
 
-        public static DataTable GetTable<TEntity>(IEnumerable<TEntity> table, string name) where TEntity : class
+        public static DataTable GetTable<TEntity>(List<TEntity> table, string name) where TEntity : class
         {
             var offset = 78;
             DataTable result = new DataTable(name);
@@ -63,7 +63,7 @@ namespace QLBikeStores.Helpers
                     result.Columns.Add(new DataColumn(info.Name, info.PropertyType));
                 }
             }
-            foreach (var el in table) //lỗi
+            foreach (var el in table)
             {
                 DataRow row = result.NewRow();
                 foreach (PropertyInfo info in infos)

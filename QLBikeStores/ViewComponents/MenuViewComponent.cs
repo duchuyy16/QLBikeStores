@@ -16,6 +16,11 @@ namespace QLBikeStores.ViewComponents
         public IViewComponentResult Invoke()
         {
             var menu = Utilities.SendDataRequest<List<MenuViewModel>>("/api/Menu/GetMenuList");
+            List<CartItem> lstCart = HttpContext.Session.Get<List<CartItem>>("GioHang");
+            if(lstCart!=null)
+            {
+                ViewData["Count"] = lstCart.Count;
+            }    
             return View(menu);
         }
     }
