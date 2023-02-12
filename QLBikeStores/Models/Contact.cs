@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLBikeStores.Models
 {
-    public class ContactModel
+    public class Contact
     {
         public int Id { get; set; }
 

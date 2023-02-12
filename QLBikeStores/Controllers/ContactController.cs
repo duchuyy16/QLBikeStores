@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QLBikeStores.Helpers;
+using QLBikeStores.Models;
+using System;
 
 namespace QLBikeStores.Controllers
 {
@@ -8,11 +11,23 @@ namespace QLBikeStores.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult Submit(string name, string email, string message)
+        public IActionResult Submit(Contact model)
         {
-            // Xử lý dữ liệu form và lưu vào database hoặc gửi email
-            return View("Thanks");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Utilities.SendDataRequest<Contact>(ConstantValues.Contact.ThemLienLac, model);
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

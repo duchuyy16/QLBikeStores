@@ -34,7 +34,7 @@
 </style>*@
 <h1>Product Portfolio</h1>
 <div>
-    <form asp-action="Search" method="post" class="form-inline">
+    <form asp-action="Search" asp-area="Admin" asp-controller="Products" method="GET" class="form-inline">
         Enter product name: &nbsp; <input type="text" name="name" />&nbsp; Price from: &nbsp; <input type="number" name="to" />&nbsp; To: &nbsp; <input type="number" name="from" /> &ensp; <button class="btn btn-primary" style="width:100px;"><i class="fas fa-search"></i>&nbsp;<span>Search</span></button>
     </form>
 </div>

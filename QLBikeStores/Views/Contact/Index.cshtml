@@ -181,23 +181,17 @@
             </div>
             <div class="row text-center">
                 <div class="col-md-8">
-                    <form action="#" class="contact-form">
+                    <form action="/Contact/Submit" method="POST" class="contact-form">
                         <div class="row">
                             <div class="col-xl-6">
-                                <input type="text" placeholder="name">
+                                <input type="text" placeholder="name" name="Name">
                             </div>
                             <div class="col-xl-6">
-                                <input type="text" placeholder="email">
+                                <input type="text" placeholder="email" name="Email">
                             </div>
-                           @* <div class="col-xl-6">
-                                <input type="text" placeholder="subject">
-                            </div>
-                            <div class="col-xl-6">
-                                <input type="text" placeholder="telephone">
-                            </div>*@
                             <div class="col-xl-12">
-                                <textarea placeholder="message" cols="30" rows="10"></textarea>
-                                <input type="submit" asp-action="Submit" asp-controller="Contact" value="send message">
+                                <textarea placeholder="message" cols="30" rows="10" name="Message"></textarea>
+                                <input type="submit" value="send message">
                             </div>
                         </div>
                     </form>

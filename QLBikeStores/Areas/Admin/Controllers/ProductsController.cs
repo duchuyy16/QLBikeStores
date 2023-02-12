@@ -53,7 +53,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products
-        public async Task<IActionResult> Index(int? categoryId, int? pageNo = 1)
+        public IActionResult Index(int? categoryId, int? pageNo = 1)
         {
             try
             {
@@ -62,18 +62,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 ViewBag.CategoryId = new SelectList(categories, "CategoryId", "CategoryName", categoryId);
                 if (categoryId == null)
                 {
-                    //var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-                    //var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
+
                     var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
-                    var pagedList = await products.ToPagedListAsync((int)pageNo, 10);
+                    var pagedList =  products.ToPagedList((int)pageNo, 10);
                     return View(pagedList);
                 }
                 else
                 {
-                    //var demoContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-                    //var pagedList = await demoContext.Where(x => x.CategoryId == categoryId).ToPagedListAsync((int)pageNo, 10);
                     var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
-                    var pagedList = await products.Where(x=>x.CategoryId==categoryId ).ToPagedListAsync((int)pageNo, 10);
+                    var pagedList =  products.Where(x=>x.CategoryId==categoryId ).ToPagedList((int)pageNo, 10);
                     return View(pagedList);
                 }
             }

@@ -31,7 +31,7 @@ namespace QLBikeStores
             FastReport.Utils.RegisteredObjects.AddConnection(typeof(FastReport.Data.MsSqlDataConnection));
 
             services.AddControllersWithViews();
-            services.AddDbContext<demoContext>();
+            //services.AddDbContext<demoContext>();
             services.AddScoped<IIdentityService, IdentityService>();
             //services.AddRazorPages();
             services.AddSession(options =>
