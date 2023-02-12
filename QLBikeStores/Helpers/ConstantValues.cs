@@ -117,6 +117,12 @@
         public class Contact
         {
             public const string ThemLienLac = "api/Contact/ThemLienLac";
+            public const string DanhSachLienLac = "api/Contact/DanhSachLienLac";
+            public const string ChiTietLienLac = "api/Contact/ChiTiet/{0}";
+            public const string CapNhatLienLac = "api/Contact/CapNhatLienLac";
+            public const string XoaLienLac = "api/Contact/XoaLienLac";
+            public const string TimKiem = "api/Contact/TimKiem/{0}";
+            public const string ContactExists = "api/Contact/ContactExists/{0}";
         }
     }
 }

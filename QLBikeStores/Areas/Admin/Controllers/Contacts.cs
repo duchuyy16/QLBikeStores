@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStores.Helpers;
 using QLBikeStores.Models;
-using X.PagedList;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QLBikeStores.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class BrandsController : Controller
+    public class Contacts : Controller
     {
-
         public IActionResult Index()
         {
             try
             {
-                var contacts = Utilities.SendDataRequest<List<Brand>>(ConstantValues.Brand.DanhSachNhanHieu);
+                var contacts = Utilities.SendDataRequest<List<Contact>>(ConstantValues.Contact.DanhSachLienLac);
                 return View(contacts.ToList());
             }
             catch (Exception)
@@ -36,15 +32,15 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                var url = string.Format(ConstantValues.Brand.ChiTietNhanHieu, id);
-                var brand = Utilities.SendDataRequest<Brand>(url);
+                var url = string.Format(ConstantValues.Contact.ChiTietLienLac, id);
+                var contact = Utilities.SendDataRequest<Contact>(url);
 
-                if (brand == null)
+                if (contact == null)
                 {
                     return NotFound();
                 }
 
-                return View(brand);
+                return View(contact);
             }
             catch (Exception)
             {
@@ -62,16 +58,16 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Brands/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("BrandId,BrandName")] Brand brand)
+        public IActionResult Create([Bind("Id,Name,Email,Message")] Contact contact)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Utilities.SendDataRequest<Brand>(ConstantValues.Brand.ThemNhanHieu, brand);
+                    Utilities.SendDataRequest<Contact>(ConstantValues.Contact.ThemLienLac, contact);
                     return RedirectToAction(nameof(Index));
                 }
-                return View(brand);
+                return View(contact);
             }
             catch (Exception)
             {
@@ -88,13 +84,13 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                var url = string.Format(ConstantValues.Brand.TimKiem, id);
-                var brand = Utilities.SendDataRequest<Brand>(url);
-                if (brand == null)
+                var url = string.Format(ConstantValues.Contact.TimKiem, id);
+                var contact = Utilities.SendDataRequest<Contact>(url);
+                if (contact == null)
                 {
                     return NotFound();
                 }
-                return View(brand);
+                return View(contact);
             }
             catch (Exception)
             {
@@ -106,11 +102,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
         // POST: Admin/Brands/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("BrandId,BrandName")] Brand brand)
+        public IActionResult Edit(int id, [Bind("Id,Name,Email,Message,CreateAt")] Contact contact)
         {
             try
             {
-                if (id != brand.BrandId) //lỗi kh return về trang index
+                if (id != contact.Id)
                 {
                     return NotFound();
                 }
@@ -119,12 +115,12 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 {
                     try
                     {
-                        Utilities.SendDataRequest<bool>(ConstantValues.Brand.CapNhatNhanHieu, brand);
-                        
+                        Utilities.SendDataRequest<bool>(ConstantValues.Contact.CapNhatLienLac, contact);
+
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        if (!BrandExists(brand.BrandId))
+                        if (!ContactExists(contact.Id))
                         {
                             return NotFound();
                         }
@@ -135,7 +131,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
-                return View(brand);
+                return View(contact);
             }
             catch (Exception)
             {
@@ -152,14 +148,14 @@ namespace QLBikeStores.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                var url = string.Format(ConstantValues.Brand.ChiTietNhanHieu, id);
-                var brand = Utilities.SendDataRequest<Brand>(url);
-                if (brand == null)
+                var url = string.Format(ConstantValues.Contact.ChiTietLienLac, id);
+                var contact = Utilities.SendDataRequest<Contact>(url);
+                if (contact == null)
                 {
                     return NotFound();
                 }
 
-                return View(brand);
+                return View(contact);
             }
             catch (Exception)
             {
@@ -174,10 +170,10 @@ namespace QLBikeStores.Areas.Admin.Controllers
         {
             try
             {
-                var url = string.Format(ConstantValues.Brand.TimKiem, id);
-                var brand = Utilities.SendDataRequest<Brand>(url);
+                var url = string.Format(ConstantValues.Contact.TimKiem, id);
+                var contact = Utilities.SendDataRequest<Contact>(url);
 
-                Utilities.SendDataRequest<bool>(ConstantValues.Brand.XoaNhanHieu, brand);
+                Utilities.SendDataRequest<bool>(ConstantValues.Contact.XoaLienLac, contact);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -188,11 +184,11 @@ namespace QLBikeStores.Areas.Admin.Controllers
 
         }
 
-        private bool BrandExists(int id)
+        private bool ContactExists(int id)
         {
-            var url = string.Format(ConstantValues.Brand.BrandExists, id);
-            var brand = Utilities.SendDataRequest<bool>(url);
-            if (brand != true) return false;
+            var url = string.Format(ConstantValues.Contact.ContactExists, id);
+            var contact = Utilities.SendDataRequest<bool>(url);
+            if (contact != true) return false;
             else return true;
         }
     }

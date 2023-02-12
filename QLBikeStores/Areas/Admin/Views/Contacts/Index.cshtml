@@ -1,0 +1,73 @@
+﻿@model IEnumerable<QLBikeStores.Models.Contact>
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @*<p>
+    <button type="button" class="btn btn-primary">
+    <a style="color:white;" asp-action="Create">Create New</a>
+    </button>
+    </p>*@
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateAt)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateAt)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success">
+                            <a style="color:white;" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        </button>
+                        <button type="button" class="btn btn-info">
+                            <a style="color:white;" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            <a style="color:white;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            <a style="color:white;" asp-action="Create">Create New</a>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
