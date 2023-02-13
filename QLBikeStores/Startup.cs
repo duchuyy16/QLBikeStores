@@ -18,6 +18,7 @@ namespace QLBikeStores
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -46,12 +47,20 @@ namespace QLBikeStores
                     option.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     option.LoginPath = "/Account/Login";
                     option.AccessDeniedPath = "/Account/Login";
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = Configuration["Google:AppId"];
+                    options.ClientSecret = Configuration["Google:AppSecret"];
+                    //options.ClaimActions.MapJsonKey("Picture", "picture", "url");
+                    options.SaveTokens = true;
+                    options.CallbackPath = Configuration["Google:CallbackPath"];
                 });
-
             services.AddHttpContextAccessor();
 
         }
-        
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -73,7 +82,7 @@ namespace QLBikeStores
                     case (int)HttpStatusCode.Forbidden:
                         response.Redirect("/Common/NoPermission");
                         break;
-                    case(int)HttpStatusCode.BadRequest:
+                    case (int)HttpStatusCode.BadRequest:
                         response.Redirect("/Common/PageBadRequest");
                         break;
                 }

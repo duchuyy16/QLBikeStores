@@ -15,13 +15,6 @@ namespace QLBikeStores.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly demoContext _context;
-        //public AccountController(demoContext context)
-        //{
-        //    _context = context;
-        //}
-
-
         public IActionResult Index()
         {
             return View();

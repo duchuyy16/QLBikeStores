@@ -17,22 +17,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
             return View();
         }
 
-
-        [HttpGet]
-        public List<PizzaModel> PopulationChart()
-        {
-            var model = new List<PizzaModel>
-            {
-                new PizzaModel{Topping="C1",Slices=3},
-                new PizzaModel{Topping="C2",Slices=1},
-                new PizzaModel{Topping="C3",Slices=2},
-                new PizzaModel{Topping="C4",Slices=4},
-                new PizzaModel{Topping="C5",Slices=6},
-                new PizzaModel{Topping="C6",Slices=4},
-            };
-            return model;
-        }
-
         [HttpGet]
         public List<ThongKeModel.Output.ThongKeSanPhamTheoTheLoai> ThongKeSanPham()
         {

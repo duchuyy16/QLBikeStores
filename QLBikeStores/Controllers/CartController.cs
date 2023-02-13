@@ -11,11 +11,6 @@ namespace QLBikeStores.Controllers
 {
     public class CartController : Controller
     {
-        //private readonly demoContext _context;
-        //public CartController(demoContext context)
-        //{
-        //    _context = context;
-        //}
         public List<CartItem> Carts
         {
             get
