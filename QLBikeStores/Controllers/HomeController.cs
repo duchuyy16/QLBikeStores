@@ -10,25 +10,6 @@ namespace QLBikeStores.Controllers
 {
     public class HomeController : Controller
     {
-        //public IActionResult DanhSachSanPhamAjax()
-        //{
-        //    return View();
-        //}
-        //public List<Product> DocDanhSachSanPhamAjax()
-        //{
-        //    var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
-        //    var dsTheLoai = JsonConvert.DeserializeObject<List<Product>>(result.ToString());
-        //    return dsTheLoai;
-        //}
-
-        //public IActionResult DanhSachSanPham()
-        //{
-        //    //var result = Utilities.SendDataRequest("api/Product/DocDanhSachSanPham");
-        //    //var dsTheLoai = JsonConvert.DeserializeObject<List<ProductModel>>(result.ToString());
-        //    var dsSanPham = Utilities.SendDataRequest<List<Product>>("api/Product/DocDanhSachSanPham");
-        //    return View(dsSanPham);
-        //}
-
 
         public IActionResult IndexTest()
         {

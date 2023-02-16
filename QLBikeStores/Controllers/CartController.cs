@@ -31,13 +31,13 @@ namespace QLBikeStores.Controllers
             if (item == null)
             {
                 var url = string.Format(ConstantValues.Product.ChiTietSanPham, id);
-                var products = Utilities.SendDataRequest<Product>(url); /*_context.Products.SingleOrDefault(p => p.ProductId == id);*/
+                var product = Utilities.SendDataRequest<Product>(url); /*_context.Products.SingleOrDefault(p => p.ProductId == id);*/
                 item = new CartItem
                 {
                     ProductId = id,
-                    ProductName = products.ProductName,
-                    Image = products.ImageBike,
-                    ListPrice = (products.ListPrice - (products.ListPrice * products.Discount / 100)),
+                    ProductName = product.ProductName,
+                    Image = product.ImageBike,
+                    ListPrice = (product.ListPrice - (product.ListPrice * product.Discount / 100)),
                     Quantity = quantity,
 
                 };
@@ -77,12 +77,12 @@ namespace QLBikeStores.Controllers
         public IActionResult RemoveCart(int id)
         {
             HttpContext.Session.Set("GioHang", Carts.Where(p => p.ProductId != id).ToList());
+            HttpContext.Session.Clear();
             return RedirectToAction("Index");
         }
 
         public IActionResult CheckOut()
         {
-
             return View(Carts);
         }
 

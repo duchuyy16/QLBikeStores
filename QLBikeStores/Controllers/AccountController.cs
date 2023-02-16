@@ -66,6 +66,10 @@ namespace QLBikeStores.Controllers
                     Email = model.Email,
                     Password =EncryptPassword(model.Password),
                     Phone = model.Phone,
+                    Street=model.Street,
+                    City=model.City,
+                    ZipCode=model.ZipCode,
+                    State=model.State,
                     //Active =Convert.ToByte(model.IsActive)
                 };
                 //_context.Customers.Add(data);

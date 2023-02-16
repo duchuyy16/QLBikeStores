@@ -15,8 +15,19 @@ namespace QLBikeStores.Models
         [Required(ErrorMessage = "Please enter last name")]
         public string Lastname { get; set; }
 
-        [Required(ErrorMessage = "Please enter store")]
-        public int StoreId { get; set; } // <=3
+        //[Required(ErrorMessage = "Please enter store")]
+        //public int StoreId { get; set; } // <=3
+        [Required(ErrorMessage = "Please enter street")]
+        public string Street { get; set; }
+
+        [Required(ErrorMessage = "Please enter city")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "Please enter state")]
+        public string State { get; set; }
+
+        [Required(ErrorMessage = "Please enter zipcode")]
+        public string ZipCode { get; set; }
 
         [Required (ErrorMessage ="Please enter username")]
         [Remote(action:"UsernameIsExist",controller:"Account")]

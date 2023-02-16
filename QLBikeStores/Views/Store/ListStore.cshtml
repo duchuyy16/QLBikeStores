@@ -2,9 +2,17 @@
     ViewData["Title"] = "ListStore";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <section>
     <div class="container-fluid p-3 my-3">
-        <h1 style="text-align:center; color:midnightblue"><b><i>Store List</i></b></h1>
+        <div class="title-store" style="text-align: center; color:#37517e">
+                <h1><b><i>Store List</i></b></h1>
+                <div class="icon-bike">
+                    <img alt="icon-bike" src="~/assets/img/icon-store2.jpg" style="width:145px;height:96px;"/>
+                </div>
+            </div>
+        @*<h1 style="text-align:center; color:#37517e"><b><i>Store List</i></b></h1>*@
         <div class="row row-cols-3 g-3">
             @foreach (Store item in Model)
             {
@@ -16,24 +24,13 @@
                             <h4><i class="bi-telephone-fill"></i>&nbsp;Tel: <b>@item.Phone</b></h4>
                             <h4><i class="bi-envelope-fill"></i>&nbsp;Email: <b>@item.Email</b></h4>
                             <h4><i class="bi-door-open-fill"></i>&nbsp;Opening Hours: <b>10AM - 9PM (Monday - Sunday)</b></h4>
-                            @*<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12094.57348593182!2d-74.00599512526003!3d40.72586666928451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2598f988156a9%3A0xd54629bdf9d61d68!2sBroadway-Lafayette%20St!5e0!3m2!1spl!2spl!4v1624523797308!5m2!1spl!2spl"
-                                class="h-100 w-100" style="border:0;" allowfullscreen="" loading="lazy"></iframe>*@
+
                         </div>
                     </div>
                 </div>
             }
 
         </div>
-    </div>
-    <div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white"
-         style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');">
-        <h1 class="mb-3 h2">Bike Store</h1>
-
-        <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus praesentium
-            labore accusamus sequi, voluptate debitis tenetur in deleniti possimus modi voluptatum
-            neque maiores dolorem unde? Aut dolorum quod excepturi fugit.
-        </p>
     </div>
 </section>
 
