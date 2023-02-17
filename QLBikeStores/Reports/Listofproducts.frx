@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="01/05/2023 18:51:36" ReportInfo.Modified="01/05/2023 19:16:36" ReportInfo.CreatorVersion="2023.1.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/05/2023 18:51:36" ReportInfo.Modified="02/17/2023 10:35:40" ReportInfo.CreatorVersion="2023.1.0.0">
   <Styles Name="Gray">
     <Style Name="Title" Font="Arial, 12pt, style=Bold"/>
     <Style Name="Header" Fill.Color="Gainsboro" Font="Arial, 10pt, style=Bold"/>
@@ -9,7 +9,7 @@
     <Style Name="EvenRows" Fill.Color="WhiteSmoke" Font="Arial, 10pt"/>
   </Styles>
   <Dictionary>
-    <MsSqlDataConnection Name="QLBikeStoreConnection" ConnectionString="rijcmlqW+trQVRf8ffYSUAa/yWGWhGIEaXPQBDKiw9QdrCcyqyzeDz1JrBZ3rHUfWr8UTJDLYi4g6EHrDzCdSGC7VVsUHAU9YaivsEr8349DEuAYdznqKxSKNnsSxbS6fVDaN1BaNazHS1ptqcnNi64h6Wdl+ZEwwX6cHGmgYz1+sxxU9LKAOMTUk98npUsKtiMVUe4SCtflfSNlh1RkVxXdVBT7g==">
+    <MsSqlDataConnection Name="QLBikeStoreConnection" ConnectionString="rijcmlqaqzDO48ywxSOIVMI7VW+uFOQJahVTshPOXrY1Nd/DWR5jpqE2v/aZyNSmzvOJ27YWyvROnAsqRbU5DzllelC2WKGRbkuuPvQ/26D7HQRIvEehd6suPo39OZhTmnF96txMNbkVpTd/l9C5P+k2ahJthAXiWOmjCtEIX51WjZFpS2wdA9ZqmuBiTmrTHFtPfjRmuX1pVnkZjAjhK4xEFGrqw==">
       <TableDataSource Name="production_products" DataType="System.Int32" Enabled="true" TableName="production.&quot;products&quot;">
         <Column Name="product_id" DataType="System.Int32"/>
         <Column Name="product_name" DataType="System.String"/>

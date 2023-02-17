@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace QLBikeStores.Areas.Admin.Controllers
@@ -63,10 +64,12 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 var webReport = new WebReport();
                 webReport.Report.Load(duongdanreport);
                 
-                var dsSanPham = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
-
-                var bangSanPham = Utilities.GetTable<Product>(dsSanPham, "Product");
-                webReport.Report.RegisterData(bangSanPham, "Product");
+                var dsSanPham = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham).ToList();
+                
+                var bangSanPham = Utilities.GetTable<Product>(dsSanPham, "products");
+                
+                webReport.Report.RegisterData(bangSanPham, "products");
+                //webReport.Report.GetDataSource("production_products").Enabled = true;
                 return View(webReport);
             }
             catch (Exception)
