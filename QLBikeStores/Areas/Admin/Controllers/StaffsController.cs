@@ -81,7 +81,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Utilities.SendDataRequest<Staff>(ConstantValues.Staff.ThemNhanVienMoi);
+                    Utilities.SendDataRequest<Staff>(ConstantValues.Staff.ThemNhanVienMoi,staff);
                     return RedirectToAction(nameof(Index));
                 }
                 ViewData["ManagerId"] = new SelectList(Utilities.SendDataRequest<List<Staff>>(ConstantValues.Staff.DanhSachNhanVien), "StaffId", "Email", staff.ManagerId);
