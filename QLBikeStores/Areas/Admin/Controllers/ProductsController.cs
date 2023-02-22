@@ -70,7 +70,7 @@ namespace QLBikeStores.Areas.Admin.Controllers
                 else
                 {
                     var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
-                    var pagedList =  products.Where(x=>x.CategoryId==categoryId ).ToPagedList((int)pageNo, 10);
+                    var pagedList =  products.Where(x=>x.CategoryId==categoryId).ToPagedList((int)pageNo, 10);
                     return View(pagedList);
                 }
             }
