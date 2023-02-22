@@ -15,21 +15,6 @@ namespace QLBikeStores.Areas.Admin.Controllers
     [Area("Admin")]
     public class OrderItemsController : Controller
     {
-        private readonly demoContext _context;
-
-        public OrderItemsController(demoContext context)
-        {
-            _context = context;
-        }
-
-        // GET: Admin/OrderItems
-        //public async Task<IActionResult> Index(int? pageNo = 1)
-        //{
-        //    var demoContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product);
-        //    var pagedList = await demoContext.ToPagedListAsync((int)pageNo, 10);
-        //    return View(pagedList);
-
-        //}
 
         // GET: Admin/OrderItems/Details/5
         //them tham so khoa ngoai
