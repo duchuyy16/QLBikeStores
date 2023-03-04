@@ -7,20 +7,31 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css
+" rel="stylesheet">
+
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800,900%7cRaleway:300,400,500,600,700" rel="stylesheet">
 <style>
     .p1 {
-        color:black;
+        color: black;
     }
-    .h41{
-        color:black;
+
+    .h41 {
+        color: black;
     }
-    .h51{
-        color:black;
+
+    .h51 {
+        color: black;
     }
+
     .pb-100 {
         padding-bottom: 100px;
     }
@@ -191,7 +202,7 @@
                             </div>
                             <div class="col-xl-12">
                                 <textarea placeholder="message" cols="30" rows="10" name="Message"></textarea>
-                                <input type="submit" value="send message">
+                                <input type="submit" id="mess" value="send message">
                             </div>
                         </div>
                     </form>
@@ -217,3 +228,33 @@
         </div>
     </section>
 </body>
+
+<script>
+    var button = document.getElementById("mess");
+    button.onclick = function() {
+        
+        //alert("Gửi contact thành công!");
+        //Swal.fire({
+        //    title: "Success!",
+        //    text: "You have sent the communication successfully!!!",
+        //    type: "success",
+        //    timer: 7000
+        //});
+        //function () {
+        //    location.reload(true);
+        //    tr.hide();
+        //};
+        Swal.fire({
+            title: 'Success',
+            text: 'You have sent the communication successfully!!!',
+            icon: 'success',
+            timer: 9000 // đợi 3 giây trước khi tự động ẩn thông báo đi
+        });
+    }
+</script>
+
+@*<script>
+    function submit() {
+  $(".alert").html("Gửi contact thành công!").addClass("alert-success").show();
+}
+</script>*@
