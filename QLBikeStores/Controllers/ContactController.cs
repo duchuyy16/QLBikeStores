@@ -9,6 +9,7 @@ namespace QLBikeStores.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Thongbao"] = false;
             return View();
         }
 
@@ -20,9 +21,11 @@ namespace QLBikeStores.Controllers
                 if (ModelState.IsValid)
                 {
                     Utilities.SendDataRequest<Contact>(ConstantValues.Contact.ThemLienLac, model);
-                    return RedirectToAction(nameof(Index));
+                    ViewData["Thongbao"] = true;
+                    return View("Index");
                 }
-                return RedirectToAction("Index");
+                ViewData["Thongbao"] = false;
+                return View("Index");
             }
             catch (Exception)
             {

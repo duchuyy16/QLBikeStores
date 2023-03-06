@@ -229,29 +229,20 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css
     </section>
 </body>
 
-<script>
-    var button = document.getElementById("mess");
-    button.onclick = function() {
-        
-        //alert("Gửi contact thành công!");
-        //Swal.fire({
-        //    title: "Success!",
-        //    text: "You have sent the communication successfully!!!",
-        //    type: "success",
-        //    timer: 7000
-        //});
-        //function () {
-        //    location.reload(true);
-        //    tr.hide();
-        //};
-        Swal.fire({
-            title: 'Success',
-            text: 'You have sent the communication successfully!!!',
-            icon: 'success',
-            timer: 9000 // đợi 3 giây trước khi tự động ẩn thông báo đi
-        });
-    }
-</script>
+@if((bool)ViewData["Thongbao"])
+{
+    <script>
+    Swal.fire({
+        title: 'Success',
+        text: 'You have sent the communication successfully!!!',
+        icon: 'success',
+        timer: 5000 // đợi 3 giây trước khi tự động ẩn thông báo đi
+    });
+    </script>
+}
+
+
+
 
 @*<script>
     function submit() {

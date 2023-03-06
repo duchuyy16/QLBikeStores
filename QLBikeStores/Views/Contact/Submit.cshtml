@@ -1,2 +1,16 @@
-﻿<h1>Cảm ơn tin nhắn của bạn!</h1>
-<p>Chúng tôi sẽ trả lời bạn trong thời gian sớm nhất có thể.</p>
+﻿@*<h1>Cảm ơn tin nhắn của bạn!</h1>
+<p>Chúng tôi sẽ trả lời bạn trong thời gian sớm nhất có thể.</p>*@
+
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
+"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
+<script>
+    Swal.fire({
+        title: 'Success',
+        text: 'You have sent the communication successfully!!!',
+        icon: 'success',
+        timer: 5000 // đợi 5 giây trước khi tự động ẩn thông báo đi
+    });
+</script>
