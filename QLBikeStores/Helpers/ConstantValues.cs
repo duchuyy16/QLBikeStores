@@ -5,6 +5,7 @@
         public class Product
         {
             public const string DanhSachSanPham = "api/Product/DanhSachSanPham";
+            public const string DanhSachSanPhamBanChay = "api/Product/DanhSachSanPhamBanChay";
             public const string ChiTietSanPham = "api/Product/ChiTietSanPham/{0}";
             public const string DocDanhSachSanPhamTheoTheLoai = "api/Product/DocDanhSachSanPhamTheoTheLoai/{0}";
             public const string DanhSachSanPhamTheoTheLoaiThuongHieu = "api/Product/DocDanhSachSanPhamTheoTheLoaiThuongHieu/{0}&{1}";

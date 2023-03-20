@@ -16,13 +16,16 @@ namespace QLBikeStores.Controllers
             return BadRequest();
         }
 
-        public IActionResult Index(int? pageNo = 1)
+        public IActionResult Index(/*int? pageNo = 1*/)
         {
             try
             {
-                var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPham);
-                var pagedList = products.ToPagedList((int)pageNo, 10);
-                return View(pagedList);
+                //var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPhamBanChay);
+                //var pagedList = products.ToPagedList((int)pageNo, 10);
+                //return View(pagedList);
+                var products = Utilities.SendDataRequest<List<Product>>(ConstantValues.Product.DanhSachSanPhamBanChay);
+               
+                return View(products);
             }
             catch (Exception)
             {

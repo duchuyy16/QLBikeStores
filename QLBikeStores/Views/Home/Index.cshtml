@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <style>
-        .pagination-container {
+       /* .pagination-container {
             display: flex;
             flex: 1;
         }
@@ -34,7 +34,7 @@
             order: -1;
             flex: 1;
             /*expands the div to max available width*/
-        }
+        }*/
 
         .product-name {
             height: 48px;
@@ -113,7 +113,7 @@
                 </div>
             }
         </div>
-        <div class="row mt-5">
+       @* <div class="row mt-5">
             @Html.PagedListPager((IPagedList)Model,
             pageNo => Url.Action("Index", new { pageNo }),
             new PagedListRenderOptions{
@@ -126,7 +126,7 @@
             DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
             }
             )
-        </div>
+        </div>*@
     </div>
 </section>
 
